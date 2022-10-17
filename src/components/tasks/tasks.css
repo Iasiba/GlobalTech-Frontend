@@ -1,0 +1,54 @@
+.tasks{
+    width: 100%;
+    height: auto;
+}
+.tasks > .area{
+    width: 100%;
+    text-align: center;
+}
+
+.task {
+    margin: 2px 20px;
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    height: auto;
+    align-content: center;
+    color:blue;
+}
+.task:hover{
+    cursor: pointer;
+    color: black;
+}
+
+.canceled {
+    color: rgb(255, 0, 0);
+}
+
+.finished{
+    color: rgb(13, 255, 0);
+}
+
+.gridHeader {
+    margin: 10px 20px;
+    height: 30px;
+    align-items: center;
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    border:1px solid var(--borderInput-color); 
+    color: var(--secondary-color);
+  }
+  .activity{
+    background-color: var(--primary-color);
+    padding:1px 3px;
+    border-radius: 5px;
+  }
+.activity:hover{
+    color: white;
+    background-color: var(--secondary-color);
+}
+
+.deployTask{
+    margin: 10px auto;
+    border-bottom:1px solid var(--borderInput-color);
+    border-top:1px solid var(--borderInput-color);
+}

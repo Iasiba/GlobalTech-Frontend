@@ -1,0 +1,26 @@
+.bx {
+    color:var(--secondary-color);
+    font-size:24px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+}
+.menuPlus {
+    position: fixed;
+    right: 10px;
+    top:65px;
+    font-size: 18px;
+    background-color: white;
+}
+.menuPlus div {
+    box-shadow: 1px 1px 5px var(--primary-color);
+    display:flex; 
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    height: 30px;
+    color: var(--secondary-color);
+    border-radius: 5px;
+}
+.menuPlus div :hover{
+    color: var(--primary-color);
+}

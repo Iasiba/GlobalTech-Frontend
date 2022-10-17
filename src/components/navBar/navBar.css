@@ -1,0 +1,24 @@
+.bx {
+    color: var(--secondary-color);
+    font-size: 40px;
+    margin: 0 20px;
+}
+
+.navBar{
+    height: 60px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding-left: 5%;
+    padding-right: 5%;
+    align-items: center;
+    box-shadow: 1px 1px 10px var(--primary-color);
+}
+.logo {
+    height: 90%;
+    width: auto;
+}
+.title{
+    color: var(--secondary-color);
+}

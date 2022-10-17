@@ -1,0 +1,52 @@
+:root {
+  --padding-mobile: 20px;
+  --padding-tablet: 50px;
+  --padding-desktop: 100px;
+  --primary-color: rgb(199, 225, 164);
+  --secondary-color: rgb(61, 100, 5);
+  --borderInput-color:rgb(229, 228, 228);
+  --borderTable-color:rgb(177, 166, 249);
+  --border-color: #9996;
+  --color-primary-text: black;
+  --color-secondary-text: #9996;
+  --color-footer: #3C3C3B;
+  --font-family: 'Lato', sans-serif;
+  --font-size:12px;
+}
+
+/* -- Reset -- */
+*{
+  box-sizing: border-box;
+  
+}
+html {
+  scroll-behavior: smooth;
+}
+body{
+  margin: 0;
+  font-family: var(--font-family);
+}
+h1, h2, h3, h4, p, ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+img {
+  width: 100%;
+}
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+}
+.main {
+  flex: 1;
+}
