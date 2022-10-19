@@ -1,0 +1,9 @@
+.project{
+    color:var(--secondary-color);
+    border-top: 1px solid var(--borderInput-color);
+}
+.project:hover{
+    cursor: pointer;
+    color:var(--primary-color);
+    border-top: 1px solid var(--borderInput-color);
+}
