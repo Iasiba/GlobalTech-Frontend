@@ -6,8 +6,8 @@ const tasks = ({projectId}) => {
   const AllTask = AxiosGetHook('http://localhost:8000/api/v1/tasks')
   const AllTasks = AllTask.data.data?.tasks
   return (
-    <div className='tasks'>
-      <div className="gridHeader">
+    <div>
+      <div className="taskHeader tableHeader">
         <p>Fecha</p>
         <p>Proyecto</p>
         <p>Area</p>

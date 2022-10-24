@@ -28,8 +28,8 @@ const NavBar = () => {
         <p className='title'> {Area} </p>
         <div>
 
-        <i className='Plus bx bx-plus' onClick={() => (dispatch(setVisiblePlusMenu(!PlusMenuVisible)),{/*dispatch(setArea("PlusMenu"))*/})}></i>
-        <i className='bx bx-user pages' onClick={() => (dispatch(setVisibleUserMenu(!UserMenuVisible)),{/* dispatch(setArea("UserMenu"))*/})}></i>
+        <i className='Plus bx bx-plus plus' onClick={() => (dispatch(setVisiblePlusMenu(!PlusMenuVisible)),{/*dispatch(setArea("PlusMenu"))*/})}></i>
+        <i className='bx bx-user pages user' onClick={() => (dispatch(setVisibleUserMenu(!UserMenuVisible)),{/* dispatch(setArea("UserMenu"))*/})}></i>
         </div>
       </div>
       {PlusMenuVisible && <MenuPlus />}

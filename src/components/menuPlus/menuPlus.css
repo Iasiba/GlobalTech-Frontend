@@ -1,9 +1,4 @@
-.bx {
-    color:var(--secondary-color);
-    font-size:24px;
-    background-color: var(--primary-color);
-    border-radius: 50%;
-}
+
 .menuPlus {
     position: fixed;
     right: 10px;

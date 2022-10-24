@@ -1,11 +1,12 @@
 import React from 'react'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
-const deployTask = ({task}) => {
+import Activities from '../activities/activities'
+const deployTask = ({ task }) => {
     const [Visible, setVisible] = useState(false)
+    const [ActivityVisible, setActivityVisible] = useState(false)
     return (
         <>
-            <div onClick={()=>setVisible(!Visible)} className={`task ${task.iscanceled && "canceled"} ${task.isfinished && "finished"}`}>
+            <div onClick={() => setVisible(!Visible)} className={`task tableHover ${task.iscanceled && "canceled"} ${task.isfinished && "finished"}`}>
                 <aside>
                     <p>{task.executionDate}</p>
                 </aside>
@@ -19,7 +20,7 @@ const deployTask = ({task}) => {
                     <p>{task.description}</p>
                 </aside>
             </div>
-            {Visible && <div className='deployTask'>
+            {Visible && <div className='content'>
                 <p>Tarea: {task.description}</p>
                 <p>Proyecto: {task.room.project.name}</p>
                 <p>Area: {task.room.name}</p>
@@ -27,7 +28,10 @@ const deployTask = ({task}) => {
                 <p>Direccion: {task.room.project.address}</p>
                 <p>Coordenadas: {task.room.project.coordinates}</p>
                 <p>Material: {task.material}</p>
-                <p><Link className='activity' to={`/tasks/activity/:${task.id}`}>Actividades </Link> </p>
+                <div className={`subcontent ${ActivityVisible && 'activityGrid'}`}>
+                    <p onClick={() => setActivityVisible(!ActivityVisible)} className={`sub`}>Actividades</p>
+                    {ActivityVisible && <Activities />}
+                </div>
             </div>}
         </>
     )

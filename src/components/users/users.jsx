@@ -6,12 +6,16 @@ const users = () => {
   const Users = AxiosGetHook('http://localhost:8000/api/v1/users')
   const AllUsers = Users.data.data?.users
   return (
-    <div className='tasks' >
-    {  AllUsers && AllUsers?.map(user =>{ 
-          return (<DeployUser key={user.id} user={user}/>)
+    <div>
+      <div className="userHeader tableHeader">
+        <p>Nombre</p>
+        <p>Tarea Asignada</p>
+      </div>
+      {AllUsers && AllUsers?.map(user => {
+        return (<DeployUser key={user.id} user={user} />)
       }
       )}
-  </div>
+    </div>
   )
 }
 
