@@ -92,3 +92,32 @@ img {
   background-color:var(--sub-color);
   align-items: center;
 }
+
+
+.createGrid{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 20% 80%;
+}
+.createCenter{
+  text-align: center;
+  padding: 10px;
+  flex-wrap: wrap;
+  background-color: var(--borderInput-color);
+}
+
+.createGrid > input{
+  border: none;
+  border-radius: 10px;
+}
+.createGrid > input:hover{
+  cursor: text;
+}
+h2{
+  margin:30px 0 ;
+}
+
+

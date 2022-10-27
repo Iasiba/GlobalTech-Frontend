@@ -8,11 +8,11 @@ const menuPlus = () => {
   return (
     visible && <div>
       <div className='menuPlus'>
-        <div><Link to={'/tasks'} >Tarea</Link></div>
-        <div><Link to={'/projects'} >Proyecto</Link></div>
-        <div><Link to={'/inventaries'} >Inventario</Link></div>
-        <div><Link to={'/users'} >Usuario</Link></div>
-        <div><Link to={'/accounts'} >Cuenta</Link></div>
+        <div><Link to={'/newTask'} >Crear Tarea</Link></div>
+        <div><Link to={'/newProject'} >Crear Proyecto</Link></div>
+        <div><Link to={'/newInventary'} >Crear Inventario</Link></div>
+        <div><Link to={'/newUser'} >Crear Usuario</Link></div>
+        <div><Link to={'/newAccount'} >Crear Cuenta</Link></div>
       </div>
     </div>
 

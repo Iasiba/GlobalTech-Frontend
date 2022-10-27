@@ -1,5 +1,6 @@
 
 .menuPlus {
+    width: 170px;
     position: fixed;
     right: 10px;
     top:65px;

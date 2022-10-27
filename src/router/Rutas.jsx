@@ -18,6 +18,7 @@ import Notes from '../components/notes/notes'
 import Rooms from '../components/rooms/rooms'
 import Backups from '../components/backups/backups'
 import Programming from '../components/programming/programming'
+import NewAccount from '../components/accounts/newAccount'
 
 const Rutas = () => {
     return (
@@ -38,6 +39,9 @@ const Rutas = () => {
                 <Route path="/notes" element={<Notes />} />
                 <Route path="/backups" element={<Backups />} />
                 <Route path="/programming" element={<Programming />} />
+
+                <Route path="/newAccount" element={<NewAccount />} />
+
             <Route element={<ProtectedRoutes/>}>
             </Route>
             {/*
