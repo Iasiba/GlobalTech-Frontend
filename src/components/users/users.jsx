@@ -5,6 +5,7 @@ import AxiosGetHook from '../../hooks/axiosGetHook'
 const users = () => {
   const Users = AxiosGetHook('http://localhost:8000/api/v1/users')
   const AllUsers = Users.data.data?.users
+  console.log(AllUsers)
   return (
     <div>
       <div className="userHeader tableHeader">

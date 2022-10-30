@@ -2,9 +2,9 @@ import React from 'react'
 import "./tasks.css"
 import DeployTask from './deployTask'
 import AxiosGetHook from '../../hooks/axiosGetHook'
-const tasks = ({projectId}) => {
-  const AllTask = AxiosGetHook('http://localhost:8000/api/v1/tasks')
-  const AllTasks = AllTask.data.data?.tasks
+const tasks = ({roomId}) => {
+  const Tasks = AxiosGetHook(roomId?`http://localhost:8000/api/v1/rooms/${roomId}/tasks`:'http://localhost:8000/api/v1/tasks')
+  const AllTasks = roomId? Tasks.data?.data:Tasks.data.data?.tasks
   return (
     <div>
       <div className="taskHeader tableHeader">
@@ -14,7 +14,7 @@ const tasks = ({projectId}) => {
         <p>Descripcion</p>
       </div>
       {
-        AllTasks && AllTasks?.map(task =>{ 
+        Tasks && AllTasks?.map(task =>{ 
             return (<DeployTask key={task.id} task={task}/>)
         })
       }

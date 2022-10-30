@@ -2,7 +2,7 @@ import React from 'react'
 import DeployProject from './deployProject'
 import AxiosGetHook from '../../hooks/axiosGetHook'
 const projects = () => {
-  const Projects = AxiosGetHook('http://localhost:8000/api/v1/projects')
+  const Projects = AxiosGetHook('http://localhost:8000/api/v1/projects' )
   const AllProjects = Projects.data.data?.projects
   return (
     <div>

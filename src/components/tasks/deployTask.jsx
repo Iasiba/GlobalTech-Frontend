@@ -30,7 +30,7 @@ const deployTask = ({ task }) => {
                 <p>Material: {task.material}</p>
                 <div className={`subcontent ${ActivityVisible && 'activityGrid'}`}>
                     <p onClick={() => setActivityVisible(!ActivityVisible)} className={`sub`}>Actividades</p>
-                    {ActivityVisible && <Activities />}
+                    {ActivityVisible && <Activities taskId={task.id}/>}
                 </div>
             </div>}
         </>

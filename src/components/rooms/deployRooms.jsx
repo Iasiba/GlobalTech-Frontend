@@ -8,7 +8,7 @@ const deployRooms = ({ room }) => {
             <div onClick={() => setVisible(!Visible)} className="tableHover">
                     <p>{room.name}</p>
             </div>
-            {Visible &&<Tasks/>} 
+            {Visible &&<Tasks roomId={room.id}/>} 
         </>
     )
 }

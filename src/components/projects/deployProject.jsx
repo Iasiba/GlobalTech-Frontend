@@ -28,27 +28,27 @@ const deployProject = ({ project }) => {
         
         <div className={`subcontent ${RoomsVisible && 'activityGrid'}`}>
           <p onClick={() => setRoomsVisible(!RoomsVisible)} className={`sub`}>Habitaciones</p>
-          {RoomsVisible && <Rooms />}
+          {RoomsVisible && <Rooms projectId={project.id}/>}
         </div>
 
         <div className={`subcontent ${AccountsVisible && 'activityGrid'}`}>
           <p onClick={() => setAccountsVisible(!AccountsVisible)} className={`sub`}>Cuentas</p>
-          {AccountsVisible && <Accounts />}
+          {AccountsVisible && <Accounts projectId={project.id}/>}
         </div>
 
         <div className={`subcontent ${MaterialsVisible && 'activityGrid'}`}>
           <p onClick={() => setMaterialsVisible(!MaterialsVisible)} className={`sub`}>Materials</p>
-          {MaterialsVisible && <Materials />}
+          {MaterialsVisible && <Materials projectId={project.id}/>}
         </div>
 
-        <div className={`subcontent ${TasksVisible && 'activityGrid'}`}>
+       {/* <div className={`subcontent ${TasksVisible && 'activityGrid'}`}>
           <p onClick={() => setTasksVisible(!TasksVisible)} className={`sub`}>Tareas</p>
-          {TasksVisible && <Tasks />}
-        </div>
+          {TasksVisible && <Tasks projectId={project.id}/>}
+  </div>*/}
 
         <div className={`subcontent ${BackupsVisible && 'activityGrid'}`}>
           <p onClick={() => setBackupsVisible(!BackupsVisible)} className={`sub`}>Respaldos</p>
-          {BackupsVisible && <Backups />}
+          {BackupsVisible && <Backups projectId={project.id}/>}
         </div>
 
         <p>Propietario: {project.user.firstName}</p>
