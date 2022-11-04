@@ -13,6 +13,7 @@ const menuUser = () => {
   return (
     visible && <div className='menu'>
       <div><Link to={'/'} onClick={() => (dispatch(setArea("Home")))}>Home</Link></div>
+      <div><Link to={'/THome'} onClick={() => (dispatch(setArea("Home")))}>THome</Link></div>
       <div><Link to={'/tasks'} onClick={() => (dispatch(setArea("Tareas")))}>Tareas</Link></div>
       <div><Link to={'/activities'} onClick={() => (dispatch(setArea("Actividades")))}>Actividades</Link></div>
       <div><Link to={'/projects'} onClick={() => (dispatch(setArea("Proyectos")))}>Proyectos</Link></div>

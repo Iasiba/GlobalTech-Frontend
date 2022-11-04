@@ -19,6 +19,13 @@ const deployTask = ({ task }) => {
                 <aside>
                     <p>{task.description}</p>
                 </aside>
+
+                <aside className='_menuTask'>
+                    <i className='bx bx-edit-alt menuTask'></i>
+                    <i className='bx bx-trash menuTask'></i>
+                </aside>
+
+
             </div>
             {Visible && <div className='content'>
                 <p>Tarea: {task.description}</p>
@@ -30,7 +37,7 @@ const deployTask = ({ task }) => {
                 <p>Material: {task.material}</p>
                 <div className={`subcontent ${ActivityVisible && 'activityGrid'}`}>
                     <p onClick={() => setActivityVisible(!ActivityVisible)} className={`sub`}>Actividades</p>
-                    {ActivityVisible && <Activities taskId={task.id}/>}
+                    {ActivityVisible && <Activities taskId={task.id} />}
                 </div>
             </div>}
         </>

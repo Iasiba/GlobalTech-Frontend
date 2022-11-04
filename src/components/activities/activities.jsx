@@ -5,7 +5,6 @@ import AxiosGetHook from '../../hooks/axiosGetHook'
 const activities = ({taskId}) => {
     const AllActivity = AxiosGetHook(taskId?`http://localhost:8000/api/v1/tasks/${taskId}/activities`:'http://localhost:8000/api/v1/activities')
     const AllActivities = taskId? AllActivity.data?.data:AllActivity.data.data?.activities
-
     return (
         <div>
             <div className='activitiesHeader tableHeader'>

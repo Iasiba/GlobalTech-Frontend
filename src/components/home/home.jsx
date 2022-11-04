@@ -8,14 +8,13 @@ const HomeScreen = () => {
   return (
     <div className='home'>
       <p>Pendientes</p>
-      <Tasks />
+      <Tasks home={"home"}/>
       <p>Actividades</p>
-      <Activities/>
+      <Activities />
       <p>Materiales Faltantes</p>
       <Materials />
       <p>Notas</p>
       <Notes />
-      
     </div>
   )
 }

@@ -2,20 +2,20 @@ import React from 'react'
 import './backups.css'
 import DeployBackups from './deployBackups'
 import AxiosGetHook from '../../hooks/axiosGetHook'
-const backups = () => {
-  const backup = AxiosGetHook('http://localhost:8000/api/v1/backups')
-  const AllBackups = backup.data.data?.backups
+const backups = ({ projectId }) => {
+  const AllBackups = AxiosGetHook(projectId ? `http://localhost:8000/api/v1/projects/${projectId}/backups` : `http://localhost:8000/api/v1/backups`)
+  const Backups = projectId ? AllBackups.data?.data : AllBackups.data.data?.backups
   return (
     <div>
-      <div className="backupGrid tableHeader">
+      {Backups && <div className="backupGrid tableHeader">
         <p>Software</p>
         <p>Nombre</p>
         <p>Creador</p>
         <p>Descarga</p>
-      </div>
+      </div>}
       {
-        AllBackups && AllBackups?.map(backup =>{ 
-            return (<DeployBackups key={backup.id} backup={backup}/>)
+        Backups && Backups?.map(backup => {
+          return (<DeployBackups key={backup.id} backup={backup} />)
         })
       }
     </div>

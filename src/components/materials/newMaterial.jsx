@@ -9,7 +9,7 @@ import './materials.css'
 const newMaterial = () => {
     const Projects = AxiosGetHook('http://localhost:8000/api/v1/projects')
     const AllProjects = Projects.data.data?.projects
-    const [projectName, setProjectName] = useState('')
+    const [projectName, setProjectName] = useState('--Selecciona un Proyecto--')
     const [Project, setProject] = useState('')
     const [ProjectId, setProjectId] = useState('')
     const [ProjectListVisible, setProjectListVisible] = useState(false)
@@ -67,7 +67,7 @@ const newMaterial = () => {
 
             <div className='createGrid'>
                 <div>Inventario:</div>
-                <input type="text" onClick={() => setInventoryListVisible(!InventoryListVisible)} placeholder='Selecciona un inventario' value={InventoryName} {...register('inventoryName')} />
+                <input type="text" onClick={() => setInventoryListVisible(!InventoryListVisible)} placeholder='--Selecciona un inventario--' value={InventoryName} {...register('inventoryName')} />
             </div>
             <div className='createGrid'>
                 <div></div>
@@ -87,7 +87,7 @@ const newMaterial = () => {
 
             <div className='createGrid'>
                 <div>Proyecto:</div>
-                <input type="text" onClick={() => setProjectListVisible(!ProjectListVisible)} placeholder='Ej. La Cima' value={projectName} {...register('projectName')} />
+                <input type="text" onClick={() => setProjectListVisible(!ProjectListVisible)} placeholder='--Selecciona un Proyecto--' value={projectName} {...register('projectName')} />
             </div>
             <div className='createGrid'>
                 <div></div>

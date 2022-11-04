@@ -43,7 +43,7 @@ const newRoom = () => {
             </div>
             <div className='createGrid'>
                 <div>Proyecto:</div>
-                <input type="text" onClick={() => setProjectListVisible(!ProjectListVisible)} placeholder='Ej. La Cima' value={projectName} {...register('projectName')} />
+                <input type="text" onClick={() => setProjectListVisible(!ProjectListVisible)} placeholder='--Selecciona un Proyecto--' value={projectName} {...register('projectName')} />
             </div>
             <div className='createGrid'>
                 <div></div>
