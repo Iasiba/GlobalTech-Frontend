@@ -1,14 +1,28 @@
 import React from 'react'
 import DeployInventary from './deployInventary'
-import AxiosGetHook from '../../hooks/axiosGetHook'
+import axios from 'axios'
+import getConfig from '../../utils/getConfig'
+import { useState } from 'react'
+import { useEffect } from 'react'
 const inventaries = () => {
-  const AllInventary = AxiosGetHook('http://localhost:8000/api/v1/inventories')
-  const AllInventaries = AllInventary.data.data?.inventory
+  const [AllInventaries, setAllInventaries] = useState('')
+  useEffect(() => searchInventary(), [])
+
+  function searchInventary() {
+    axios.get('http://localhost:8000/api/v1/inventories', getConfig())
+      .then(res => (setAllInventaries(res.data.inventory)))
+  }
   return (
     <div>
       {
         AllInventaries && AllInventaries?.map(inventary => {
-          return (<DeployInventary key={inventary.id} inventary={inventary} />)
+          return (
+            <DeployInventary
+              key={inventary.id}
+              inventary={inventary}
+              searchInventary={searchInventary}
+            />
+          )
         })
       }
     </div>

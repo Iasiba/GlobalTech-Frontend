@@ -1,24 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import "./tasks.css"
 import DeployTask from './deployTask'
-import AxiosGetHook from '../../hooks/axiosGetHook'
 import axios from 'axios'
 import getConfig from '../../utils/getConfig'
-const tasks = ({ roomId, home }) => {
+const tasks = ({ roomId, home, myhome }) => {
   const [AllTasks, setAllTasks] = useState('')
   const [Home, setHome] = useState('')
+  useEffect(() => searchTasks(), [])
 
-  useEffect(() => {
-    let url = 'http://localhost:8000/api/v1/tasks'
-    if (roomId) {
-      url = `http://localhost:8000/api/v1/rooms/${roomId}/tasks`
-    }
+  function searchTasks() {
+    let url = 'http://localhost:8000/api/v1/tasks'// home y otras opciones
+    if (roomId) url = `http://localhost:8000/api/v1/rooms/${roomId}/tasks`
+    if (myhome) url = 'http://localhost:8000/api/v1/users/me/tasks'
     axios.get(url, getConfig())
       .then(res => {
-        console.log(res.data.tasks, home, roomId)
-        setAllTasks(roomId ? res.data : res.data.tasks)
+        if (res.data?.tasks) {
+          setAllTasks(res.data?.tasks)
+        } else {
+          setAllTasks(res.data)
+        }
       })
-  }, [])
+  }
 
   useEffect(() => {
     for (let i = 0; i < AllTasks?.length; i++) {
@@ -41,6 +43,7 @@ const tasks = ({ roomId, home }) => {
       setHome(home)
     }
   }, [AllTasks])
+
   return (
     <div>
       <div className="taskHeader tableHeader">
@@ -51,7 +54,12 @@ const tasks = ({ roomId, home }) => {
       </div>
       {
         AllTasks && AllTasks?.map(task => {
-          return (<DeployTask key={task.id} task={task} />)
+          return (
+            <DeployTask
+              key={task.id}
+              task={task}
+              searchTasks={searchTasks}
+            />)
         })
       }
     </div>

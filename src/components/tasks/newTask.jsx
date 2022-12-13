@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
-import axios from 'axios'
 import AxiosGetHook from '../../hooks/axiosGetHook'
-import '../../App.css'
 import './tasks'
+import '../../App.css'
+import axios from 'axios'
 import getConfig from '../../utils/getConfig'
+import { Link, useNavigate } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { setItem } from '../../store/slices/ItemSlice'
 const newTask = () => {
+    const dispatch = useDispatch()
+    const Task = useSelector(state => state.Item)
+
     const Projects = AxiosGetHook('http://localhost:8000/api/v1/projects')
     const AllProjects = Projects.data.data?.projects
     const [projectName, setProjectName] = useState('')
@@ -25,36 +30,41 @@ const newTask = () => {
             .then(res => setRooms(res.data))
             .catch(err => console.log(err))
     }, [Project])
-
-
-    const [IsCanceled, setIsCanceled] = useState(false)
-    const [IsFinished, setIsFinished] = useState(false)
+    if (Task.id) {
+        useEffect(() => {
+            setRoom(Task.room)
+            setRoomName(Task.room.name)
+            setProject(Task.room.project)
+            setProjectName(Task.room.project.name)
+        }, [Task])//en caso de editar tareas
+    }
 
     const { handleSubmit, reset, register } = useForm()
     const navigate = useNavigate()
 
     const submit = data => {
         data.roomId = Room.id
-        data.isfinished=IsFinished
-        data.iscanceled=IsCanceled
-        const URL = `http://localhost:8000/api/v1/rooms/${Room.id}/tasks`
-        axios.post(URL, data, getConfig())
-            .then(res => {
-                console.log(res, "Tarea Creada")
-            })
-            .catch(err => console.log(err))
-        /*reset({
-            email: '',
-            password: ''
-        })*/
+        Task.id ?
+            axios.put(`http://localhost:8000/api/v1/tasks/${Task.id}`, data, getConfig())
+                .then(res => {
+                    console.log(res, "Tarea Actualizada")
+                })
+                .catch(err => console.log(err))
+                .finally(dispatch(setItem(false), navigate('/tasks')))
+            :
+            axios.post(`http://localhost:8000/api/v1/rooms/${Room.id}/tasks`, data, getConfig())
+                .then(res => {
+                    console.log(res, "Tarea Creada")
+                })
+                .catch(err => console.log(err))
     }
 
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter' >
-            <h2>Nueva Tarea</h2>
+            <h2>{Task.id?'Editar Tarea':'Nueva Tarea'}</h2>
             <div className='createGrid'>
                 <div>Fecha de ejecucion:</div>
-                <input type="date" placeholder='2022/05/31' {...register('executionDate')} />
+                <input type="date" defaultValue={Task.id && Task.executionDate} placeholder='2022/05/31' {...register('executionDate')} />
             </div>
             <div className='createGrid'>
                 <div>Proyecto:</div>
@@ -87,28 +97,32 @@ const newTask = () => {
             </div>
             <div className='createGrid'>
                 <p>Descripcion:</p>
-                <input type="text" placeholder='Ej.Montar Tv Terraza ' {...register('description')} />
+                <input type="text" defaultValue={Task.id ? Task.description : ''} placeholder='Ej.Montar Tv Terraza ' {...register('description')} />
             </div>
             <div className='createGrid'>
                 <p>Observacion:</p>
-                <input type="text" placeholder='Ej. se entrego a cliente' {...register('observation')} />
+                <input type="text" defaultValue={Task.id ? Task.observation : ''} placeholder='Ej. se entrego a cliente' {...register('observation')} />
             </div>
             <div className='createGrid'>
                 <p>Material:</p>
-                <input type="text" placeholder='Ej. cables, conectores' {...register('material')} />
+                <input type="text" defaultValue={Task.id ? Task.material : ''} placeholder='Ej. cables, conectores' {...register('material')} />
             </div>
-            <div className='createGrid'>
-                <p>Finalizado:</p>
-                <input type="checkbox" checked={IsFinished} onClick={() => {setIsFinished(!IsFinished)}}{...register('isfinished')} />
+
+            <div className='checks'>
+                <aside className='check'>
+                    <input type="checkbox" defaultChecked={Task.id && Task.isfinished} {...register('isfinished')} />
+                    <div>Finalizado:</div>
+                </aside>
+                <aside className='check'>
+                    <input type="checkbox" defaultChecked={Task.id && Task.iscanceled}  {...register('iscanceled')} />
+                    <div>Cancelado:</div>
+                </aside>
             </div>
-            <div className='createGrid'>
-                <div>Cancelado:</div>
-                <input type="checkbox" checked={IsCanceled} onClick={() => {setIsCanceled(!IsCanceled)}} {...register('iscanceled')} />
-            </div>
+
             <br />
-            <button>Crear</button>
+            <button>{Task.id ? 'Actualizar' : 'Crear'}</button>
         </form>
     )
 }
-
+/*<Link to={'/tasks'}>{'Crear'}</Link> */
 export default newTask

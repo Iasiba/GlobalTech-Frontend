@@ -7,7 +7,7 @@ const backups = ({ projectId }) => {
   const Backups = projectId ? AllBackups.data?.data : AllBackups.data.data?.backups
   return (
     <div>
-      {Backups && <div className="backupGrid tableHeader">
+      {Backups&&<div className="backupGrid tableHeader">
         <p>Software</p>
         <p>Nombre</p>
         <p>Creador</p>

@@ -5,9 +5,9 @@
 }
 
 .task {
-    width: 100%;
+    width: 96%;
     display: grid;
-    grid-template-columns: 24% 24% 24% 24% 4%;
+    grid-template-columns: 25% 25% 25% 25%;
 }
 
 .canceled {
@@ -21,16 +21,4 @@
 .activityGrid{
     display: grid;
     grid-template-columns: 25% 75%;
-}
-
-.menuTask{
-    color:black
-}
-.menuTask:hover{
- 
-    color:var(--primary-color)
-}
-._menuTask{
-    display: flex;
-    flex-direction: column;
 }

@@ -1,5 +1,31 @@
 .materialsHeader{
     width: 100%;
     display: grid;
-    grid-template-columns: 33% 33% 33%;
+    grid-template-columns: 32% 32% 32% 4%;
+}
+.materialsBody{
+    width: 96%;
+    display: grid;
+    grid-template-columns: 33% 33% 33% ;
+}
+.materialMenuOptions{
+    padding: 0px 10px;
+    background-color: var(--backgroundList-color);
+    width: max-content;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+    box-shadow: 0 0 20px var(--backgroundList-color);
+
+    position:absolute;
+    right: 100%;
+    /*
+        
+        width: 80px;
+        */
+}
+.materialItemsWidth{
+    width: 77px;
 }

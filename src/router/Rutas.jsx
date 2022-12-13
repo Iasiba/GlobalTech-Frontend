@@ -28,7 +28,9 @@ import NewNote from '../components/notes/newNote'
 import NewActivity from '../components/activities/newActivity'
 import NewRole from '../components/role/newRole'
 import NewUser from '../components/users/newUser'
-import TechnicalHome from '../components/home/technicalHome'
+import MyHome from '../components/home/MyHome'
+import AssignTask from '../components/tasks/assignTask'
+import UserList from '../components/users/userList'
 const Rutas = () => {
     return (
         <Routes>
@@ -58,7 +60,9 @@ const Rutas = () => {
             <Route path='/newActivity' element={<NewActivity />} />
             <Route path='/newRole' element={<NewRole />} />
             <Route path='/newUser' element={<NewUser />} />
-            <Route path='/THome' element={<TechnicalHome />} />
+            <Route path='/myHome' element={<MyHome />} />
+            <Route path='/userList' element={<UserList />} />
+            <Route path='/assignTask' element={<AssignTask />} />
 
             <Route element={<ProtectedRoutes />}>
             </Route>

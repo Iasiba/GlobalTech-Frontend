@@ -1,31 +1,60 @@
 import React from 'react'
+import axios from 'axios'
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
+import UserList from '../users/userList'
+import getConfig from '../../utils/getConfig'
+import { useDispatch } from 'react-redux'
+import { setItem } from '../../store/slices/ItemSlice'
 import Activities from '../activities/activities'
-const deployTask = ({ task }) => {
+const deployTask = ({ task, searchTasks }) => {
+    const dispatch = useDispatch()
+    const [MenuVisible, setMenuVisible] = useState(false)
+    const [UserListVisible, setUserListVisible] = useState(false)
     const [Visible, setVisible] = useState(false)
     const [ActivityVisible, setActivityVisible] = useState(false)
     return (
         <>
-            <div onClick={() => setVisible(!Visible)} className={`task tableHover ${task.iscanceled && "canceled"} ${task.isfinished && "finished"}`}>
-                <aside>
-                    <p>{task.executionDate}</p>
-                </aside>
-                <aside>
-                    <p>{task.room.project.name}</p>
-                </aside>
-                <aside>
-                    <p>{task.room.name}</p>
-                </aside>
-                <aside>
-                    <p>{task.description}</p>
-                </aside>
+            <div className='deploy'>
+                <div onClick={() => setVisible(!Visible)} className={`task tableHover ${task.iscanceled && "canceled"} ${task.isfinished && "finished"}`}>
+                    <aside>
+                        <p>{task.executionDate}</p>
+                    </aside>
+                    <aside>
+                        <p>{task.room.project.name}</p>
+                    </aside>
+                    <aside>
+                        <p>{task.room.name}</p>
+                    </aside>
+                    <aside>
+                        <p>{task.description}</p>
+                    </aside>
 
-                <aside className='_menuTask'>
-                    <i className='bx bx-edit-alt menuTask'></i>
-                    <i className='bx bx-trash menuTask'></i>
-                </aside>
-
-
+                </div>
+                <aside className='threePoints' onClick={() => setMenuVisible(!MenuVisible)} ><p>...</p></aside>
+                {
+                    MenuVisible
+                    &&
+                    <div className='itemList itemListPrimary '>
+                        <p className='items materialItemsWidth' onClick={() => setUserListVisible(!UserListVisible)}>Asignar</p>
+                        <p className='items materialItemsWidth' onClick={() => dispatch(setItem(task))}><Link to={'/newTask'}  >Editar</Link></p>
+                        <p className='items materialItemsWidth' onClick={() => ((
+                            axios.delete(`http://localhost:8000/api/v1/tasks/${task.id}/activities`, getConfig()),
+                            axios.delete(`http://localhost:8000/api/v1/tasks/${task.id}`, getConfig())
+                            .then(searchTasks()),
+                            setMenuVisible(!MenuVisible)))
+                        }>Eliminar</p>
+                    </div>
+                }
+                {
+                    UserListVisible
+                    &&
+                    <UserList
+                        task={task}
+                        menuvisible={MenuVisible} setmenuvisible={setMenuVisible}
+                        userlistvisible={UserListVisible} setuserlistvisible={setUserListVisible}
+                    />
+                }
             </div>
             {Visible && <div className='content'>
                 <p>Tarea: {task.description}</p>

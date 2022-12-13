@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react'
-import getConfig from '../../utils/getConfig'
-import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
-import axios from 'axios'
+import './materials.css'
 import AxiosGetHook from '../../hooks/axiosGetHook'
 import '../../App.css'
-import './materials.css'
+import axios from 'axios'
+import getConfig from '../../utils/getConfig'
+import { Link, useNavigate } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { setItem } from '../../store/slices/ItemSlice'
 const newMaterial = () => {
+    const dispatch = useDispatch()
+    const Material = useSelector(state => state.Item)
+
     const Projects = AxiosGetHook('http://localhost:8000/api/v1/projects')
     const AllProjects = Projects.data.data?.projects
     const [projectName, setProjectName] = useState('--Selecciona un Proyecto--')
@@ -27,43 +32,36 @@ const newMaterial = () => {
     useEffect(() => { setProjectId(Project.id) }, [Project])
     useEffect(() => { setInventoryId(Inventory.id) }, [Inventory])
 
+    if (Material.id) useEffect(() => { setInventoryName(Material.inventory.name), setInventory(Material.inventory), setProjectName(Material.project.name), setProject(Material.project) }, [Material])//en caso de editar materiales
     const submit = data => {
         data.projectId = ProjectId
-        data.inventoryId=InventoryId
+        data.inventoryId = InventoryId
+        const URL = Material.id ? `http://localhost:8000/api/v1/materials/${Material.id}` : `http://localhost:8000/api/v1/inventories/${InventoryId}/materials`
 
-        const URL = `http://localhost:8000/api/v1/inventories/${InventoryId}/materials`
-        axios.post(URL, data, getConfig())
-            .then(res => {
-                console.log(res, "Material creado")
-            })
-            .catch(err => console.log(err))
+        Material.id ?
+            axios.put(URL, data, getConfig())
+                .then(res => {
+                    console.log(res, "Material Actualizado")
+                })
+                .catch(err => console.log(err))
+                .finally(() => dispatch(setItem(false)), navigate('/materials'))
+            :
+            axios.post(URL, data, getConfig())
+                .then(res => {
+                    console.log(res, "Material creado")
+                })
+                .catch(err => console.log(err))
+
         /*reset({
             email: '',
             password: ''
         })*/
+        navigate('/materials')
     }
+    // 
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter' >
-            <h2>Nuevo Material</h2>
-            <div className='createGrid'>
-                <p>Nombre:</p>
-                <input type="text" placeholder='Ej. Sonos Amp' {...register('name')} />
-            </div>
-            <div className='createGrid'>
-                <p>Cantidad:</p>
-                <input type="number" placeholder='0-1000' {...register('amount')} />
-            </div>
-            <div className='createGrid'>
-                <p>En espera:</p>
-                <input type="text" placeholder='default: no' {...register('onHold')} />
-            </div>
-            <div className='createGrid'>
-                <p>Retornado:</p>
-                <input type="text" placeholder='default: no' {...register('returned')} />
-            </div>
-
-
-
+            {Material.id ? <h2>Editar Material</h2> : <h2>Nuevo Material</h2>}
 
             <div className='createGrid'>
                 <div>Inventario:</div>
@@ -81,10 +79,6 @@ const newMaterial = () => {
                 </div>
             </div>
 
-
-
-
-
             <div className='createGrid'>
                 <div>Proyecto:</div>
                 <input type="text" onClick={() => setProjectListVisible(!ProjectListVisible)} placeholder='--Selecciona un Proyecto--' value={projectName} {...register('projectName')} />
@@ -100,8 +94,41 @@ const newMaterial = () => {
                     }
                 </div>
             </div>
+
+
+            <div className='createGrid'>
+                <p>Material:</p>
+                <input type="text" defaultValue={Material.id ? Material.name : 'Ej. Sonos Amp'}{...register('name')} />
+            </div>
+            <div className='createGrid'>
+                <p>Cantidad:</p>
+                <input type="number" defaultValue={Material.id ? Material.amount : 0} {...register('amount')} />
+            </div>
+
+
+
+
+
+            <div className='checks'>
+                <aside className='check'>
+                    <input type="checkbox" defaultChecked={Material.id ? Material.onHold : false}{...register('onHold')} />
+                    <div>En espera:</div>
+                </aside>
+                <aside className='check'>
+                    <input type="checkbox" defaultChecked={Material.id ? Material.onHold : false}{...register('installed')} />
+                    <div>Instalado:</div>
+                </aside>
+                <aside className='check'>
+                    <input type="checkbox" defaultChecked={Material.id ? Material.onHold : false}{...register('returned')} />
+                    <div>Devuelto:</div>
+                </aside>
+                <aside className='check'>
+                    <input type="checkbox" defaultChecked={Material.id ? Material.onHold : false}{...register('damaged')} />
+                    <div>Dañado:</div>
+                </aside>
+            </div>
             <br />
-            <button>Crear</button>
+            <button>{Material.id ? 'Actualizar' : 'Crear'}</button>
         </form>
     )
 }

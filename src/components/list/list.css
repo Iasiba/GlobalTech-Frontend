@@ -1,0 +1,68 @@
+.itemList{
+    padding: 10px;
+    background-color: var(--backgroundList-color);
+    width: max-content;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    border-radius: 10px;
+    box-shadow: 0 0 20px var(--backgroundList-color);
+}
+.itemListPrimary{
+    right: 36px;
+}
+.itemListSecondary{
+    right: 140px;
+}
+@media (max-width: 600px) {
+    .itemListPrimary{
+        right: 23px;
+    }
+    .itemListSecondary{
+        right: 130px;
+    }
+}
+.items{
+    display: flex;
+    box-shadow: 0 0 1px var(--secondary-color);
+    padding: 0 10px;
+    margin:2px 0px;
+    border-radius: 5px;
+    color:var(--textlist-color);
+    background-color: var(--selectlist-color);
+    justify-content: space-between;
+}
+.itemsWidth{
+    width: 250px;
+}
+.items:hover{
+    background-color: var(--sub-color);
+    box-shadow: none;
+    cursor: pointer;
+    color: var(--secondary-color);
+}
+
+.selectbackground{
+    background-color: var(--backgroundList-color);
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 2px white;
+}
+.select{
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    box-shadow: 0 0 2px white;
+}
+.select:hover{
+    background-color: var(--select-color);
+}
+.selection{
+    background-color: var(--select-color);
+}

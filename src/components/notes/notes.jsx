@@ -1,19 +1,24 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './notes.css'
 import DeployNotes from './deployNotes'
-import AxiosGetHook from '../../hooks/axiosGetHook'
+import axios from 'axios'
+import getConfig from '../../utils/getConfig'
 const notes = () => {
-  const Notes = AxiosGetHook('http://localhost:8000/api/v1/notes')
-  const AllNotes = Notes.data.data?.notes
+  const [AllNotes, setAllNotes] = useState('')
+  useEffect(() => {
+    axios.get('http://localhost:8000/api/v1/users/me/notes', getConfig())
+      .then((res) =>setAllNotes(res.data))
+  }, [])
+
   return (
     <div>
       <div className='noteGrid tableHeader'>
         <p>Titulo</p>
-        <p>Apunte</p>
+        <p>Nota</p>
       </div>
       {
         AllNotes && AllNotes?.map(note => {
-          return (<DeployNotes key={note.id} note={note} />)
+          return (<DeployNotes key={note.id} note={note} setAllNotes={setAllNotes} />)
         }
         )}
     </div>

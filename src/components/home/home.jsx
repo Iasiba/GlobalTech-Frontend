@@ -10,9 +10,9 @@ const HomeScreen = () => {
       <p>Pendientes</p>
       <Tasks home={"home"}/>
       <p>Actividades</p>
-      <Activities />
+      <Activities home={"home"} />
       <p>Materiales Faltantes</p>
-      <Materials />
+      <Materials home={"home"}/>
       <p>Notas</p>
       <Notes />
     </div>

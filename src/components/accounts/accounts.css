@@ -1,8 +1,12 @@
+.accountBody {
+    width: 96%;
+}
+
 input {
     border: none;
 }
 
-.list{
+.list {
     display: flex;
     flex-direction: column;
     width: min-content;
@@ -10,7 +14,8 @@ input {
     margin: 1px auto;
     border-radius: 3px;
 }
-.list:hover{
+
+.list:hover {
     box-shadow: 0 0 2px var(--secondary-color);
     z-index: 2;
 }
