@@ -9,7 +9,7 @@ import './users.css'
 const newUser = () => {
     const Roles = AxiosGetHook('http://localhost:8000/api/v1/roles')
     const AllRoles = Roles.data.data?.roles
-    console.log(AllRoles)
+
     const [RoleName, setRoleName] = useState('')
     const [Role, setRole] = useState('')
     const [RoleId, setRoleId] = useState('')
@@ -23,17 +23,12 @@ const newUser = () => {
 
     const submit = data => {
         data.roleId = RoleId
-console.log(data)
         const URL = `http://localhost:8000/api/v1/auth/register`
         axios.post(URL, data, getConfig())
             .then(res => {
                 console.log(res, "Usuario creado")
             })
             .catch(err => console.log(err))
-        /*reset({
-            email: '',
-            password: ''
-        })*/
     }
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter' >

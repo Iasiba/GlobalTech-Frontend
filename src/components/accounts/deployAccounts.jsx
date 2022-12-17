@@ -22,7 +22,7 @@ const deployAccounts = ({ account, searchAccounts }) => {
                     MenuVisible
                     &&
                     <div className='itemList itemListPrimary '>
-                        <p className='items materialItemsWidth' onClick={() => dispatch(setItem(account))}><Link to={'/accounts'}  >Editar</Link></p>
+                        <p className='items materialItemsWidth' onClick={() => dispatch(setItem(account))}><Link to={'/newAccount'}  >Editar</Link></p>
                         <p className='items materialItemsWidth' onClick={() => ((
                             axios.delete(`http://localhost:8000/api/v1/accounts/${account.id}`, getConfig())
                                 .then(searchAccounts()),

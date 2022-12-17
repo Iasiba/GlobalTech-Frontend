@@ -37,5 +37,4 @@ const deployNotes = ({ note, setAllNotes }) => {
         </>
     )
 }
-
 export default deployNotes

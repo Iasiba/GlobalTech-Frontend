@@ -49,13 +49,13 @@ const deployProject = ({ project, searchProjects }) => {
         <div className={`subcontent ${InfoVisible && 'activityGrid'}`}>
           <p onClick={() => setInfoVisible(!InfoVisible)} className={`sub`}>Informacion</p>
           {InfoVisible && <div className='info'>
-            <p>Pais: {project.country}</p>
-            <p>Ciudad: {project.city}</p>
-            <p>Direction: {project.address}</p>
-            <p>Referencias: {project.reference}</p>
-            <p>Coordenadas: {project.coordinates}</p>
-            <p>Planos: {`${project.plane}`}</p>
-            <p>Propietario: {project.user.firstName}</p>
+            <p><b>Pais:</b>  {project.country}</p>
+            <p><b>Ciudad:</b> {project.city}</p>
+            <p><b>Direction:</b> {project.address}</p>
+            <p><b>Referencias:</b> {project.reference}</p>
+            <p><b>Coordenadas:</b> {project.coordinates}</p>
+            <p><b>Planos:</b> <a href={`${project.plane}`}>{`${project.plane}`}</a></p>
+            <p><b>Propietario:</b> {project.user.firstName}</p>
           </div>}
         </div>
 

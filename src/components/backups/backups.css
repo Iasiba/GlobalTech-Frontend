@@ -1,11 +1,15 @@
 .backupGrid{
     width: 100%;
     display: grid;
-    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-columns: 24% 24% 24% 24% 4%;
     text-align: center;
     justify-content: center;
 }
-
-a{
-    padding:5%;
+.backupBody{
+    width: 96%;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    grid-template-columns: 25% 25% 25% 25%;
 }

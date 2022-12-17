@@ -18,13 +18,8 @@
     align-items: center;
     border-radius: 10px;
     box-shadow: 0 0 20px var(--backgroundList-color);
-
     position:absolute;
     right: 100%;
-    /*
-        
-        width: 80px;
-        */
 }
 .materialItemsWidth{
     width: 77px;

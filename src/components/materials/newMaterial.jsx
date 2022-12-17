@@ -14,7 +14,7 @@ const newMaterial = () => {
 
     const Projects = AxiosGetHook('http://localhost:8000/api/v1/projects')
     const AllProjects = Projects.data.data?.projects
-    const [projectName, setProjectName] = useState('--Selecciona un Proyecto--')
+    const [projectName, setProjectName] = useState('')
     const [Project, setProject] = useState('')
     const [ProjectId, setProjectId] = useState('')
     const [ProjectListVisible, setProjectListVisible] = useState(false)
@@ -81,14 +81,30 @@ const newMaterial = () => {
 
             <div className='createGrid'>
                 <div>Proyecto:</div>
-                <input type="text" onClick={() => setProjectListVisible(!ProjectListVisible)} placeholder='--Selecciona un Proyecto--' value={projectName} {...register('projectName')} />
+                <input type="text"
+                    onClick={() => setProjectListVisible(!ProjectListVisible)}
+                    placeholder='--Selecciona un Proyecto--'
+                    /*defaultValue={Material.id && Material.project.name}*/
+                    value={projectName}
+                    {...register('projectName')}
+                />
             </div>
             <div className='createGrid'>
                 <div></div>
                 <div>
                     {
                         ProjectListVisible && AllProjects && AllProjects?.map(project => {
-                            return (<p className='tableHeader tableHover list' onClick={() => { setProjectName(project.name), setProject(project), setProjectListVisible(!ProjectListVisible) }} key={project.id}>{project.name}</p>)
+                            return (
+                                <p className='tableHeader tableHover list'
+                                    onClick={
+                                        () => {
+                                            setProjectName(project.name),
+                                            setProject(project),
+                                            setProjectListVisible(!ProjectListVisible)
+                                        }
+                                    }
+                                    key={project.id}
+                                >{project.name}</p>)
                         }
                         )
                     }
@@ -98,11 +114,11 @@ const newMaterial = () => {
 
             <div className='createGrid'>
                 <p>Material:</p>
-                <input type="text" defaultValue={Material.id ? Material.name : 'Ej. Sonos Amp'}{...register('name')} />
+                <input type="text" defaultValue={Material.id && Material.name} placeholder='HDMI' {...register('name')} />
             </div>
             <div className='createGrid'>
                 <p>Cantidad:</p>
-                <input type="number" defaultValue={Material.id ? Material.amount : 0} {...register('amount')} />
+                <input type="number" defaultValue={Material.id && Material.amount} placeholder='0-1000'  {...register('amount')} />
             </div>
 
 

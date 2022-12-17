@@ -48,7 +48,7 @@ const newRoom = () => {
     }
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter' >
-            <h2>{Room.id ? 'Editar Ambiente' : 'Nuevo Ambiente'}</h2>
+            <h2>{Room.id ? 'Editar Area' : 'Nueva Area'}</h2>
             <div className='createGrid'>
                 <p>Nombre:</p>
                 <input type="text" defaultValue={Room.id && Room.name} placeholder='Ej. Cocina' {...register('name')} />
