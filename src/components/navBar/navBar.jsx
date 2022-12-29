@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './navBar.css'
 import logo from '../../assets/Logo.jpg'
 import { useSelector, useDispatch } from 'react-redux'
@@ -11,14 +11,17 @@ const NavBar = () => {
   let UserMenuVisible = useSelector(state => state.UserMenu)
   let PlusMenuVisible = useSelector(state => state.PlusMenu)
   let Area = useSelector(state => state.Area)
+
+  const [Menu, setMenu] = useState(false)
+
   return (
     < >
       <div className='navBar'>
         <img src={logo} alt="" className='logo' />
         <p className='title'> {Area} </p>
-        <div>
-          <div className='menu-btn'>
-
+        <div className='black'>
+          <div className={`menu-btn ${Menu && 'open'}`} onClick={() => setMenu(!Menu)}>
+            <div className='menu-btn__burger'></div>
           </div>
           <div className='Menu' onClick={() => (dispatch(setVisibleUserMenu(!UserMenuVisible)), dispatch(setVisiblePlusMenu(false)))}>
             <div className='wire rotateI'></div>
