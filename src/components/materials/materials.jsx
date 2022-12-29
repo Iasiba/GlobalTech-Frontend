@@ -5,7 +5,6 @@ import axios from 'axios'
 import getConfig from '../../utils/getConfig'
 const materials = ({ projectId, myhome, home, materials }) => {
   const [Materials, setMaterials] = useState('')
-
   useEffect(() => {
     if (materials) {
       setMaterials(materials)

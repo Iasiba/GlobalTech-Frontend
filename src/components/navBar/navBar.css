@@ -1,14 +1,56 @@
-.user, .plus{
+.menu-btn{
+    background-color: blue;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    height: 80px;
+    cursor: pointer;
+    transition: all .5s ease-in-out;
+    border: 3px solid #fff;
+}
+
+
+
+
+
+.rotateI{
+    transform: rotate(50deg);
+}
+.rotateD{
+    transform: rotate(-50deg);
+}
+.wiremargin{
+    margin: 5px 0;
+}
+.wire{
+    background-color: var(--secondary-color);
+    width: 27px;
+    height: 4px;
+}
+.Menu{
+    padding: 10px;
+    position: fixed;
+    left: 5px;
+    top: 10px;
+}
+.Menu, .plus{
     color: var(--secondary-color);
     font-size: 40px;
-    margin: 0 20px;
     background-color: var(--primary-color);
-    border-radius: 50%;
+    margin: 0 20px;
 }
-.user:hover, .plus:hover{
+.Menu:hover, .plus:hover{
     color: var(--primary-color);
     background-color: var(--borderInput-color);
     cursor: pointer;
+}
+.plus{
+    position: fixed;
+    right: 5px;
+    top: 60px;
+    border-radius: 50%;
 }
 .navBar{
     position: sticky;
@@ -17,7 +59,6 @@
     height: 60px;
     width: 100%;
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-between;
     padding-left: 5%;
     padding-right: 5%;
