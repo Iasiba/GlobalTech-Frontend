@@ -1,13 +1,15 @@
 import axios from 'axios'
 import React from 'react'
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { setItem } from '../../store/slices/ItemSlice'
 import getConfig from '../../utils/getConfig'
 import './backups.css'
+import { setVisibleBackup } from './../../store/slices/NewsVisibleSlice'
 const deployBackups = ({ backup, search }) => {
   const dispatch = useDispatch()
+  const NewBackupVisible = useSelector(state => state.NewsVisible)[7]
   const [MenuVisible, setMenuVisible] = useState(false)
   return (
     <>
@@ -26,7 +28,7 @@ const deployBackups = ({ backup, search }) => {
           MenuVisible
           &&
           <div className='itemList itemListPrimary '>
-            <p className='items materialItemsWidth' onClick={() => dispatch(setItem(backup))}><Link to={'/newBackup'}>Editar</Link></p>
+            <p className='items materialItemsWidth' onClick={() => {dispatch(setItem(backup)),dispatch(setVisibleBackup(!NewBackupVisible)),setMenuVisible(!MenuVisible)}}>Editar</p>
             <p className='items materialItemsWidth' onClick={() => ((
               axios.delete(`http://localhost:8000/api/v1/backups/${backup.id}`, getConfig())
                 .then(search()),

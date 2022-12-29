@@ -3,12 +3,14 @@ import { useState } from 'react'
 import './activities.css'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setItem } from '../../store/slices/ItemSlice'
 import getConfig from '../../utils/getConfig'
+import { setVisibleActivity } from './../../store/slices/NewsVisibleSlice'
 const deployActivities = ({ activity, searcActivities }) => {
-  const [Visible, setVisible] = useState(false)
   const dispatch = useDispatch()
+  const NewActivityVisible = useSelector(state => state.NewsVisible)[3]
+  const [Visible, setVisible] = useState(false)
   const [MenuVisible, setMenuVisible] = useState(false)
   return (
     <>
@@ -24,7 +26,7 @@ const deployActivities = ({ activity, searcActivities }) => {
           MenuVisible
           &&
           <div className='itemList itemListPrimary '>
-            <p className='items materialItemsWidth' onClick={() => dispatch(setItem(activity))}><Link to={'/newActivity'}  >Editar</Link></p>
+            <p className='items materialItemsWidth' onClick={() => {dispatch(setItem(activity)),dispatch(setVisibleActivity(!NewActivityVisible)),setMenuVisible(!MenuVisible)}}>Editar</p>
             <p className='items materialItemsWidth' onClick={() => ((
               axios.delete(`http://localhost:8000/api/v1/activities/${activity.id}`, getConfig())
                 .then(searcActivities()),

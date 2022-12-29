@@ -7,9 +7,9 @@ import '../../App.css'
 import './projects.css'
 import { setItem } from '../../store/slices/ItemSlice'
 import { useDispatch, useSelector } from 'react-redux'
-
+import { setVisibleProject } from './../../store/slices/NewsVisibleSlice'
 const newProject = () => {
-
+    const NewProjectVisible = useSelector(state => state.NewsVisible)[0]
     const Project = useSelector(state => state.Item)
     const { handleSubmit, reset, register } = useForm()
     const dispatch = useDispatch()
@@ -24,7 +24,6 @@ const newProject = () => {
                 .catch(err => console.log(err))
                 .finally(
                     dispatch(setItem(false)),
-                    navigate('/projects')
                 )
             :
             axios.post(`http://localhost:8000/api/v1/projects`, data, getConfig())
@@ -32,20 +31,18 @@ const newProject = () => {
                     console.log(res, "Proyecto creado")
                 })
                 .catch(err => console.log(err))
-                .finally(
-                    navigate('/projects')
-                )
+        dispatch(setVisibleProject(!NewProjectVisible))//ocultar ventana de creacion de projectos
     }
     return (
-        <form onSubmit={handleSubmit(submit)} className='createCenter' >
+        <form onSubmit={handleSubmit(submit)} className='createCenter newProject new' >
             <h2>{Project.id ? 'Editar Proyecto' : 'Nuevo Proyecto'}</h2>
             <div className='createGrid'>
                 <p>Nombre:</p>
-                <input type="text" defaultValue={Project.id && Project.name} placeholder='Ej. Vasconcelos' {...register('name')} />
+                <input type="text" defaultValue={Project.id && Project.name} placeholder='Ej. Global' {...register('name')} />
             </div>
             <div className='createGrid'>
                 <p>Direccion:</p>
-                <input type="text" defaultValue={Project.id && Project.address} placeholder='Ej. calle matamorros' {...register('address')} />
+                <input type="text" defaultValue={Project.id && Project.address} placeholder='Ej. calle matamorros # 503' {...register('address')} />
             </div>
             <div className='createGrid'>
                 <p>Plano:</p>

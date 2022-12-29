@@ -35,7 +35,7 @@ const materials = ({ projectId, myhome, home, materials }) => {
       })
   }
   return (
-    <div>
+    <div >
       <div className="materialsHeader taskHeader tableHeader">
         <p>Material</p>
         <p>Cantidad</p>

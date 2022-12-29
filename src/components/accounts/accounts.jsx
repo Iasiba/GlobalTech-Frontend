@@ -22,7 +22,7 @@ const accounts = ({ projectId }) => {
       )
   }
   return (
-    <div>
+    <div >
       {
         Accounts && Accounts?.map(account => {
           return (

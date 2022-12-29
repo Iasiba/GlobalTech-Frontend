@@ -4,11 +4,13 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import UserList from '../users/userList'
 import getConfig from '../../utils/getConfig'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setItem } from '../../store/slices/ItemSlice'
 import Activities from '../activities/activities'
+import { setVisibleTask } from './../../store/slices/NewsVisibleSlice'
 const deployTask = ({ task, searchTasks }) => {
     const dispatch = useDispatch()
+    const NewTaskVisible = useSelector(state => state.NewsVisible)[2]
     const [MenuVisible, setMenuVisible] = useState(false)
     const [UserListVisible, setUserListVisible] = useState(false)
     const [Visible, setVisible] = useState(false)
@@ -37,7 +39,7 @@ const deployTask = ({ task, searchTasks }) => {
                     &&
                     <div className='itemList itemListPrimary '>
                         <p className='items materialItemsWidth' onClick={() => setUserListVisible(!UserListVisible)}>Asignar</p>
-                        <p className='items materialItemsWidth' onClick={() => dispatch(setItem(task))}><Link to={'/newTask'}  >Editar</Link></p>
+                        <p className='items materialItemsWidth' onClick={() => {dispatch(setItem(task)),dispatch(setVisibleTask(!NewTaskVisible)),setMenuVisible(!MenuVisible)}}>Editar</p>
                         <p className='items materialItemsWidth' onClick={() => ((
                             axios.delete(`http://localhost:8000/api/v1/tasks/${task.id}/activities`, getConfig()),
                             axios.delete(`http://localhost:8000/api/v1/tasks/${task.id}`, getConfig())

@@ -8,9 +8,12 @@ import './inventaries.css'
 import { useSelector } from 'react-redux'
 import { setItem } from '../../store/slices/ItemSlice'
 import { useDispatch } from 'react-redux'
+import { setVisibleInventary } from './../../store/slices/NewsVisibleSlice'
 const newInventary = () => {
     const dispatch = useDispatch()
     const Inventary = useSelector(state => state.Item)
+    const NewInventaryVisible = useSelector(state => state.NewsVisible)[5]
+
     const { handleSubmit, reset, register } = useForm()
     const navigate = useNavigate()
 
@@ -23,8 +26,7 @@ const newInventary = () => {
                 })
                 .catch(err => console.log(err))
                 .finally(
-                    dispatch(setItem(false)),
-                    navigate('/inventaries')
+                    dispatch(setItem(false))
                 )
             :
             axios.post(`http://localhost:8000/api/v1/inventories`, data, getConfig())
@@ -32,12 +34,10 @@ const newInventary = () => {
                     console.log(res, "Inventario creado")
                 })
                 .catch(err => console.log(err))
-                .finally(
-                    navigate('/inventaries')
-                )
+        dispatch(setVisibleInventary(!NewInventaryVisible))//ocultar ventana de creacion de inventarios
     }
     return (
-        <form onSubmit={handleSubmit(submit)} className='createCenter' >
+        <form onSubmit={handleSubmit(submit)} className='createCenter new' >
             <h2>{Inventary.id ? 'Editar Inventario' : 'Nuevo Inventario'}</h2>
             <div className='createGrid'>
                 <p>Nombre:</p>

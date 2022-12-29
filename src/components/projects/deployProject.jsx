@@ -6,13 +6,16 @@ import Accounts from '../accounts/accounts'
 import Materials from '../materials/materials'
 import Tasks from '../tasks/tasks'
 import { Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setItem } from '../../store/slices/ItemSlice'
 import axios from 'axios'
 import getConfig from '../../utils/getConfig'
 import Backups from '../backups/backups'
+import { setVisibleProject } from './../../store/slices/NewsVisibleSlice'
 const deployProject = ({ project, searchProjects }) => {
   const dispatch = useDispatch()
+  const NewProjectVisible = useSelector(state => state.NewsVisible)[0]
+
   const [Visible, setVisible] = useState(false)
   const [RoomsVisible, setRoomsVisible] = useState(false)
   const [AccountsVisible, setAccountsVisible] = useState(false)
@@ -32,7 +35,7 @@ const deployProject = ({ project, searchProjects }) => {
           MenuVisible
           &&
           <div className='itemList itemListPrimary '>
-            <p className='items materialItemsWidth' onClick={() => dispatch(setItem(project))}><Link to={'/newProject'}  >Editar</Link></p>
+            <p className='items materialItemsWidth' onClick={() => {dispatch(setItem(project)),dispatch(setVisibleProject(true)),setMenuVisible(!MenuVisible)}}>Editar</p>
             <p className='items materialItemsWidth' onClick={() => ((
               axios.delete(`http://localhost:8000/api/v1/projects/${project.id}`, getConfig())
                 .then(searchProjects(),

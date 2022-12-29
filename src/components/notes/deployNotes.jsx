@@ -4,11 +4,13 @@ import '../../App.css'
 import './notes.css'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setItem } from '../../store/slices/ItemSlice'
 import getConfig from '../../utils/getConfig'
+import { setVisibleNote } from './../../store/slices/NewsVisibleSlice'
 const deployNotes = ({ note, setAllNotes }) => {
     const dispatch = useDispatch()
+    const NewNoteVisible = useSelector(state => state.NewsVisible)[8]
     const [MenuVisible, setMenuVisible] = useState(false)
     return (
         <>
@@ -22,7 +24,7 @@ const deployNotes = ({ note, setAllNotes }) => {
                     MenuVisible
                     &&
                     <div className='itemList itemListPrimary '>
-                        <p className='items materialItemsWidth' onClick={() => dispatch(setItem(note))}><Link to={'/newNote'}  >Editar</Link></p>
+                        <p className='items materialItemsWidth' onClick={() => {dispatch(setItem(note)),dispatch(setVisibleNote(!NewNoteVisible)),setMenuVisible(!MenuVisible)}}>Editar</p>
                         <p className='items materialItemsWidth' onClick={() => ((
                             axios.delete(`http://localhost:8000/api/v1/notes/${note.id}`, getConfig())
                                 .then(

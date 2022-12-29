@@ -6,7 +6,7 @@ const programming = () => {
   const programing = AxiosGetHook('http://localhost:8000/api/v1/programmings')
   const AllProgrammings = programing.data.data?.programmingGuide
   return (
-    <div>
+    <div className='contentDeploy'>
       <div className="backupGrid tableHeader">
         <p>Nombre</p>
         <p>Manual</p>

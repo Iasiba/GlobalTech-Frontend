@@ -45,7 +45,7 @@ const tasks = ({ roomId, home, myhome }) => {
   }, [AllTasks])
 
   return (
-    <div>
+    <div className='contentDeploy'>
       <div className="taskHeader tableHeader">
         <p>Fecha</p>
         <p>Proyecto</p>

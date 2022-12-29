@@ -8,7 +8,9 @@ import getConfig from '../../utils/getConfig'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { setItem } from '../../store/slices/ItemSlice'
+import { setVisibleTask } from './../../store/slices/NewsVisibleSlice'
 const newTask = () => {
+    const NewTaskVisible = useSelector(state => state.NewsVisible)[2]
     const dispatch = useDispatch()
     const Task = useSelector(state => state.Item)
 
@@ -51,18 +53,19 @@ const newTask = () => {
                     console.log(res, "Tarea Actualizada")
                 })
                 .catch(err => console.log(err))
-                .finally(dispatch(setItem(false), navigate('/tasks')))
+                .finally(dispatch(setItem(false)))
             :
             axios.post(`http://localhost:8000/api/v1/rooms/${Room.id}/tasks`, data, getConfig())
                 .then(res => {
                     console.log(res, "Tarea Creada")
                 })
                 .catch(err => console.log(err))
+        dispatch(setVisibleTask(!NewTaskVisible))//ocultar ventana de creacion de Tareas
     }
 
     return (
-        <form onSubmit={handleSubmit(submit)} className='createCenter' >
-            <h2>{Task.id?'Editar Tarea':'Nueva Tarea'}</h2>
+        <form onSubmit={handleSubmit(submit)} className='createCenter new' >
+            <h2>{Task.id ? 'Editar Tarea' : 'Nueva Tarea'}</h2>
             <div className='createGrid'>
                 <div>Fecha de ejecucion:</div>
                 <input type="date" defaultValue={Task.id && Task.executionDate} placeholder='2022/05/31' {...register('executionDate')} />

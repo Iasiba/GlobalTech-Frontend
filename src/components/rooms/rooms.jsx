@@ -21,7 +21,7 @@ const rooms = ({ projectId }) => {
             })
     }
     return (
-        <div>
+        <div >
             {
                 Rooms && Rooms?.map(room => {
                     return (

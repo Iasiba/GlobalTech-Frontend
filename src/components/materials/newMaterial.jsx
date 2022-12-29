@@ -8,9 +8,11 @@ import getConfig from '../../utils/getConfig'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { setItem } from '../../store/slices/ItemSlice'
+import { setVisibleMaterial } from './../../store/slices/NewsVisibleSlice'
 const newMaterial = () => {
     const dispatch = useDispatch()
     const Material = useSelector(state => state.Item)
+    const NewMaterialVisible = useSelector(state => state.NewsVisible)[6]
 
     const Projects = AxiosGetHook('http://localhost:8000/api/v1/projects')
     const AllProjects = Projects.data.data?.projects
@@ -44,23 +46,18 @@ const newMaterial = () => {
                     console.log(res, "Material Actualizado")
                 })
                 .catch(err => console.log(err))
-                .finally(() => dispatch(setItem(false)), navigate('/materials'))
+                .finally(() => dispatch(setItem(false)))
             :
             axios.post(URL, data, getConfig())
                 .then(res => {
                     console.log(res, "Material creado")
                 })
                 .catch(err => console.log(err))
-
-        /*reset({
-            email: '',
-            password: ''
-        })*/
-        navigate('/materials')
+        dispatch(setVisibleMaterial(!NewMaterialVisible))//ocultar ventana de creacion de materiales
     }
     // 
     return (
-        <form onSubmit={handleSubmit(submit)} className='createCenter' >
+        <form onSubmit={handleSubmit(submit)} className='createCenter new' >
             {Material.id ? <h2>Editar Material</h2> : <h2>Nuevo Material</h2>}
 
             <div className='createGrid'>
@@ -142,7 +139,14 @@ const newMaterial = () => {
                     <input type="checkbox" defaultChecked={Material.id ? Material.onHold : false}{...register('damaged')} />
                     <div>Dañado:</div>
                 </aside>
+                <aside className='check'>
+                    <input type="checkbox" defaultChecked={Material.id ? Material.onHold : false}{...register('damaged')} />
+                    <div>Entregado:</div>
+                </aside>
             </div>
+                {Material.id&&<div>
+                    {`${'Recibido por:'}`}
+                </div>}
             <br />
             <button>{Material.id ? 'Actualizar' : 'Crear'}</button>
         </form>

@@ -8,9 +8,11 @@ import '../../App.css'
 import './activities.css'
 import { useSelector, useDispatch } from 'react-redux'
 import { setItem } from '../../store/slices/ItemSlice'
+import { setVisibleActivity } from './../../store/slices/NewsVisibleSlice'
 const newActivity = () => {
     const dispatch = useDispatch()
     const Activity = useSelector(state => state.Item)
+    const NewActivityVisible = useSelector(state => state.NewsVisible)[3]
 
     const Tasks = AxiosGetHook('http://localhost:8000/api/v1/tasks')
     const AllTasks = Tasks.data.data?.tasks
@@ -27,8 +29,6 @@ const newActivity = () => {
     if (Activity.id) useEffect(() => { setTask(Activity.task) }, [Activity])//en caso de editar materiales
 
     const submit = data => {
-        console.log(Activity)
-
         data.taskId = Task.id
         console.log(data)
         const URL = Activity.id ? `http://localhost:8000/api/v1/activities/${Activity.id}` : `http://localhost:8000/api/v1/tasks/${TaskId}/activities`
@@ -38,31 +38,28 @@ const newActivity = () => {
                     console.log(res, "Activiad Actualizada")
                 })
                 .catch(err => console.log(err))
-                .finally(dispatch(setItem(false)), navigate('/activities'))
+                .finally(dispatch(setItem(false)))
             :
             axios.post(URL, data, getConfig())
                 .then(res => {
                     console.log(res, "Actividad creada")
                 })
                 .catch(err => console.log(err))
-        /*reset({
-            email: '',
-            password: ''
-        })*/
+        dispatch(setVisibleActivity(!NewActivityVisible))//ocultar ventana de creacion de actividades
     }
     return (
-        <form onSubmit={handleSubmit(submit)} className='createCenter' >
+        <form onSubmit={handleSubmit(submit)} className='createCenter new' >
             <h2>{Activity.id ? 'Editar Actividad' : 'Nueva Actividad'}</h2>
             <div className='createGrid'>
                 <p>Descripcion:</p>
-                <input type="text" defaultValue={Activity.id ? Activity.description : 'Ej. Sonos Amp'} placeholder='Ej. cablee 5 nodos en cocina' {...register('description')} />
+                <input type="text" defaultValue={Activity.id && Activity.description} placeholder='Ej. cablee 5 nodos en cocina' {...register('description')} />
             </div>
             <div className='createGrid'>
                 <div>Tarea:</div>
                 <input type="text"
                     onClick={() => setTaskListVisible(!TaskListVisible)}
                     placeholder='--selecciona una tarea--'
-                    value={Task.description?Task.description:''}
+                    value={Task.description ? Task.description : ''}
                     {...register('taskDescription')} />
             </div>
 

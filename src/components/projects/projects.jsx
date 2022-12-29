@@ -13,7 +13,7 @@ const projects = () => {
       .then(res => setAllProjects(res.data.projects))
   }
   return (
-    <div>
+    <div className='contentDeploy'>
       {
         AllProjects && AllProjects?.map(project => {
           return (

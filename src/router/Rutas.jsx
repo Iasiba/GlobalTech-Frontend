@@ -34,23 +34,26 @@ import NewBackup from '../components/backups/newBackup'
 const Rutas = () => {
     return (
         <Routes>
+            <Route path='/login' element={<Login />} />
             <Route path="/" element={<HomeScreen />} />
+            <Route path='/myHome' element={<MyHome />} />
             <Route path="/userMenu" element={<MenuUser />} />
+            <Route path="/plusMenu" element={<MenuPlus />} />
+            <Route path="/myAccount" element={<MyAccount />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/Rooms" element={<Rooms />} />
             <Route path="/tasks" element={<Tasks />} />
             <Route path="/activities" element={<Activities />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/materials" element={<Materials />} />
             <Route path="/inventaries" element={<Inventaries />} />
-            <Route path="/users" element={<Users />} />
-            <Route path="/myAccount" element={<MyAccount />} />
-            <Route path="/plusMenu" element={<MenuPlus />} />
+            <Route path="/materials" element={<Materials />} />
             <Route path="/accounts" element={<Accounts />} />
-            <Route path="/Rooms" element={<Rooms />} />
-            <Route path="/notes" element={<Notes />} />
             <Route path="/backups" element={<Backups />} />
+            <Route path="/notes" element={<Notes />} />
+            <Route path="/users" element={<Users />} />
+            <Route path='/userList' element={<UserList />} />
             <Route path="/programming" element={<Programming />} />
+           { /*
             <Route path="/newAccount" element={<NewAccount />} />
-            <Route path='/login' element={<Login />} />
             <Route path='/newProject' element={<NewProject />} />
             <Route path='/newRoom' element={<NewRoom />} />
             <Route path='/newTask' element={<NewTask />} />
@@ -60,10 +63,8 @@ const Rutas = () => {
             <Route path='/newActivity' element={<NewActivity />} />
             <Route path='/newRole' element={<NewRole />} />
             <Route path='/newUser' element={<NewUser />} />
-            <Route path='/myHome' element={<MyHome />} />
-            <Route path='/userList' element={<UserList />} />
             <Route path='/newBackup' element={<NewBackup />} />
-
+*/}
             <Route element={<ProtectedRoutes />}>
             </Route>
             {/*

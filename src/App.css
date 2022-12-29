@@ -59,10 +59,11 @@ img {
 }
 
 .App {
-  min-height: 100vh;
+  width: 100%;
   display: flex;
+  justify-content: center;
   flex-direction: column;
-
+  align-items: center;
 }
 
 .main {
@@ -117,6 +118,18 @@ img {
 }
 
 
+.createCenter {
+  width: 400px;
+  max-height: 99vh;
+  /********************/
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+/***************************/
+  text-align: center;
+  padding: 10px;
+  flex-wrap: wrap;
+  background-color: var(--borderInput-color);
+}
 .createGrid {
   width: 100%;
   display: grid;
@@ -124,19 +137,12 @@ img {
   justify-content: center;
   align-items: center;
 }
-
-.createCenter {
-  text-align: center;
-  padding: 10px;
-  flex-wrap: wrap;
-  background-color: var(--borderInput-color);
-}
-
 .createGrid>input {
+  height: auto;/********/
+  width: 80%;
   border: none;
   border-radius: 5px;
 }
-
 .createGrid>input:hover {
   cursor: text;
 }
@@ -164,6 +170,7 @@ h2 {
 .threePoints {
   width: 4%;
   color: var(--secondary-color);
+  z-index: 0;
 }
 
 .threePoints:hover {
@@ -197,3 +204,34 @@ input {
   box-shadow: 0 0 2px var(--secondary-color);
   z-index: 2;
 }
+/*para las ventanas de creacion*/
+.new{
+  border-radius: 2%;
+  margin: 0  auto;
+  box-shadow: 0 0 20px black;
+}
+.News{
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top:0px;/*60px;*/
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.overlay::after{
+  width: 100%;
+  content: " dceerferf";
+  background-color: rgb(9, 6, 50);
+  background-size: cover;
+  position: fixed;
+  top: 0;
+  inset: 0;
+  opacity: 0.3;
+}
+.contentDeploy{
+  width: 100vw;
+}
+

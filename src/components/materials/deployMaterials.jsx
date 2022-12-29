@@ -5,10 +5,12 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import UserList from '../users/userList'
 import getConfig from '../../utils/getConfig'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setItem } from '../../store/slices/ItemSlice'
+import { setVisibleMaterial } from './../../store/slices/NewsVisibleSlice'
 const deployMaterials = ({ material, searchMaterials }) => {
   const dispatch = useDispatch()
+  const NewMaterialVisible = useSelector(state => state.NewsVisible)[6]
   const [Visible, setVisible] = useState(false)
   const [MenuVisible, setMenuVisible] = useState(false)
   const [UserListVisible, setUserListVisible] = useState(false)
@@ -26,7 +28,7 @@ const deployMaterials = ({ material, searchMaterials }) => {
           &&
           <div className='itemList itemListPrimary '>
             <p className='items materialItemsWidth' onClick={() => setUserListVisible(!UserListVisible)}>Asignar</p>
-            <p className='items materialItemsWidth' onClick={() => dispatch(setItem(material))}><Link to={'/newMaterial'}  >Editar</Link></p>
+            <p className='items materialItemsWidth' onClick={() => {dispatch(setItem(material)),dispatch(setVisibleMaterial(!NewMaterialVisible)),setMenuVisible(!MenuVisible)}}>Editar</p>
             <p className='items materialItemsWidth'
               onClick={() => ((
                 axios.delete(`http://localhost:8000/api/v1/materials/${material.id}`, getConfig())

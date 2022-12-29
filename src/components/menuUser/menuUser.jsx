@@ -22,14 +22,9 @@ const menuUser = () => {
     {/*<div><Link to={'/plans'} onClick={() => (dispatch(setArea("Planos")))}>Planos</Link></div>
     */}
     <div><Link to={'/inventaries'} onClick={() => (dispatch(setArea("Inventarios")), dispatch(setVisibleUserMenu(!UserMenuVisible)))} >Inventarios</Link></div>
-    <div><Link to={'/materials'} onClick={() => (dispatch(setArea("Materiales")), dispatch(setVisibleUserMenu(!UserMenuVisible)))}>Materiales</Link></div>
     <div><Link to={'/users'} onClick={() => (dispatch(setArea("Usuarios")), dispatch(setVisibleUserMenu(!UserMenuVisible)))}>Usuarios</Link></div>
-    <div><Link to={'/rooms'} onClick={() => (dispatch(setArea("Habitaciones")), dispatch(setVisibleUserMenu(!UserMenuVisible)))}>Habitaciones</Link></div>
-    <div><Link to={'/accounts'} onClick={() => (dispatch(setArea("Cuentas")), dispatch(setVisibleUserMenu(!UserMenuVisible)))}>Cuentas</Link></div>
     <div><Link to={'/myAccount'} onClick={() => (dispatch(setArea("Mi Cuenta")), dispatch(setVisibleUserMenu(!UserMenuVisible)))}>Mi Cuenta</Link></div>
-    <div><Link to={'/notes'} onClick={() => (dispatch(setArea("Notas")), dispatch(setVisibleUserMenu(!UserMenuVisible)))}>Notas</Link></div>
-    <div><Link to={'/backups'} onClick={() => (dispatch(setArea("Respaldos")), dispatch(setVisibleUserMenu(!UserMenuVisible)))}>Respaldos</Link></div>
-    <div><Link to={'/programming'} onClick={() => (dispatch(setArea("Programacion")), dispatch(setVisibleUserMenu(!UserMenuVisible)))}>Programacion</Link></div>
+    <div><Link to={'/programming'} onClick={() => (dispatch(setArea("Programacion")), dispatch(setVisibleUserMenu(!UserMenuVisible)))}>Documentacion</Link></div>
   {/*  
     <div><Link to={'/userList'} onClick={() => (dispatch(setArea("Lista de Usuarios")), dispatch(setVisibleUserMenu(!UserMenuVisible)))}>Lista de Usuarios</Link></div>
   */}

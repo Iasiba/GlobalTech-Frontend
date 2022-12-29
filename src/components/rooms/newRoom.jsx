@@ -8,7 +8,9 @@ import '../../App.css'
 import './rooms.css'
 import { setItem } from '../../store/slices/ItemSlice'
 import { useDispatch, useSelector } from 'react-redux'
+import { setVisibleRoom } from './../../store/slices/NewsVisibleSlice'
 const newRoom = () => {
+    const NewRoomVisible = useSelector(state => state.NewsVisible)[1]
     const dispatch = useDispatch()
     const Room = useSelector(state => state.Item)
 
@@ -21,7 +23,7 @@ const newRoom = () => {
     const { handleSubmit, reset, register } = useForm()
 
     const navigate = useNavigate()
-    if (Room.id) useEffect(() =>setProject(Room.project), [])
+    if (Room.id) useEffect(() => setProject(Room.project), [])
 
     const submit = data => {
         data.projectId = Project.id
@@ -32,8 +34,7 @@ const newRoom = () => {
                 })
                 .catch(err => console.log(err))
                 .finally(
-                    dispatch(setItem(false)),
-                    navigate('/rooms')
+                    dispatch(setItem(false))
                 )
             :
             axios.post(`http://localhost:8000/api/v1/projects/${data.projectId}/rooms`, data, getConfig())
@@ -41,13 +42,10 @@ const newRoom = () => {
                     console.log(res, "Habitacion Creada")
                 })
                 .catch(err => console.log(err))
-                .finally(
-                    navigate('/rooms')
-                )
-
+        dispatch(setVisibleRoom(!NewRoomVisible))//ocultar ventana de creacion de habiaciones
     }
     return (
-        <form onSubmit={handleSubmit(submit)} className='createCenter' >
+        <form onSubmit={handleSubmit(submit)} className='createCenter new' >
             <h2>{Room.id ? 'Editar Area' : 'Nueva Area'}</h2>
             <div className='createGrid'>
                 <p>Nombre:</p>
@@ -55,7 +53,7 @@ const newRoom = () => {
             </div>
             <div className='createGrid'>
                 <div>Proyecto:</div>
-                <input type="text" value={Project&&Project.name} onClick={() => setProjectListVisible(!ProjectListVisible)} placeholder='--Selecciona un Proyecto--'  {...register('projectName')} />
+                <input type="text" value={Project && Project.name} onClick={() => setProjectListVisible(!ProjectListVisible)} placeholder='--Selecciona un Proyecto--'  {...register('projectName')} />
             </div>
             <div className='createGrid'>
                 <div></div>

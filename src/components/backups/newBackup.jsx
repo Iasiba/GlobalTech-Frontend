@@ -8,9 +8,11 @@ import getConfig from '../../utils/getConfig'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { setItem } from '../../store/slices/ItemSlice'
-const newMaterial = () => {
+import { setVisibleBackup } from './../../store/slices/NewsVisibleSlice'
+const newBackup = () => {
     const dispatch = useDispatch()
     const Backup = useSelector(state => state.Item)
+    const NewBackupVisible = useSelector(state => state.NewsVisible)[7]
     const Projects = AxiosGetHook('http://localhost:8000/api/v1/projects')
 
     const AllProjects = Projects.data.data?.projects
@@ -18,10 +20,12 @@ const newMaterial = () => {
     const [Project, setProject] = useState('')
     const [ProjectListVisible, setProjectListVisible] = useState(false)
 
+    const [File, setFile] = useState('')
+
     const { handleSubmit, reset, register } = useForm()
     const navigate = useNavigate()
 
-    if (Backup.id) useEffect(() => { setProject(Backup.project),setProjectName(Backup.project.name) }, [])
+    if (Backup.id) useEffect(() => { setProject(Backup.project), setProjectName(Backup.project.name) }, [])
     const tiempoTranscurrido = Date.now()
     const hoy = new Date(tiempoTranscurrido)
     const today = hoy.toLocaleDateString()
@@ -30,30 +34,39 @@ const newMaterial = () => {
     const day = today.substring(0, 2)
 
     const submit = data => {
+        console.log(File, 'file')
+        const Data = new FormData()
+        Data.append("backups", File)
+
         data.projectId = Project.id
         data.date = year + '/' + month + '/' + day//Today // "2020/06/12"//
         data.name = Project.name + year + month + day + 'V' + data.version
-        data.backup = 'https://www.youtube.com/watch?v=DIexYmyB1zk'
-        const URL = Backup.id ? `http://localhost:8000/api/v1/backups/${Backup.id}` : `http://localhost:8000/api/v1/backups`
-        console.log(data)
+        const URL = Backup.id ?
+            `http://localhost:8000/api/v1/backups/${Backup.id}`
+            :
+            `http://localhost:8000/api/v1/backups`
         Backup.id ?
             axios.put(URL, data, getConfig())
-                .then(res => {
-                    console.log(res, "Respaldo Actualizado")
+                .then(()=> {
+                    axios.post(`http://localhost:8000/api/v1/backups/${Backup.id}`, Data, getConfig())
+                        .then(res => { console.log(res) })
                 })
                 .catch(err => console.log(err))
-                .finally(() => dispatch(setItem(false)), navigate('/backups'))
+                .finally(() => dispatch(setItem(false)))
             :
             axios.post(URL, data, getConfig())
                 .then(res => {
-                    console.log(res, "Respaldo creado")
+                    console.log(res.data.backup.id)
+                    axios.post(`http://localhost:8000/api/v1/backups/${res.data.backup.id}`, Data, getConfig())
+                        .then(res => { console.log(res) })
+
                 })
                 .catch(err => console.log(err))
-                .finally(navigate('/backups'))
+        dispatch(setVisibleBackup(!NewBackupVisible))
     }
-    
+
     return (
-        <form onSubmit={handleSubmit(submit)} className='createCenter' >
+        <form onSubmit={handleSubmit(submit)} className='createCenter new' >
             {Backup.id ? <h2>Editar Respaldo</h2> : <h2>Nuevo Respaldo</h2>}
             <div className='createGrid'>
                 <div>Proyecto:</div>
@@ -63,9 +76,9 @@ const newMaterial = () => {
                     value={projectName}
                     {...register('projectName')}
                 />
-            </div>{/**/}
-             <div className='createGrid'>
-             <div></div>
+            </div>
+            <div className='createGrid'>
+                <div></div>
                 <div>
                     {
                         ProjectListVisible && AllProjects && AllProjects?.map(project => {
@@ -88,17 +101,15 @@ const newMaterial = () => {
             </div>
             <div className='createGrid'>
                 <p>Software:</p>
-                <input type="text" defaultValue={Backup.id && Backup.software } placeholder='Ej. Lutron Homeworks'{...register('software')} />
+                <input type="text" defaultValue={Backup.id && Backup.software} placeholder='Ej. Lutron Homeworks'{...register('software')} />
             </div>
             <div className='createGrid'>
                 <p>Version:</p>
-                <input type='number' defaultValue={Backup.id &&Backup.version} placeholder='Ej. 3.5->35' {...register('version')} />
+                <input type='number' defaultValue={Backup.id && Backup.version} placeholder='Ej. 3.5->35' {...register('version')} />
             </div>
-           
-
             <div className='createGrid'>
                 <p>Respaldo:</p>
-                <input type="file" />
+                <input type="file" onChange={event => setFile(event.target.files[0])} />
             </div>
             <br />
             <button>{Backup.id ? 'Actualizar' : 'Crear'}</button>
@@ -106,4 +117,4 @@ const newMaterial = () => {
     )
 }
 
-export default newMaterial
+export default newBackup

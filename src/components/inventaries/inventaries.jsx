@@ -13,7 +13,7 @@ const inventaries = () => {
       .then(res => (setAllInventaries(res.data.inventory)))
   }
   return (
-    <div>
+    <div className='contentDeploy'>
       {
         AllInventaries && AllInventaries?.map(inventary => {
           return (

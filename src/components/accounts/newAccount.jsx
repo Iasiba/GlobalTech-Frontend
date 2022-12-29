@@ -8,10 +8,11 @@ import '../../App.css'
 import './accounts.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { setItem } from '../../store/slices/ItemSlice'
-
+import { setVisibleAccount } from './../../store/slices/NewsVisibleSlice'
 const newAccount = () => {
     const dispatch = useDispatch()
     const Account = useSelector(state => state.Item)
+    const NewAccountVisible = useSelector(state => state.NewsVisible)[4]
 
     const Projects = AxiosGetHook('http://localhost:8000/api/v1/projects')
     const AllProjects = Projects.data.data?.projects
@@ -24,24 +25,24 @@ const newAccount = () => {
     if (Account.id) useEffect(() => { setProject(Account.project) }, [])
 
     const submit = data => {
-        data.projectId = Project.id //ProjectId
+        data.projectId = Project.id 
         Account.id ?
             axios.put(`http://localhost:8000/api/v1/accounts/${Account.id}`, data, getConfig())
                 .then(res => {
                     console.log(res, "cuenta Actualizada")
                 })
                 .catch(err => console.log(err))
-                .then(dispatch(setItem(false)), navigate('/accounts'))
+                .then(dispatch(setItem(false)))
             :
             axios.post(`http://localhost:8000/api/v1/projects/${data.projectId}/accounts`, data, getConfig())
                 .then(res => {
                     console.log(res, "cuenta creada")
                 })
                 .catch(err => console.log(err))
-                .finally(navigate('/accounts'))
+        dispatch(setVisibleAccount(!NewAccountVisible))//ocultar ventana de creacion de cuentas
     }
     return (
-        <form onSubmit={handleSubmit(submit)} className='createCenter' >
+        <form onSubmit={handleSubmit(submit)} className='createCenter new' >
             <h2>{Account.id ? 'Editar Cuenta' : 'Nueva Cuenta'}</h2>
             <div className='createGrid'>
                 <p>Software:</p>
@@ -49,7 +50,7 @@ const newAccount = () => {
             </div>
             <div className='createGrid'>
                 <p>Direccion Ip:</p>
-                <input type="text" defaultValue={Account.id && Account.directionIp} placeholder='Ej. 0.0.0.0' {...register('directionIp')} />
+                <input type="text" defaultValue={Account.id ? Account.directionIp:'0.0.0.0'} placeholder='Ej. 0.0.0.0' {...register('directionIp')} />
             </div>
             <div className='createGrid'>
                 <p>Propietario:</p>

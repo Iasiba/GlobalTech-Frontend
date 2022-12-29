@@ -22,7 +22,6 @@ const deployUser = ({ user, searchUsers }) => {
           MenuVisible
           &&
           <div className='itemList itemListPrimary '>
-            <p className='items materialItemsWidth' onClick={() => dispatch(setItem(false))}><Link to={'/users'}  >Editar</Link></p>
             <p className='items materialItemsWidth' onClick={() => ((
               axios.delete(`http://localhost:8000/api/v1/users/${user.id}`, getConfig())
                 .then(searchUsers()),

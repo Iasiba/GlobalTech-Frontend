@@ -11,12 +11,15 @@ import PlusMenu from './slices/PlusMenu'
 import Area from './slices/AreaSlice'
 import Item from './slices/ItemSlice'
 import ItemName from './slices/ItemNameSlice'
+import NewsVisible from './slices/NewsVisibleSlice'
 export default configureStore({
     reducer: {
         UserMenu,
         PlusMenu,
         Area,
         Item,
-        ItemName
+        ItemName,
+
+        NewsVisible
     }
 })

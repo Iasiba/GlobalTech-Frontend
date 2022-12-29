@@ -33,7 +33,7 @@ const activities = ({ taskId, myhome, home }) => {
             })
     }
     return (
-        <div>
+        <div className='contentDeploy'>
             <div className='activitiesHeader tableHeader'>
                 <p>Proyecto</p>
                 <p>Description</p>

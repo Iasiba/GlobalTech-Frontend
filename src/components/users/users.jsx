@@ -14,7 +14,7 @@ const users = () => {
       .then(res => setAllUsers(res.data.users))
   }
   return (
-    <div>
+    <div className='contentDeploy'>
       <div className="userHeader tableHeader">
         <p>Nombre</p>
         <p>Tarea Asignada</p>
