@@ -30,8 +30,8 @@ const menuPlus = () => {
   const NewNoteVisible = useSelector(state => state.NewsVisible)[8]
   const NewUserVisible = useSelector(state => state.NewsVisible)[9]
   return (
-    visible && <div>
-      <div className='menuPlus'>
+    /*visible && */<div>
+      <div className={`menuPlus ${visible&&'menuPlusOpen'}`}>
         <div onClick={() => { dispatch(setVisibleProject(!NewProjectVisible), dispatch(setVisiblePlusMenu(!visible))) }} className='menuPlusOptions'>Proyecto</div>
         <div onClick={() => { dispatch(setVisibleRoom(!NewRoomVisible), dispatch(setVisiblePlusMenu(!visible))) }} className='menuPlusOptions'>Area</div>
         <div onClick={() => { dispatch(setVisibleTask(!NewTaskVisible), dispatch(setVisiblePlusMenu(!visible))) }} className='menuPlusOptions'>Tarea</div>

@@ -10,11 +10,11 @@ import { setArea } from '../../store/slices/AreaSlice'
 const menuUser = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  let visible = useSelector(state => state.UserMenu)
+  /**let visible = useSelector(state => state.UserMenu)*/
   let UserMenuVisible = useSelector(state => state.UserMenu)
   //let Area = useSelector(state => state.Area)
   return (
-    visible && <div className='menu'>
+    /*visible && */<div className={`menu ${UserMenuVisible && 'openmenuUser'}`}>
       <div className='menuPlusOptions' onClick={() => (navigate('/'), dispatch(setArea("Home")), dispatch(setVisibleUserMenu(!UserMenuVisible)))}>Home</div>
       <div className='menuPlusOptions' onClick={() => (navigate('/myHome'), dispatch(setArea("MyHome")), dispatch(setVisibleUserMenu(!UserMenuVisible)))}>MyHome</div>
       <div className='menuPlusOptions' onClick={() => (navigate('/projects'), dispatch(setArea("Proyectos")), dispatch(setVisibleUserMenu(!UserMenuVisible)))}>Proyectos</div>

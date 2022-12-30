@@ -1,12 +1,17 @@
-
+.menuPlusOpen{
+    transform: translate(-195px);
+    transition: all .5s ease-in-out;  
+}
 .menuPlus {
     width: 170px;
     position: fixed;
-    right: 60px;
-    top:65px;
+    right: -180px;
+    top:12px;
     font-size: 18px;
     background-color: white;
     z-index: 1;
+    /*transform: translate(180px);*/
+    transition: all .5s ease-in-out;
 }
 .menuPlus>div {
     box-shadow: 1px 1px 5px var(--primary-color);

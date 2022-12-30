@@ -1,10 +1,11 @@
 .menu {
     position: fixed;
-    right: 10px;
-    top:65px;
+    left: -150px;
+    top:10px;
     font-size: 18px;
     background-color: white;
     z-index: 1;
+    transition: all .5s ease-in-out;
 }
 .menu div {
     box-shadow: 1px 1px 5px var(--primary-color);
@@ -18,4 +19,8 @@
 }
 .menu div :hover{
     color: var(--primary-color);
+}
+.openmenuUser{
+    transform: translate(170px);
+    transition: all .5s ease-in-out;
 }

@@ -11,30 +11,18 @@ const NavBar = () => {
   let UserMenuVisible = useSelector(state => state.UserMenu)
   let PlusMenuVisible = useSelector(state => state.PlusMenu)
   let Area = useSelector(state => state.Area)
-
-  const [Menu, setMenu] = useState(false)
-
   return (
     < >
       <div className='navBar'>
-        <img src={logo} alt="" className='logo' />
+        {/*<img src={logo} alt="" className='logo' />*/}
         <p className='title'> {Area} </p>
-        <div className='black'>
-          <div className={`menu-btn ${Menu && 'open'}`} onClick={() => setMenu(!Menu)}>
-            <div className='menu-btn__burger'></div>
-          </div>
-          <div className='Menu' onClick={() => (dispatch(setVisibleUserMenu(!UserMenuVisible)), dispatch(setVisiblePlusMenu(false)))}>
-            <div className='wire rotateI'></div>
-            <div className='wire wiremargin'></div>
-            <div className='wire rotateD'></div>
-          </div>
-          <i className='Plus bx bx-plus plus' onClick={() => (dispatch(setVisiblePlusMenu(!PlusMenuVisible)), dispatch(setVisibleUserMenu(false)), {/*dispatch(setArea("PlusMenu"))*/ })}></i>
-          <i className='bx bx-menu pages vaca' onClick={() => (dispatch(setVisibleUserMenu(!UserMenuVisible)), dispatch(setVisiblePlusMenu(false)), {/* dispatch(setArea("UserMenu"))*/ })}></i>
-          {/*<i class='bx bx-menu'></i> */}
+        <div className={`menu-btn ${UserMenuVisible && 'open'} `} onClick={() => {dispatch(setVisibleUserMenu(!UserMenuVisible)), dispatch(setVisiblePlusMenu(false)) }}>
+          <div className={`menu-btn__burger`}></div>
         </div>
+        <i className={`Plus bx bx-plus plus ${PlusMenuVisible&&'plusOpen'}`} onClick={() => (dispatch(setVisiblePlusMenu(!PlusMenuVisible)), dispatch(setVisibleUserMenu(false)))}></i>
       </div>
-      {PlusMenuVisible && <MenuPlus />}
-      {UserMenuVisible && <MenuUser />}
+      {<MenuPlus />}
+      {<MenuUser />}
     </>
   )
 }
