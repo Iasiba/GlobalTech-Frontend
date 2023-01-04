@@ -29,12 +29,12 @@ const newBackup = () => {
     const tiempoTranscurrido = Date.now()
     const hoy = new Date(tiempoTranscurrido)
     const today = hoy.toLocaleDateString()
-    const year = today.substring(6, 10)
-    const month = today.substring(3, 5)
-    const day = today.substring(0, 2)
+    const date = today.split('/')
+    const year = date[2]
+    const month = date[1]
+    const day = date[0]
 
     const submit = data => {
-        console.log(File, 'file')
         const Data = new FormData()
         Data.append("backups", File)
 
@@ -47,7 +47,7 @@ const newBackup = () => {
             `http://localhost:8000/api/v1/backups`
         Backup.id ?
             axios.put(URL, data, getConfig())
-                .then(()=> {
+                .then(() => {
                     axios.post(`http://localhost:8000/api/v1/backups/${Backup.id}`, Data, getConfig())
                         .then(res => { console.log(res) })
                 })
@@ -63,14 +63,16 @@ const newBackup = () => {
                 })
                 .catch(err => console.log(err))
         dispatch(setVisibleBackup(!NewBackupVisible))
+        navigate('/myhome')
     }
 
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
+            <i className='bx bx-x-circle close' onClick={() => dispatch(setVisibleBackup(!NewBackupVisible))}></i>
             {Backup.id ? <h2>Editar Respaldo</h2> : <h2>Nuevo Respaldo</h2>}
             <div className='createGrid'>
-                <div>Proyecto:</div>
-                <input type="text"
+                <div>* Proyecto:</div>
+                <input type="text" required
                     onClick={() => setProjectListVisible(!ProjectListVisible)}
                     placeholder='--Selecciona un Proyecto--'
                     value={projectName}
@@ -100,15 +102,15 @@ const newBackup = () => {
                 </div>
             </div>
             <div className='createGrid'>
-                <p>Software:</p>
-                <input type="text" defaultValue={Backup.id && Backup.software} placeholder='Ej. Lutron Homeworks'{...register('software')} />
+                <div>* Software:</div>
+                <input type="text" required defaultValue={Backup.id && Backup.software} placeholder='Ej. Lutron Homeworks'{...register('software')} />
             </div>
             <div className='createGrid'>
-                <p>Version:</p>
-                <input type='number' defaultValue={Backup.id && Backup.version} placeholder='Ej. 3.5->35' {...register('version')} />
+                <div>* Version:</div>
+                <input type="number" required /*min="0" max="100" step="0.01"*/ defaultValue={Backup.id && Backup.version} placeholder='Ej. 3.5->35' {...register('version')} />
             </div>
             <div className='createGrid'>
-                <p>Respaldo:</p>
+                <div>Respaldo:</div>
                 <input type="file" onChange={event => setFile(event.target.files[0])} />
             </div>
             <br />

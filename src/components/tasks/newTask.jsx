@@ -65,14 +65,15 @@ const newTask = () => {
 
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
+            <i className='bx bx-x-circle close' onClick={() => dispatch(setVisibleTask(!NewTaskVisible))}></i>
             <h2>{Task.id ? 'Editar Tarea' : 'Nueva Tarea'}</h2>
             <div className='createGrid'>
-                <div>Fecha de ejecucion:</div>
-                <input type="date" defaultValue={Task.id && Task.executionDate} placeholder='2022/05/31' {...register('executionDate')} />
+                <div>* Fecha de ejecucion:</div>
+                <input type="date" required defaultValue={Task.id && Task.executionDate} placeholder='2022/05/31' {...register('executionDate')} />
             </div>
             <div className='createGrid'>
-                <div>Proyecto:</div>
-                <input type="text" onClick={() => setProjectListVisible(!ProjectListVisible)} placeholder='--Selecciona un Proyecto--' value={projectName} {...register('projectName')} />
+                <div>* Proyecto:</div>
+                <input type="text" required onClick={() => setProjectListVisible(!ProjectListVisible)} placeholder='--Selecciona un Proyecto--' value={projectName} {...register('projectName')} />
             </div>
             <div className='createGrid'>
                 <div></div>
@@ -85,8 +86,8 @@ const newTask = () => {
                 </div>
             </div>
             <div className='createGrid'>
-                <div>Habitacion:</div>
-                <input type="text" onClick={() => { setRoomListVisible(!RoomListVisible) }} placeholder='--Selecciona una Habitacion--' value={RoomName} {...register('roomName')} />
+                <div>* Habitacion:</div>
+                <input type="text" required onClick={() => { setRoomListVisible(!RoomListVisible) }} placeholder='--Selecciona una Habitacion--' value={RoomName} {...register('roomName')} />
             </div>
             <div className='createGrid'>
                 <div></div>
@@ -100,15 +101,15 @@ const newTask = () => {
                 </div>
             </div>
             <div className='createGrid'>
-                <p>Descripcion:</p>
-                <input type="text" defaultValue={Task.id ? Task.description : ''} placeholder='Ej.Montar Tv Terraza ' {...register('description')} />
+                <div>* Descripcion:</div>
+                <input type="text" required defaultValue={Task.id ? Task.description : ''} placeholder='Ej.Montar Tv Terraza ' {...register('description')} />
             </div>
             <div className='createGrid'>
-                <p>Observacion:</p>
+                <div>Observacion:</div>
                 <input type="text" defaultValue={Task.id ? Task.observation : ''} placeholder='Ej. se entrego a cliente' {...register('observation')} />
             </div>
             <div className='createGrid'>
-                <p>Material:</p>
+                <div>Material:</div>
                 <input type="text" defaultValue={Task.id ? Task.material : ''} placeholder='Ej. cables, conectores' {...register('material')} />
             </div>
 

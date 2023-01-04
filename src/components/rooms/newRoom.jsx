@@ -24,7 +24,6 @@ const newRoom = () => {
 
     const navigate = useNavigate()
     if (Room.id) useEffect(() => setProject(Room.project), [])
-
     const submit = data => {
         data.projectId = Project.id
         Room.id ?
@@ -46,14 +45,15 @@ const newRoom = () => {
     }
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
+            <i className='bx bx-x-circle close' onClick={() => dispatch(setVisibleRoom(!NewRoomVisible))}></i>
             <h2>{Room.id ? 'Editar Area' : 'Nueva Area'}</h2>
             <div className='createGrid'>
-                <p>Nombre:</p>
-                <input type="text" defaultValue={Room.id && Room.name} placeholder='Ej. Cocina' {...register('name')} />
+                <div>* Nombre:</div>
+                <input type="text" required defaultValue={Room.id && Room.name} placeholder='Ej. Cocina' {...register('name')} />
             </div>
             <div className='createGrid'>
-                <div>Proyecto:</div>
-                <input type="text" value={Project && Project.name} onClick={() => setProjectListVisible(!ProjectListVisible)} placeholder='--Selecciona un Proyecto--'  {...register('projectName')} />
+                <div>* Proyecto:</div>
+                <input type="text" required value={Project && Project.name} onClick={() => setProjectListVisible(!ProjectListVisible)} placeholder='--Selecciona un Proyecto--'  {...register('projectName')} />
             </div>
             <div className='createGrid'>
                 <div></div>

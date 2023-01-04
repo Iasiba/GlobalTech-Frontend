@@ -6,7 +6,6 @@ import getConfig from '../../utils/getConfig'
 const activities = ({ taskId, myhome, home }) => {
     const [AllActivity, setAllActivity] = useState('')
     useEffect(() => searcActivities(), [])
-
     function searcActivities() {
         let url = 'http://localhost:8000/api/v1/activities'//!home && !myhome && !taskId
         if (home) url = 'http://localhost:8000/api/v1/activities'

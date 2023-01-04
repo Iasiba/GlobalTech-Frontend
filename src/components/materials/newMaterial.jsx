@@ -58,11 +58,12 @@ const newMaterial = () => {
     // 
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
+            <i className='bx bx-x-circle close' onClick={() => dispatch(setVisibleMaterial (!NewMaterialVisible))}></i>
             {Material.id ? <h2>Editar Material</h2> : <h2>Nuevo Material</h2>}
 
             <div className='createGrid'>
-                <div>Inventario:</div>
-                <input type="text" onClick={() => setInventoryListVisible(!InventoryListVisible)} placeholder='--Selecciona un inventario--' value={InventoryName} {...register('inventoryName')} />
+                <div>* Inventario:</div>
+                <input type="text" required onClick={() => setInventoryListVisible(!InventoryListVisible)} placeholder='--Selecciona un inventario--' value={InventoryName} {...register('inventoryName')} />
             </div>
             <div className='createGrid'>
                 <div></div>
@@ -77,8 +78,8 @@ const newMaterial = () => {
             </div>
 
             <div className='createGrid'>
-                <div>Proyecto:</div>
-                <input type="text"
+                <div>* Proyecto:</div>
+                <input type="text" required
                     onClick={() => setProjectListVisible(!ProjectListVisible)}
                     placeholder='--Selecciona un Proyecto--'
                     /*defaultValue={Material.id && Material.project.name}*/
@@ -96,8 +97,8 @@ const newMaterial = () => {
                                     onClick={
                                         () => {
                                             setProjectName(project.name),
-                                            setProject(project),
-                                            setProjectListVisible(!ProjectListVisible)
+                                                setProject(project),
+                                                setProjectListVisible(!ProjectListVisible)
                                         }
                                     }
                                     key={project.id}
@@ -110,12 +111,12 @@ const newMaterial = () => {
 
 
             <div className='createGrid'>
-                <p>Material:</p>
-                <input type="text" defaultValue={Material.id && Material.name} placeholder='HDMI' {...register('name')} />
+                <div>* Material:</div>
+                <input type="text" required defaultValue={Material.id && Material.name} placeholder='Ej. Conectores, Bocinas' {...register('name')} />
             </div>
             <div className='createGrid'>
-                <p>Cantidad:</p>
-                <input type="number" defaultValue={Material.id && Material.amount} placeholder='0-1000'  {...register('amount')} />
+                <div>* Cantidad:</div>
+                <input type="number" required defaultValue={Material.id && Material.amount} placeholder='0-1000'  {...register('amount')} />
             </div>
 
 
@@ -125,28 +126,28 @@ const newMaterial = () => {
             <div className='checks'>
                 <aside className='check'>
                     <input type="checkbox" defaultChecked={Material.id ? Material.onHold : false}{...register('onHold')} />
-                    <div>En espera:</div>
+                    <div>En espera</div>
                 </aside>
                 <aside className='check'>
                     <input type="checkbox" defaultChecked={Material.id ? Material.onHold : false}{...register('installed')} />
-                    <div>Instalado:</div>
+                    <div>Instalado</div>
                 </aside>
                 <aside className='check'>
                     <input type="checkbox" defaultChecked={Material.id ? Material.onHold : false}{...register('returned')} />
-                    <div>Devuelto:</div>
+                    <div>Devuelto</div>
                 </aside>
                 <aside className='check'>
                     <input type="checkbox" defaultChecked={Material.id ? Material.onHold : false}{...register('damaged')} />
-                    <div>Dañado:</div>
+                    <div>Dañado</div>
                 </aside>
                 <aside className='check'>
                     <input type="checkbox" defaultChecked={Material.id ? Material.onHold : false}{...register('damaged')} />
-                    <div>Entregado:</div>
+                    <div>Entregado</div>
                 </aside>
             </div>
-                {Material.id&&<div>
-                    {`${'Recibido por:'}`}
-                </div>}
+            {Material.id && <div>
+                {`${'Recibido por:'}`}
+            </div>}
             <br />
             <button>{Material.id ? 'Actualizar' : 'Crear'}</button>
         </form>

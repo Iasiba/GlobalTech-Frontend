@@ -49,14 +49,15 @@ const newActivity = () => {
     }
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
+            <i className='bx bx-x-circle close' onClick={() => dispatch(setVisibleActivity (!NewActivityVisible))}></i>
             <h2>{Activity.id ? 'Editar Actividad' : 'Nueva Actividad'}</h2>
             <div className='createGrid'>
-                <p>Descripcion:</p>
-                <input type="text" defaultValue={Activity.id && Activity.description} placeholder='Ej. cablee 5 nodos en cocina' {...register('description')} />
+                <div>* Descripcion:</div>
+                <input type="text" required defaultValue={Activity.id && Activity.description} placeholder='Ej. cablee 5 nodos en cocina' {...register('description')} />
             </div>
             <div className='createGrid'>
-                <div>Tarea:</div>
-                <input type="text"
+                <div>* Tarea:</div>
+                <input type="text" required
                     onClick={() => setTaskListVisible(!TaskListVisible)}
                     placeholder='--selecciona una tarea--'
                     value={Task.description ? Task.description : ''}

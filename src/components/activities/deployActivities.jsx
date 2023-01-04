@@ -12,6 +12,7 @@ const deployActivities = ({ activity, searcActivities }) => {
   const NewActivityVisible = useSelector(state => state.NewsVisible)[3]
   const [Visible, setVisible] = useState(false)
   const [MenuVisible, setMenuVisible] = useState(false)
+
   return (
     <>
       <div className='deploy'>

@@ -38,10 +38,11 @@ const newInventary = () => {
     }
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
+            <i className='bx bx-x-circle close' onClick={() => dispatch(setVisibleInventary(!NewInventaryVisible))}></i>
             <h2>{Inventary.id ? 'Editar Inventario' : 'Nuevo Inventario'}</h2>
             <div className='createGrid'>
-                <p>Nombre:</p>
-                <input type="text" defaultValue={Inventary.id && Inventary.name} placeholder='Ej. Herramientas' {...register('name')} />
+                <div>* Nombre:</div>
+                <input type="text" required defaultValue={Inventary.id && Inventary.name} placeholder='Ej. Herramientas' {...register('name')} />
             </div>
             <br />
             <button>{Inventary.id ? 'Actualizar' : 'Crear'}</button>

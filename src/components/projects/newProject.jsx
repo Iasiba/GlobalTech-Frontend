@@ -35,22 +35,23 @@ const newProject = () => {
     }
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter newProject new' >
+            <i className='bx bx-x-circle close' onClick={() => dispatch(setVisibleProject(!NewProjectVisible))}></i>
             <h2>{Project.id ? 'Editar Proyecto' : 'Nuevo Proyecto'}</h2>
             <div className='createGrid'>
-                <p>Nombre:</p>
-                <input type="text" defaultValue={Project.id && Project.name} placeholder='Ej. Global' {...register('name')} />
+                <div>* Nombre:</div>
+                <input type="text" required defaultValue={Project.id && Project.name} placeholder='Ej. Global' {...register('name')} />
             </div>
             <div className='createGrid'>
-                <p>Direccion:</p>
-                <input type="text" defaultValue={Project.id && Project.address} placeholder='Ej. calle matamorros # 503' {...register('address')} />
+                <div>* Direccion:</div>
+                <input type="text" required defaultValue={Project.id && Project.address} placeholder='Ej. calle matamorros # 503' {...register('address')} />
             </div>
             <div className='createGrid'>
-                <p>Plano:</p>
+                <div>Plano:</div>
                 <input type="text" defaultValue={Project.id && Project.plane} placeholder='Link' {...register('plane')} />
             </div>
             <div className='createGrid'>
-                <p>Coordenadas:</p>
-                <input type="text" defaultValue={Project.id && Project.coordinates} placeholder='Ej. 25.653315,-100.382917' {...register('coordinates')} />
+                <div>* Coordenadas:</div>
+                <input type="text" required defaultValue={Project.id && Project.coordinates} placeholder='Ej. 25.653315,-100.382917' {...register('coordinates')} />
             </div>
             <div className='createGrid'>
                 <div>Referencias:</div>

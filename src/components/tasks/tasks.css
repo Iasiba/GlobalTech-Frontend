@@ -22,3 +22,7 @@
     display: grid;
     grid-template-columns: 25% 75%;
 }
+.inputdescription{
+    width: 0px;
+    height: auto;
+}

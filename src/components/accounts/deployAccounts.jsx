@@ -1,12 +1,14 @@
 import axios from 'axios'
 import React from 'react'
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { setItem } from '../../store/slices/ItemSlice'
 import getConfig from '../../utils/getConfig'
+import { setVisibleAccount } from './../../store/slices/NewsVisibleSlice'
 const deployAccounts = ({ account, searchAccounts }) => {
     const dispatch = useDispatch()
+    const NewAccountVisible = useSelector(state => state.NewsVisible)[4]
     const [Visible, setVisible] = useState(false)
     const [MenuVisible, setMenuVisible] = useState(false)
     return (
@@ -22,7 +24,7 @@ const deployAccounts = ({ account, searchAccounts }) => {
                     MenuVisible
                     &&
                     <div className='itemList itemListPrimary '>
-                        <p className='items materialItemsWidth' onClick={() => dispatch(setItem(account))}><Link to={'/newAccount'}  >Editar</Link></p>
+                        <p className='items materialItemsWidth' onClick={() => {dispatch(setItem(account)),setMenuVisible(!MenuVisible),dispatch(setVisibleAccount(true))}}>Editar</p>
                         <p className='items materialItemsWidth' onClick={() => ((
                             axios.delete(`http://localhost:8000/api/v1/accounts/${account.id}`, getConfig())
                                 .then(searchAccounts()),

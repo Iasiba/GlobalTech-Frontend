@@ -35,14 +35,15 @@ const newNote = () => {
     }
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
+            <i class='bx bx-x-circle close' onClick={() => dispatch(setVisibleNote(!NewNoteVisible))}></i>
             <h2>{Note.id ? 'Editar Nota' : 'Nueva Nota'}</h2>
             <div className='createGrid'>
-                <p>Titulo:</p>
-                <input type="text" defaultValue={Note.id ? Note.tittle : 'Recordatorio'} placeholder='Titulo' {...register('tittle')} />
+                <div>* Titulo:</div>
+                <input type="text" required defaultValue={Note.id ? Note.tittle : 'Recordatorio'} placeholder='Titulo' {...register('tittle')} />
             </div>
             <div className='createGrid'>
-                <p>Nota:</p>
-                <input type="text" defaultValue={Note.id&&Note.note} placeholder='Ej. Recoger material' {...register('note')} />
+                <div>* Nota:</div>
+                <input type="text" required defaultValue={Note.id && Note.note} placeholder='Ej. Recoger material' {...register('note')} />
             </div>
             <br />
             <button>{Note.id ? 'Actualizar' : 'Crear'}</button>

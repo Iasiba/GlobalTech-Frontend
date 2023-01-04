@@ -37,26 +37,27 @@ const newUser = () => {
     }
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
+            <i className='bx bx-x-circle close' onClick={() => dispatch(setVisibleUser(false))}></i>
             <h2>Nuevo Usuario</h2>
             <div className='createGrid'>
-                <p>Nombre:</p>
-                <input type="text" placeholder='' {...register('first_name')} />
+                <div>* Nombre:</div>
+                <input type="text" required placeholder='' {...register('first_name')} />
             </div>
             <div className='createGrid'>
-                <p>Apellidos:</p>
+                <div>Apellidos:</div>
                 <input type="text" placeholder='' {...register('last_name')} />
             </div>
             <div className='createGrid'>
-                <p>Genero:</p>
+                <div>Genero:</div>
                 <input type="text" placeholder='' {...register('gender')} />
             </div>
             <div className='createGrid'>
-                <p>Email:</p>
-                <input type="text" placeholder='user@gmail.com' {...register('email')} />
+                <div>* Email:</div>
+                <input type="text" required placeholder='user@gmail.com' {...register('email')} />
             </div>
             <div className='createGrid'>
-                <div>Contraseña:</div>
-                <input type="text" placeholder='Ej. Password' {...register('password')} />
+                <div>* Contraseña:</div>
+                <input type="text" required placeholder='Ej. Password' {...register('password')} />
             </div>
 
             <div className='createGrid'>
@@ -92,8 +93,8 @@ const newUser = () => {
                 <input type="text" placeholder='default: no' {...register('verified')} />
             </div>
             <div className='createGrid'>
-                <div>Rol:</div>
-                <input type="text" onClick={() => setRoleListVisible(!RoleListVisible)} placeholder='Ej. admin' value={RoleName} {...register('roleName')} />
+                <div>* Rol:</div>
+                <input type="text" required onClick={() => setRoleListVisible(!RoleListVisible)} placeholder='Ej. admin' value={RoleName} {...register('roleName')} />
             </div>
 
 
