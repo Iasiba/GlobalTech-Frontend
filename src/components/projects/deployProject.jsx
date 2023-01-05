@@ -24,6 +24,7 @@ const deployProject = ({ project, searchProjects }) => {
   const [InfoVisible, setInfoVisible] = useState(false)
 
   const [MenuVisible, setMenuVisible] = useState(false)
+console.log(project)
   return (
     <>
       <div className='deploy'>

@@ -14,13 +14,14 @@ const deployMaterials = ({ material, searchMaterials }) => {
   const [Visible, setVisible] = useState(false)
   const [MenuVisible, setMenuVisible] = useState(false)
   const [UserListVisible, setUserListVisible] = useState(false)
+  console.log(material)
   return (
     <>
       <div className='deploy'>
         <div onClick={() => setVisible(!Visible)} className='materialsBody tableHover'>
           <p>{material.name}</p>
           <p>{material.amount}</p>
-          <p>{material.project.name}</p>
+          {material.project?.name&&<p>{material.project.name}</p>}
         </div>
         <aside className='threePoints' onClick={() => setMenuVisible(!MenuVisible)} ><p>...</p></aside>
         {
@@ -51,11 +52,12 @@ const deployMaterials = ({ material, searchMaterials }) => {
       {
         Visible && <div className='content'>
           <p>Cantidad: {material.amount}</p>
-          <p>Proyecto: {material.project.name}</p>
-          <p>Instalado: { }</p>
-          <p>Retornado: {material.returned ? "si" : "no"}</p>
-          <p>Dañado: { }</p>
+          {material.project?.name&&<p>Proyecto: {material.project.name}</p>}
           <p>En espera: {material.onHold ? "si" : "no"}</p>
+          <p>Entregado: {material.delivered ? "si" : "no"}</p>
+          <p>Instalado: { material.installed ? "si" : "no"}</p>
+          <p>Retornado: {material.returned ? "si" : "no"}</p>
+          <p>Dañado: { material.damaged ? "si" : "no"}</p>
           <p>Inventario: {material.inventory.name}</p>
           <p>Usuario Asignado: { }</p>
         </div>

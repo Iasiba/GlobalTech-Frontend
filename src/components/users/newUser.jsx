@@ -27,6 +27,7 @@ const newUser = () => {
 
     const submit = data => {
         data.roleId = RoleId
+        console.log(data)
         const URL = `http://localhost:8000/api/v1/auth/register`
         axios.post(URL, data, getConfig())
             .then(res => {
