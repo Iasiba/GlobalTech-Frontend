@@ -6,29 +6,19 @@
     box-shadow: 1px 1px 10px var(--secondary-color);
 }
 
-div>.edit{
-    position: fixed;
-    right: 5%;
-    top: 80px;
-}
-aside>.edit{
-    right: 40%;
-    bottom: 55%;
-}
-.edit {
-    color:var(--secondary-color);
-    width: 10px;
-    height: 10px;
-    z-index: -1;
-}
-.edit:hover{
-    color:var(--primary-color);
-    cursor: pointer;
-}
+
 .image{
     margin: 20px 0;
 }
 img{
     z-index: 0;
 }
-
+.editMyAccount{
+    position: fixed;
+    right:30px;
+    top: 90px;
+}
+.editMyAccount:hover{
+    color: var(--primary-color);
+    cursor: pointer;
+}

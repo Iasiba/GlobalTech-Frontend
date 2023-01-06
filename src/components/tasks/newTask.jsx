@@ -45,7 +45,6 @@ const newTask = () => {
     const navigate = useNavigate()
 
     const submit = data => {
-        console.log(data)
         data.roomId = Room.id
         Task.id ?
             axios.put(`http://localhost:8000/api/v1/tasks/${Task.id}`, data, getConfig())

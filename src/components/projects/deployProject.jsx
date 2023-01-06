@@ -24,7 +24,6 @@ const deployProject = ({ project, searchProjects }) => {
   const [InfoVisible, setInfoVisible] = useState(false)
 
   const [MenuVisible, setMenuVisible] = useState(false)
-console.log(project)
   return (
     <>
       <div className='deploy'>
@@ -36,7 +35,7 @@ console.log(project)
           MenuVisible
           &&
           <div className='itemList itemListPrimary '>
-            <p className='items materialItemsWidth' onClick={() => {dispatch(setItem(project)),dispatch(setVisibleProject(true)),setMenuVisible(!MenuVisible)}}>Editar</p>
+            <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(project)), dispatch(setVisibleProject(true)), setMenuVisible(!MenuVisible) }}>Editar</p>
             <p className='items materialItemsWidth' onClick={() => ((
               axios.delete(`http://localhost:8000/api/v1/projects/${project.id}`, getConfig())
                 .then(searchProjects(),

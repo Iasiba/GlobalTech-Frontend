@@ -14,14 +14,13 @@ const deployMaterials = ({ material, searchMaterials }) => {
   const [Visible, setVisible] = useState(false)
   const [MenuVisible, setMenuVisible] = useState(false)
   const [UserListVisible, setUserListVisible] = useState(false)
-  console.log(material)
   return (
     <>
       <div className='deploy'>
         <div onClick={() => setVisible(!Visible)} className='materialsBody tableHover'>
           <p>{material.name}</p>
           <p>{material.amount}</p>
-          {material.project?.name&&<p>{material.project.name}</p>}
+          {material.project?.name && <p>{material.project.name}</p>}
         </div>
         <aside className='threePoints' onClick={() => setMenuVisible(!MenuVisible)} ><p>...</p></aside>
         {
@@ -29,7 +28,7 @@ const deployMaterials = ({ material, searchMaterials }) => {
           &&
           <div className='itemList itemListPrimary '>
             <p className='items materialItemsWidth' onClick={() => setUserListVisible(!UserListVisible)}>Asignar</p>
-            <p className='items materialItemsWidth' onClick={() => {dispatch(setItem(material)),dispatch(setVisibleMaterial(!NewMaterialVisible)),setMenuVisible(!MenuVisible)}}>Editar</p>
+            <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(material)), dispatch(setVisibleMaterial(!NewMaterialVisible)), setMenuVisible(!MenuVisible) }}>Editar</p>
             <p className='items materialItemsWidth'
               onClick={() => ((
                 axios.delete(`http://localhost:8000/api/v1/materials/${material.id}`, getConfig())
@@ -52,14 +51,14 @@ const deployMaterials = ({ material, searchMaterials }) => {
       {
         Visible && <div className='content'>
           <p>Cantidad: {material.amount}</p>
-          {material.project?.name&&<p>Proyecto: {material.project.name}</p>}
+          {material.project?.name && <p>Proyecto: {material.project.name}</p>}
           <p>En espera: {material.onHold ? "si" : "no"}</p>
           <p>Entregado: {material.delivered ? "si" : "no"}</p>
-          <p>Instalado: { material.installed ? "si" : "no"}</p>
+          <p>Instalado: {material.installed ? "si" : "no"}</p>
           <p>Retornado: {material.returned ? "si" : "no"}</p>
-          <p>Dañado: { material.damaged ? "si" : "no"}</p>
+          <p>Dañado: {material.damaged ? "si" : "no"}</p>
           <p>Inventario: {material.inventory.name}</p>
-          <p>Usuario Asignado: { }</p>
+          <p>Usuario Asignado: {material.user.firstName+' '+(material.user&&material.user.lastName) }</p>
         </div>
       }
     </>

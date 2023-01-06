@@ -60,6 +60,7 @@ const deployTask = ({ task, searchTasks }) => {
             </div>
             {Visible && <div className='content'>
                 <p>Tarea: {task.description}</p>
+                <p>Observaciones: {task.observation}</p>
                 <p>Proyecto: {task.room.project.name}</p>
                 <p>Area: {task.room.name}</p>
                 <p>Fecha de Ejecucion: {task.executionDate}</p>

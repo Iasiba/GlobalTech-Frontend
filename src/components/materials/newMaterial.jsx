@@ -34,7 +34,7 @@ const newMaterial = () => {
     useEffect(() => { setProjectId(Project.id) }, [Project])
     useEffect(() => { setInventoryId(Inventory.id) }, [Inventory])
 
-    if (Material.id) useEffect(() => { setInventoryName(Material.inventory.name), setInventory(Material.inventory), setProjectName(Material.project.name), setProject(Material.project) }, [Material])//en caso de editar materiales
+    if (Material.id) useEffect(() => { setInventoryName(Material.inventory.name), setInventory(Material.inventory), Material.project?.name && setProjectName(Material.project.name), Material.project && setProject(Material.project) }, [Material])//en caso de editar materiales
     const submit = data => {
         data.projectId = ProjectId
         data.inventoryId = InventoryId
@@ -58,7 +58,7 @@ const newMaterial = () => {
     // 
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
-            <i className='bx bx-x-circle close' onClick={() => dispatch(setVisibleMaterial (!NewMaterialVisible))}></i>
+            <i className='bx bx-x-circle close' onClick={() => dispatch(setVisibleMaterial(!NewMaterialVisible))}></i>
             {Material.id ? <h2>Editar Material</h2> : <h2>Nuevo Material</h2>}
 
             <div className='createGrid'>
