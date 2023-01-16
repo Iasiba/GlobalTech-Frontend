@@ -23,12 +23,17 @@ const deployMaterials = ({ material, searchMaterials }) => {
           {material.project?.name && <p>{material.project.name}</p>}
         </div>
         <aside className='threePoints' onClick={() => setMenuVisible(!MenuVisible)} ><p>...</p></aside>
+
         {
-          MenuVisible
-          &&
+
+          <div className='backgroundthreePoints'>
+          </div>
+        }
+        {
+          MenuVisible &&
           <div className='itemList itemListPrimary '>
-            <p className='items materialItemsWidth' onClick={() => setUserListVisible(!UserListVisible)}>Asignar</p>
-            <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(material)), dispatch(setVisibleMaterial(!NewMaterialVisible)), setMenuVisible(!MenuVisible) }}>Editar</p>
+            {!material.onHold && <p className='items materialItemsWidth' onClick={() =>{ setUserListVisible(true),setMenuVisible(false)}}>Asignar</p>}
+            <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(material)), dispatch(setVisibleMaterial(true)), setMenuVisible(false) }}>Editar</p>
             <p className='items materialItemsWidth'
               onClick={() => ((
                 axios.delete(`http://localhost:8000/api/v1/materials/${material.id}`, getConfig())
@@ -43,8 +48,8 @@ const deployMaterials = ({ material, searchMaterials }) => {
           &&
           <UserList
             material={material}
-            menuvisible={MenuVisible} setmenuvisible={setMenuVisible}
-            userlistvisible={UserListVisible} setuserlistvisible={setUserListVisible}
+            setmenuvisible={setMenuVisible}
+            setuserlistvisible={setUserListVisible}
           />
         }
       </div>
@@ -58,7 +63,7 @@ const deployMaterials = ({ material, searchMaterials }) => {
           <p>Retornado: {material.returned ? "si" : "no"}</p>
           <p>Dañado: {material.damaged ? "si" : "no"}</p>
           <p>Inventario: {material.inventory.name}</p>
-          <p>Usuario Asignado: {material.user.firstName+' '+(material.user&&material.user.lastName) }</p>
+          <p>Usuario Asignado: {material.user.firstName + ' ' + (material.user && material.user.lastName)}</p>
         </div>
       }
     </>

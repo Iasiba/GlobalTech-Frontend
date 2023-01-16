@@ -1,4 +1,4 @@
-.itemList{
+.itemList {
     padding: 10px;
     background-color: var(--backgroundList-color);
     width: max-content;
@@ -8,61 +8,116 @@
     align-items: center;
     position: absolute;
     border-radius: 10px;
-    box-shadow: 0 0 20px var(--backgroundList-color);
+    /*box-shadow: 0 0 20px var(--backgroundList-color);*/
 }
-.itemListPrimary{
+
+.itemListPrimary {
     right: 36px;
 }
-.itemListSecondary{
-    right: 140px;
+
+.itemListSecondary {
+    right: 36px;
 }
+
 @media (max-width: 600px) {
-    .itemListPrimary{
+    .itemListPrimary {
         right: 23px;
     }
-    .itemListSecondary{
-        right: 130px;
+
+    .itemListSecondary {
+        right: 23px;
     }
 }
-.items{
+
+.items {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
     display: flex;
-    box-shadow: 0 0 1px var(--secondary-color);
     padding: 0 10px;
-    margin:2px 0px;
-    border-radius: 5px;
-    color:var(--textlist-color);
+    margin: 2px 0px;
+    color: var(--textlist-color);
     background-color: var(--selectlist-color);
     justify-content: space-between;
 }
-.itemsWidth{
+
+.itemsWidth {
     width: 250px;
 }
-.items:hover{
-    background-color: var(--sub-color);
+
+.items:hover {
     box-shadow: none;
     cursor: pointer;
-    color: var(--secondary-color);
+    color: var(--primary-color);
+    /*background-color: var(--sub-color);*/
 }
 
-.selectbackground{
-    background-color: var(--backgroundList-color);
+.assignItems {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.selectListBackground {
     width: 18px;
-    height: 18px;
-    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 0 2px white;
+    position: relative;
+    color: white;
+    background-color: var(--backgroundList-color);
+    border-radius: 50%;
 }
-.select{
+
+.amount {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    color: white;
+    background-color: var(--selectlist-color);
+}
+
+.amount>p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 10px;
+    font-size: large;
+    font-weight: bold;
+}
+
+.amount>p:hover {
+    color: var(--primary-color);
+    cursor: pointer;
+}
+
+.amount>div {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10px;
+    color: var(--backgroundList-color);
+    background-color: white;
+    border-radius: 5px;
+    opacity: 0.8;
+}
+
+.select {
     width: 10px;
     height: 10px;
     border-radius: 50%;
     box-shadow: 0 0 2px white;
 }
-.select:hover{
+
+.select:hover {
     background-color: var(--select-color);
 }
-.selection{
+
+.selection {
     background-color: var(--select-color);
 }

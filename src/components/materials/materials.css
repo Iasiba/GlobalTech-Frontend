@@ -1,14 +1,23 @@
-.materialsHeader{
+.materialsHeader {
     width: 100%;
     display: grid;
     grid-template-columns: 32% 32% 32% 4%;
 }
-.materialsBody{
+
+.materialsBody {
     width: 96%;
     display: grid;
-    grid-template-columns: 33% 33% 33% ;
+    grid-template-columns: 33% 33% 33%;
 }
-.materialMenuOptions{
+
+.materialAvailable {
+    color: var(--primary-color);
+    margin: 4px;
+    font-weight: bold;
+
+}
+
+.materialMenuOptions {
     padding: 0px 10px;
     background-color: var(--backgroundList-color);
     width: max-content;
@@ -18,9 +27,10 @@
     align-items: center;
     border-radius: 10px;
     box-shadow: 0 0 20px var(--backgroundList-color);
-    position:absolute;
+    position: absolute;
     right: 100%;
 }
-.materialItemsWidth{
+
+.materialItemsWidth {
     width: 77px;
 }

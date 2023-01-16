@@ -20,12 +20,27 @@ const newActivity = () => {
     const [Task, setTask] = useState('')
     const [TaskId, setTaskId] = useState('')
     const [TaskListVisible, setTaskListVisible] = useState(false)
-
+    const [Materials, setMaterials] = useState(false)
+    const [VisibleMaterialAsignedToMe, setVisibleMaterialAsignedToMe] = useState(false)
+    const [MaterialSelected, setMaterialSelected] = useState('')
+    const [Rooms, setRooms] = useState('')
+    const [VisibleRooms, setVisibleRooms] = useState(false)
+    const [RoomSelected, setRoomSelected] = useState('')
+    const [MaterialsInstalleds, setMaterialsInstalleds] = useState([])
+    const [MaterialsAsignatesToMe, setMaterialsAsignatesToMe] = useState([])
     const { handleSubmit, reset, register } = useForm()
 
     const navigate = useNavigate()
-
-    useEffect(() => setTaskId(Task.id), [Task])
+    console.log(MaterialsInstalleds)
+    useEffect(
+        () => {
+            console.log(MaterialsInstalleds)
+            Task.id && setTaskId(Task.id),
+                Task.id && setRooms(Task.room.project.rooms),
+                axios.get('http://localhost:8000/api/v1/users/me/materials', getConfig())
+                    .then(res => setMaterialsAsignatesToMe(res.data))
+        }, [Task, MaterialsInstalleds.length]
+    )
     if (Activity.id) useEffect(() => { setTask(Activity.task) }, [Activity])//en caso de editar materiales
 
     const submit = data => {
@@ -49,7 +64,7 @@ const newActivity = () => {
     }
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
-            <i className='bx bx-x-circle close' onClick={() => dispatch(setVisibleActivity (!NewActivityVisible))}></i>
+            <i className='bx bx-x-circle close' onClick={() => dispatch(setVisibleActivity(!NewActivityVisible))}></i>
             <h2>{Activity.id ? 'Editar Actividad' : 'Nueva Actividad'}</h2>
             <div className='createGrid'>
                 <div>* Descripcion:</div>
@@ -74,6 +89,59 @@ const newActivity = () => {
                         )
                     }
                 </div>
+            </div>
+
+            <div className='createGrid'>
+                <div>Materials:</div>
+                <input type="checkbox" onClick={() => setMaterials(!Materials)} />
+            </div>
+            {
+                Task && Materials &&
+                <div>
+                    <div className='createGrid'>
+                        <div>{"Proyecto: " + Task.room.project.name}</div>
+                    </div>
+                    <div className='createGrid'>
+                        <div>Habitacion:</div>
+                        <input type="text" onClick={() => setVisibleRooms(!VisibleRooms)} defaultValue={RoomSelected ? RoomSelected.name : ''} placeholder='--Selecciona Un Area--' />
+                    </div>
+                    {
+                        VisibleRooms &&
+                        <div>
+                            {Rooms.map(Room => <div onClick={() => { setRoomSelected(Room), setVisibleRooms(false) }} key='Room.id'>{Room.name}</div>)}
+                        </div>
+                    }
+                    <div className='createGrid'>
+                        <div>Material:</div>
+                        <input type="text" onClick={() => setVisibleMaterialAsignedToMe(!VisibleMaterialAsignedToMe)} defaultValue={MaterialSelected ? MaterialSelected.name : ''} placeholder='--Selecciona Un Material--' />
+                    </div>
+                    {
+                        VisibleMaterialAsignedToMe &&
+                        <div>
+                            {MaterialsAsignatesToMe.map(MaterialAsignatedToMe => <div onClick={() => { setMaterialSelected(MaterialAsignatedToMe), setVisibleMaterialAsignedToMe(false) }} key={MaterialAsignatedToMe.id}>{MaterialAsignatedToMe.name}</div>)}
+                        </div>
+                    }
+                    <div onClick={() => MaterialsInstalleds.push({ MaterialSelected, RoomSelected })}>agregar</div>
+                    <section>
+                        <div>Materiales instalados:</div>
+                        {
+                            MaterialsInstalleds.length ?
+                                MaterialsInstalleds.map((materialInstalled) => <div>
+                                    <aside>
+                                        {materialInstalled.MaterialSelected.name}
+                                    </aside>
+                                    <aside>
+                                        {materialInstalled.RoomSelected.name}
+                                    </aside>
+                                </div>)
+                                :
+                                <div>No tiene Materiales instalados</div>
+                        }
+                    </section>
+                </div>
+            }
+            <div>
+
             </div>
             <br />
             <button>{Activity.id ? 'Actualizar' : 'Crear'}</button>
