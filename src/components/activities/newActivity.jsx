@@ -32,10 +32,8 @@ const newActivity = () => {
     const { handleSubmit, reset, register } = useForm()
 
     const navigate = useNavigate()
-    console.log(MaterialsInstalleds,MaterialsAsignatesToMe)
     useEffect(
         () => {
-            console.log(MaterialsInstalleds)
             Task.id && setTaskId(Task.id),
                 Task.id && setRooms(Task.room.project.rooms),
                 axios.get('http://localhost:8000/api/v1/users/me/materials', getConfig())
@@ -44,6 +42,24 @@ const newActivity = () => {
     )
     if (Activity.id) useEffect(() => { setTask(Activity.task) }, [Activity])//en caso de editar materiales
 
+    function installMaterial(material) {
+        for (let i = 0; i < MaterialsAsignatesToMe.length; i++) {
+            if (material.id == MaterialsAsignatesToMe[i].id) {
+                MaterialsAsignatesToMe.splice(i, 1)
+                setRefreshMaterialsAsignatesToMe(!RefreshMaterialsAsignatesToMe)
+                i = MaterialsAsignatesToMe.length
+            }
+        }
+    }
+    function returnMaterial(material) {
+        for (let i = 0; i < MaterialsInstalleds.length; i++) {
+            if (material.id == MaterialsInstalleds[i].MaterialSelected.id) {
+                MaterialsInstalleds.splice(i, 1)
+                setRefreshMaterialsAsignatesToMe(!RefreshMaterialsAsignatesToMe)
+                i = MaterialsInstalleds.length
+            }
+        }
+    }
     const submit = data => {
         data.taskId = Task.id
         console.log(data)
@@ -99,8 +115,8 @@ const newActivity = () => {
             {
                 Task && Materials &&
                 <div>
-                    <div className='createGrid'>
-                        <div>Proyecto:</div>
+                    <div >
+                        <div>Proyecto</div>
                         <div>{Task.room.project.name}</div>
                     </div>
                     <div className='createGrid'>
@@ -110,7 +126,7 @@ const newActivity = () => {
                     {
                         VisibleRooms &&
                         <div>
-                            {Rooms.map(Room => <div className='MaterialAsignatedToMe' onClick={() => { setRoomSelected(Room), setVisibleRooms(false) }} key='Room.id'>{Room.name}</div>)}
+                            {Rooms.map(Room => <div className='MaterialAsignatedToMe' onClick={() => { setRoomSelected(Room), setVisibleRooms(false) }} key={Room.id}>{Room.name}</div>)}
                         </div>
                     }
                     <div className='createGrid'>
@@ -123,15 +139,20 @@ const newActivity = () => {
                             {MaterialsAsignatesToMe.map(MaterialAsignatedToMe => <div className='MaterialAsignatedToMe' onClick={() => { setMaterialSelected(MaterialAsignatedToMe), setVisibleMaterialAsignedToMe(false) }} key={MaterialAsignatedToMe.id}>{MaterialAsignatedToMe.name}</div>)}
                         </div>
                     }
-                    <div onClick={() => { if (MaterialSelected && RoomSelected) { MaterialsInstalleds.push({ MaterialSelected, RoomSelected }), setMaterialSelected(''), setRoomSelected(''), setRefreshMaterialsAsignatesToMe(!RefreshMaterialsAsignatesToMe) } }} className='add'>agregar</div>
+                    <div onClick={() => {
+                        if (MaterialSelected && RoomSelected) {
+                            MaterialsInstalleds.push({ MaterialSelected, RoomSelected }), installMaterial(MaterialSelected)
+                                , setMaterialSelected(''), setRoomSelected(''), setRefreshMaterialsAsignatesToMe(!RefreshMaterialsAsignatesToMe)
+                        }
+                    }} className='add'>agregar</div>
                     <div>{'Materiales instalados: ' + MaterialsInstalleds.length}</div>
                     <section className='MaterialsInstalleds'>
                         {
                             MaterialsInstalleds.length ?
                                 MaterialsInstalleds.map(
                                     (materialInstalled) =>
-                                        <div className='MaterialInstalled' key={materialInstalled.MaterialSelected.id+materialInstalled.RoomSelected.id}>
-                                            <div className='DeleteMaterialInstalled'>x</div>
+                                        <div className='MaterialInstalled' key={materialInstalled.MaterialSelected.id + materialInstalled.RoomSelected.id}>
+                                            <div className='DeleteMaterialInstalled' onClick={() => { MaterialsAsignatesToMe.push(materialInstalled.MaterialSelected), returnMaterial(materialInstalled.MaterialSelected) }}>x</div>
                                             <aside>
                                                 {materialInstalled.MaterialSelected.name}
                                             </aside>
