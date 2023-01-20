@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import './materials.css'
+import '../list/list.css'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import UserList from '../users/userList'
@@ -14,9 +15,17 @@ const deployMaterials = ({ material, searchMaterials }) => {
   const [Visible, setVisible] = useState(false)
   const [MenuVisible, setMenuVisible] = useState(false)
   const [UserListVisible, setUserListVisible] = useState(false)
+  
+  const [Selected, setSelected] = useState(false)
+  const [MaterialList, setMaterialList] = useState([])
+  const [Refresh, setRefresh] = useState(false)
+  console.log(Selected)
   return (
     <>
       <div className='deploy'>
+        <div className='selectListBackground selectMaterial' onClick={()=>{MaterialList.push(material),setRefresh(!Refresh),setSelected(!Selected)}} >
+          <div className={'select Select ' + `${Selected && 'selection'}`}></div>
+        </div>
         <div onClick={() => setVisible(!Visible)} className='materialsBody tableHover'>
           <p>{material.name}</p>
           <p>{material.amount}</p>
@@ -32,7 +41,7 @@ const deployMaterials = ({ material, searchMaterials }) => {
         {
           MenuVisible &&
           <div className='itemList itemListPrimary '>
-            {!material.onHold && <p className='items materialItemsWidth' onClick={() =>{ setUserListVisible(true),setMenuVisible(false)}}>Asignar</p>}
+            {!material.onHold && <p className='items materialItemsWidth' onClick={() => { setUserListVisible(true), setMenuVisible(false) }}>Asignar</p>}
             <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(material)), dispatch(setVisibleMaterial(true)), setMenuVisible(false) }}>Editar</p>
             <p className='items materialItemsWidth'
               onClick={() => ((
