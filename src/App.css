@@ -182,6 +182,10 @@ h2 {
   width: 4%;
   color: var(--secondary-color);
   z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 .threePoints:hover {
@@ -190,8 +194,17 @@ h2 {
 }
 
 .threePoints>p {
-  font-weight: bold;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1px;
+  height: 1px;
+  /*
   font-size: 22px;
+  */
+  font-weight: bold;
+  margin: 0px;
   transform: rotate(90deg);
 }
 

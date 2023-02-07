@@ -56,3 +56,15 @@
     /*border: 1px solid black;
     box-shadow: 0 0 4px black;*/
 }
+.selection{
+    background-color: blue;
+}
+.userSelect{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.SelectUser:hover{
+    cursor: pointer;
+    color: var(--primary-color);
+}

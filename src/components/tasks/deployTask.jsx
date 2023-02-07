@@ -52,7 +52,7 @@ const deployTask = ({ task, searchTasks }) => {
                     <UserList
                         task={task}
                         menuvisible={MenuVisible} setmenuvisible={setMenuVisible}
-                        userlistvisible={UserListVisible} setuserlistvisible={setUserListVisible}
+                        userlistvisible={UserListVisible} setUserListVisible={setUserListVisible}
                     />
                 }
             </div>

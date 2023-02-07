@@ -3,8 +3,11 @@ import './materials.css'
 import DeployMaterials from './deployMaterials'
 import axios from 'axios'
 import getConfig from '../../utils/getConfig'
+import UserList from '../users/userList'
 const materials = ({ projectId, myhome, home, materials }) => {
   const [Materials, setMaterials] = useState('')
+  const [MaterialList, setMaterialList] = useState([])
+  const [viewUserList, setviewUserList] = useState(false)
   useEffect(() => {
     if (materials) {
       setMaterials(materials)
@@ -35,21 +38,35 @@ const materials = ({ projectId, myhome, home, materials }) => {
   }
   return (
     <div >
-      <div className="materialsHeader taskHeader tableHeader">
-        <p>Material</p>
-        <p>Cantidad</p>
-        <p>Proyecto</p>
+      <div>
+        <div className="materialsHeader taskHeader tableHeader">
+          <p>Material</p>
+          <p>Cantidad</p>
+          <p>Proyecto</p>
+          <div className='userSelect' onClick={() => setviewUserList(!viewUserList)}><i className='bx bxs-user SelectUser'></i></div>
+        </div>
       </div>
       {Materials && Materials?.map(material => {
         return (
-          <DeployMaterials
+          < DeployMaterials
             key={material.id}
+            MaterialList={MaterialList}
             material={material}
             searchMaterials={searchMaterials}
+            viewUserList={viewUserList}
           />
         )
       }
       )}
+      {
+        /*UserListVisible*/
+        viewUserList
+        &&
+        <UserList
+          material={MaterialList} /*{Materials}*/
+          setviewUserList={setviewUserList}
+        />
+      }
     </div>
   )
 }

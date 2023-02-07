@@ -19,7 +19,6 @@ export default configureStore({
         Area,
         Item,
         ItemName,
-
         NewsVisible
     }
 })

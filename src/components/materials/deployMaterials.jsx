@@ -9,22 +9,39 @@ import getConfig from '../../utils/getConfig'
 import { useDispatch, useSelector } from 'react-redux'
 import { setItem } from '../../store/slices/ItemSlice'
 import { setVisibleMaterial } from './../../store/slices/NewsVisibleSlice'
-const deployMaterials = ({ material, searchMaterials }) => {
+const deployMaterials = ({ material,MaterialList, searchMaterials, viewUserList }) => {
   const dispatch = useDispatch()
   const NewMaterialVisible = useSelector(state => state.NewsVisible)[6]
   const [Visible, setVisible] = useState(false)
   const [MenuVisible, setMenuVisible] = useState(false)
   const [UserListVisible, setUserListVisible] = useState(false)
-  
+
   const [Selected, setSelected] = useState(false)
-  const [MaterialList, setMaterialList] = useState([])
+  //const [MaterialList, setMaterialList] = useState([])
   const [Refresh, setRefresh] = useState(false)
-  console.log(Selected)
+  const [UserSelected, setUserSelected] = useState('')
   return (
     <>
       <div className='deploy'>
-        <div className='selectListBackground selectMaterial' onClick={()=>{MaterialList.push(material),setRefresh(!Refresh),setSelected(!Selected)}} >
-          <div className={'select Select ' + `${Selected && 'selection'}`}></div>
+        <div className='selectListBackground selectMaterial'
+          onClick={
+            () => {
+              if(MaterialList.includes(material)){
+                for(let i=0;i<MaterialList.length;i++){
+                  if(material===MaterialList[i]){
+                    MaterialList.splice(i,1)
+                  }
+                }
+              }else{
+                MaterialList.push(material)
+              }
+              
+              setRefresh(!Refresh)
+              setSelected(!Selected)
+            }
+          }
+        >
+          <div className={'select Select ' + `${Selected && !material.onHold && 'selection'}`}></div>
         </div>
         <div onClick={() => setVisible(!Visible)} className='materialsBody tableHover'>
           <p>{material.name}</p>
@@ -34,7 +51,6 @@ const deployMaterials = ({ material, searchMaterials }) => {
         <aside className='threePoints' onClick={() => setMenuVisible(!MenuVisible)} ><p>...</p></aside>
 
         {
-
           <div className='backgroundthreePoints'>
           </div>
         }
@@ -53,13 +69,14 @@ const deployMaterials = ({ material, searchMaterials }) => {
           </div>
         }
         {
-          UserListVisible
+          /*UserListVisible
+          viewUserList
           &&
           <UserList
             material={material}
             setmenuvisible={setMenuVisible}
             setuserlistvisible={setUserListVisible}
-          />
+          />*/
         }
       </div>
       {
