@@ -11,6 +11,7 @@ const userList = ({ setmenuvisible, material, setUserListVisible, task, setviewU
     const [UserSelected, setUserSelected] = useState('')
     const [AllUsers, setAllUsers] = useState('')
     const [Selected, setSelected] = useState(false)
+    const [Refresh, setRefresh] = useState(false)
     function setSelectedToUser() {
         if (AllUsers) {
             for (let i = 0; i < AllUsers.length; i++) {
@@ -24,21 +25,29 @@ const userList = ({ setmenuvisible, material, setUserListVisible, task, setviewU
             .then(res => setAllUsers(res.data.users))
     }, [])
     useEffect(() => { setSelectedToUser() }, [AllUsers])
-    useEffect(() => { 
+    useEffect(() => {
         for (let i = 0; i < AllUsers.length; i++) {
-            if(AllUsers[i]===UserSelected){
-                AllUsers[i].selected=true
-            }else{
-                AllUsers[i].selected=false
+            if (AllUsers[i] === UserSelected) {
+                AllUsers[i].selected = true
+            } else {
+                AllUsers[i].selected = false
             }
         }
-
+        setRefresh(!Refresh)
+        console.log(UserSelected, material)
     }, [UserSelected])
-    
+
 
     return (
         <div className='itemList  itemListSecondary'>
-            {material && <div className='materialAvailable'>{material.name + ' Disponibles:'}<div>{material.amount}</div></div>}
+            {
+                material
+                &&
+                <div className='TittleMaterialSelected'>
+                    <div>Material Selecionado</div>
+                    {material.map(material => <div className='MaterialSelected' key={material.id}>{material.name}</div>)}
+                </div>
+            }
             {
                 AllUsers.length && AllUsers.map(
                     user => (
@@ -61,7 +70,7 @@ const userList = ({ setmenuvisible, material, setUserListVisible, task, setviewU
                                 material
                                 &&
                                 <section className='assignItems'>
-                                    <div className='items itemsWidth' onClick={() => {setUserSelected(user),setUserSelected(user)}}>
+                                    <div className='items itemsWidth' onClick={() => { setUserSelected(user) }}>
                                         {user.firstName + " " + user.lastName}
                                         {
                                             material
@@ -76,14 +85,14 @@ const userList = ({ setmenuvisible, material, setUserListVisible, task, setviewU
                         </div>
                     )
                 )
-                /*
-                    <List
-                list={AllUsers}
-                material={material}
-                setmenuvisible={setmenuvisible}
-                setuserlistvisible={setuserlistvisible}
-                task={task}
-            />
+            /*
+                <List
+                    list={AllUsers}
+                    material={material}
+                    setmenuvisible={setmenuvisible}
+                    setuserlistvisible={setuserlistvisible}
+                    task={task}
+                />
             */
             }
             <div>

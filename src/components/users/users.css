@@ -6,3 +6,10 @@
 .userBody{
     width: 96%;
 }
+
+.MaterialSelected{
+    color: #fff;
+}
+.TittleMaterialSelected{
+    color: var(--primary-color);
+}

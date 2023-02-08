@@ -43,7 +43,7 @@ const materials = ({ projectId, myhome, home, materials }) => {
           <p>Material</p>
           <p>Cantidad</p>
           <p>Proyecto</p>
-          <div className='userSelect' onClick={() => setviewUserList(!viewUserList)}><i className='bx bxs-user SelectUser'></i></div>
+          <div className='userSelect' onClick={() => MaterialList.length && setviewUserList(!viewUserList)}><i className='bx bxs-user SelectUser'></i></div>
         </div>
       </div>
       {Materials && Materials?.map(material => {

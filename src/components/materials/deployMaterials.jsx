@@ -9,7 +9,7 @@ import getConfig from '../../utils/getConfig'
 import { useDispatch, useSelector } from 'react-redux'
 import { setItem } from '../../store/slices/ItemSlice'
 import { setVisibleMaterial } from './../../store/slices/NewsVisibleSlice'
-const deployMaterials = ({ material,MaterialList, searchMaterials, viewUserList }) => {
+const deployMaterials = ({ material, MaterialList, searchMaterials, viewUserList }) => {
   const dispatch = useDispatch()
   const NewMaterialVisible = useSelector(state => state.NewsVisible)[6]
   const [Visible, setVisible] = useState(false)
@@ -26,16 +26,15 @@ const deployMaterials = ({ material,MaterialList, searchMaterials, viewUserList 
         <div className='selectListBackground selectMaterial'
           onClick={
             () => {
-              if(MaterialList.includes(material)){
-                for(let i=0;i<MaterialList.length;i++){
-                  if(material===MaterialList[i]){
-                    MaterialList.splice(i,1)
+              if (MaterialList.includes(material)) {
+                for (let i = 0; i < MaterialList.length; i++) {
+                  if (material === MaterialList[i]) {
+                    MaterialList.splice(i, 1)
                   }
                 }
-              }else{
+              } else {
                 MaterialList.push(material)
               }
-              
               setRefresh(!Refresh)
               setSelected(!Selected)
             }
@@ -49,7 +48,6 @@ const deployMaterials = ({ material,MaterialList, searchMaterials, viewUserList 
           {material.project?.name && <p>{material.project.name}</p>}
         </div>
         <aside className='threePoints' onClick={() => setMenuVisible(!MenuVisible)} ><p>...</p></aside>
-
         {
           <div className='backgroundthreePoints'>
           </div>
