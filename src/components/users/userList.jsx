@@ -37,6 +37,13 @@ const userList = ({ setmenuvisible, material, setUserListVisible, task, setviewU
         console.log(UserSelected, material)
     }, [UserSelected])
 
+    function assignMaterial(){
+        for (let i = 0; i < material.length; i++) {
+            axios.put(`http://localhost:8000/api/v1/materials/${material[i].id}`,{"assigned":true, "userId":UserSelected.id}, getConfig())
+            .then(()=>console.log(material[i].name+UserSelected.firstName))
+        }
+        setmenuvisible(false)
+    }
 
     return (
         <div className='itemList  itemListSecondary'>
@@ -97,7 +104,7 @@ const userList = ({ setmenuvisible, material, setUserListVisible, task, setviewU
             }
             <div>
                 <button className='Cancel' onClick={() => { task && setUserListVisible(false), material && setviewUserList(false) }}>Cancelar</button>
-                <button className='assign' onClick={() => { setAssingItem(true) }}>Asignar</button>
+                <button className='assign' onClick={() => assignMaterial()}>Asignar</button>
             </div>
         </div>
     )
