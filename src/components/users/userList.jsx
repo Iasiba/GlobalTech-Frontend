@@ -37,12 +37,12 @@ const userList = ({ setmenuvisible, material, setUserListVisible, task, setviewU
         console.log(UserSelected, material)
     }, [UserSelected])
 
-    function assignMaterial(){
+    function assignMaterial() {
         for (let i = 0; i < material.length; i++) {
-            axios.put(`http://localhost:8000/api/v1/materials/${material[i].id}`,{"assigned":true, "userId":UserSelected.id}, getConfig())
-            .then(()=>console.log(material[i].name+UserSelected.firstName))
+            axios.put(`http://localhost:8000/api/v1/materials/${material[i].id}`, { "assigned": true, "userId": UserSelected.id }, getConfig())
+                .then(() => console.log(material[i].name + UserSelected.firstName))
         }
-        setmenuvisible(false)
+        setviewUserList(false)
     }
 
     return (
@@ -92,19 +92,19 @@ const userList = ({ setmenuvisible, material, setUserListVisible, task, setviewU
                         </div>
                     )
                 )
-            /*
-                <List
-                    list={AllUsers}
-                    material={material}
-                    setmenuvisible={setmenuvisible}
-                    setuserlistvisible={setuserlistvisible}
-                    task={task}
-                />
-            */
+                /*
+                    <List
+                        list={AllUsers}
+                        material={material}
+                        setmenuvisible={setmenuvisible}
+                        setuserlistvisible={setuserlistvisible}
+                        task={task}
+                    />
+                */
             }
             <div>
                 <button className='Cancel' onClick={() => { task && setUserListVisible(false), material && setviewUserList(false) }}>Cancelar</button>
-                <button className='assign' onClick={() => assignMaterial()}>Asignar</button>
+                <button className='assign' onClick={() => { material && assignMaterial(), task && (setAssingItem(!AssingItem)/*, setUserListVisible(false)*/) }}>Asignar</button>
             </div>
         </div>
     )

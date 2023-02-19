@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import getConfig from '../../utils/getConfig'
-const deploylist = ({ user, setmenuvisible, setUserListVisible, material, task, AssingItem, UserSelected,setUserSelected}) => {
+const deploylist = ({ user, setmenuvisible, setUserListVisible, material, task, AssingItem, UserSelected, setUserSelected }) => {
     const [Selected, setSelected] = useState(false)
     const [Amount, setAmount] = useState(0)
-    console.log(task, material)
-    if(UserSelected===user){
+    //console.log(task, material)
+    if (UserSelected === user) {
         setSelected(true)
     }
     function asign() {
+        //console.log(user, task)
         if (Selected || Amount > 0) {
             if (material) {
                 material.userId = user.id
@@ -16,19 +17,19 @@ const deploylist = ({ user, setmenuvisible, setUserListVisible, material, task, 
             }
             if (task) {
                 task.userId = user.id
-                axios.put(`http://localhost:8000/api/v1/tasks/${task.id}`, task, getConfig())
+                axios.post(`http://localhost:8000/api/v1/taskList`,{"userId":`${user.id}`,"taskId":`${task.id}`}, getConfig())
             }
             setUserListVisible(false)
         }
     }
-    useEffect(() => { if (AssingItem) { asign() } }, [AssingItem])
+    useEffect(() => { asign()  /*if (AssingItem) {  } */}, [AssingItem])
 
     return (
         <section className='assignItems'>
-            <div className='items itemsWidth' onClick={() => { task&&setSelected(!Selected), material&&setUserSelected(user)/*, setmenuvisible(false), setuserlistvisible(false), asign() */ }}>
+            <div className='items itemsWidth' onClick={() => { task && setSelected(!Selected), material && setUserSelected(user)/*, setmenuvisible(false), setuserlistvisible(false), asign() */ }}>
                 {user.firstName + " " + user.lastName}
                 {
-                   task
+                    task
                     &&
                     <div className='selectListBackground'>
                         <div className={'select ' + `${Selected && 'selection'}`}></div>

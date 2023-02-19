@@ -12,6 +12,7 @@ import Area from './slices/AreaSlice'
 import Item from './slices/ItemSlice'
 import ItemName from './slices/ItemNameSlice'
 import NewsVisible from './slices/NewsVisibleSlice'
+import UserListVisible from './slices/UserListVisibleSlice'
 export default configureStore({
     reducer: {
         UserMenu,
@@ -19,6 +20,7 @@ export default configureStore({
         Area,
         Item,
         ItemName,
-        NewsVisible
+        NewsVisible,
+        UserListVisible
     }
 })
