@@ -68,3 +68,13 @@
     cursor: pointer;
     color: var(--primary-color);
 }
+
+.installed{
+    color: rgb(13, 255, 0);
+}
+.damaged {
+    color: rgb(255, 0, 0);
+}
+.assigned{
+    color:blue
+}

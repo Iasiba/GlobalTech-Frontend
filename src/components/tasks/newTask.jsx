@@ -64,7 +64,7 @@ const newTask = () => {
 
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
-            <i className='bx bx-x-circle close' onClick={() => dispatch(setVisibleTask(!NewTaskVisible))}></i>
+            <i className='bx bx-x-circle close' onClick={() => (dispatch(setVisibleTask(!NewTaskVisible)),dispatch(setItem(false)))}></i>
             <h2>{Task.id ? 'Editar Tarea' : 'Nueva Tarea'}</h2>
             <div className='createGrid'>
                 <div>* Fecha de ejecucion:</div>

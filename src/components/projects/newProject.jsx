@@ -35,7 +35,7 @@ const newProject = () => {
     }
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter newProject new' >
-            <i className='bx bx-x-circle close' onClick={() => dispatch(setVisibleProject(!NewProjectVisible))}></i>
+            <i className='bx bx-x-circle close' onClick={() => (dispatch(setVisibleProject(!NewProjectVisible)),dispatch(setItem(false)))}></i>
             <h2>{Project.id ? 'Editar Proyecto' : 'Nuevo Proyecto'}</h2>
             <div className='createGrid'>
                 <div>* Nombre:</div>

@@ -10,7 +10,6 @@ const userList = ({ setmenuvisible, material, setUserListVisible, task, setviewU
     const [AssingItem, setAssingItem] = useState(false)
     const [UserSelected, setUserSelected] = useState('')
     const [AllUsers, setAllUsers] = useState('')
-    const [Selected, setSelected] = useState(false)
     const [Refresh, setRefresh] = useState(false)
     function setSelectedToUser() {
         if (AllUsers) {
@@ -18,7 +17,6 @@ const userList = ({ setmenuvisible, material, setUserListVisible, task, setviewU
                 AllUsers[i].selected = false;
             }
         }
-        console.log(AllUsers, material, task)
     }
     useEffect(() => {
         axios.get('http://localhost:8000/api/v1/users', getConfig())
@@ -34,13 +32,12 @@ const userList = ({ setmenuvisible, material, setUserListVisible, task, setviewU
             }
         }
         setRefresh(!Refresh)
-        console.log(UserSelected, material)
     }, [UserSelected])
 
     function assignMaterial() {
         for (let i = 0; i < material.length; i++) {
             axios.put(`http://localhost:8000/api/v1/materials/${material[i].id}`, { "assigned": true, "userId": UserSelected.id }, getConfig())
-                .then(() => console.log(material[i].name + UserSelected.firstName))
+                .then(() => console.log("Material asignado"))
         }
         setviewUserList(false)
     }

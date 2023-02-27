@@ -58,7 +58,7 @@ const newMaterial = () => {
     // 
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
-            <i className='bx bx-x-circle close' onClick={() => dispatch(setVisibleMaterial(!NewMaterialVisible))}></i>
+            <i className='bx bx-x-circle close' onClick={() => (dispatch(setVisibleMaterial(!NewMaterialVisible)),dispatch(setItem(false)))}></i>
             {Material.id ? <h2>Editar Material</h2> : <h2>Nuevo Material</h2>}
 
             <div className='createGrid'>

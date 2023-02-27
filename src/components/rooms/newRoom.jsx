@@ -45,7 +45,7 @@ const newRoom = () => {
     }
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
-            <i className='bx bx-x-circle close' onClick={() => dispatch(setVisibleRoom(!NewRoomVisible))}></i>
+            <i className='bx bx-x-circle close' onClick={() => (dispatch(setVisibleRoom(!NewRoomVisible)),dispatch(setItem(false)))}></i>
             <h2>{Room.id ? 'Editar Area' : 'Nueva Area'}</h2>
             <div className='createGrid'>
                 <div>* Nombre:</div>

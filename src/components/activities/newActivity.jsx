@@ -9,14 +9,14 @@ import './activities.css'
 import { useSelector, useDispatch } from 'react-redux'
 import { setItem } from '../../store/slices/ItemSlice'
 import { setVisibleActivity } from './../../store/slices/NewsVisibleSlice'
-const newActivity = () => {
+const newActivity = ({ task, setVisibleReport }) => {
     const dispatch = useDispatch()
     const Activity = useSelector(state => state.Item)
     const NewActivityVisible = useSelector(state => state.NewsVisible)[3]
 
     const Tasks = AxiosGetHook('http://localhost:8000/api/v1/tasks')
     const AllTasks = Tasks.data.data?.tasks
-
+    console.log(AllTasks)
     const [Task, setTask] = useState('')
     const [TaskId, setTaskId] = useState('')
     const [TaskListVisible, setTaskListVisible] = useState(false)
@@ -40,6 +40,8 @@ const newActivity = () => {
                     .then(res => setMaterialsAsignatesToMe(res.data))
         }, [Task]
     )
+    useEffect(() => { task && setTask(task) }, [task])
+
     if (Activity.id) useEffect(() => { setTask(Activity.task) }, [Activity])//en caso de editar materiales
 
     function installMaterial(material) {
@@ -62,7 +64,6 @@ const newActivity = () => {
     }
     const submit = data => {
         data.taskId = Task.id
-        console.log(data)
         const URL = Activity.id ? `http://localhost:8000/api/v1/activities/${Activity.id}` : `http://localhost:8000/api/v1/tasks/${TaskId}/activities`
         Activity.id ?
             axios.put(URL, data, getConfig())
@@ -77,11 +78,39 @@ const newActivity = () => {
                     console.log(res, "Actividad creada")
                 })
                 .catch(err => console.log(err))
-        dispatch(setVisibleActivity(!NewActivityVisible))//ocultar ventana de creacion de actividades
+        if (MaterialsInstalleds.length) {
+            for (let i = 0; i < MaterialsInstalleds.length; i++) {
+                const MaterialId = MaterialsInstalleds[i].MaterialSelected.id;
+                MaterialsInstalleds[i].installed = true
+                MaterialsInstalleds[i].projectId = MaterialsInstalleds[i].RoomSelected.projectId
+                MaterialsInstalleds[i].roomId = MaterialsInstalleds[i].RoomSelected.id
+                axios.put(`http://localhost:8000/api/v1/materials/${MaterialId}`, MaterialsInstalleds[i], getConfig())
+                    .then(res => {
+                        console.log(res, "Material instalado")
+                    })
+                    .catch(err => console.log(err))
+            }
+        }
+        task
+            &&
+            (
+                console.log(task),
+                task.assigned=false,
+                task.userId=null,
+                axios.put(`http://localhost:8000/api/v1/tasks/${task.id}`, task, getConfig())
+                .then(res => {
+                    console.log(res, "Activiad Actualizada")
+                })
+                .catch(err => console.log(err))
+                .finally(dispatch(setItem(false)))
+                ,
+                setVisibleReport(false)
+            )
+        !task && dispatch(setVisibleActivity(!NewActivityVisible))//ocultar ventana de creacion de actividades
     }
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
-            <i className='bx bx-x-circle close' onClick={() => dispatch(setVisibleActivity(!NewActivityVisible))}></i>
+            <i className='bx bx-x-circle close' onClick={() => (task ? setVisibleReport(false) : dispatch(setVisibleActivity(!NewActivityVisible)), dispatch(setItem(false)))}></i>
             <h2>{Activity.id ? 'Editar Actividad' : 'Nueva Actividad'}</h2>
             <div className='createGrid'>
                 <div>* Descripcion:</div>
@@ -90,7 +119,7 @@ const newActivity = () => {
             <div className='createGrid'>
                 <div>* Tarea:</div>
                 <input type="text" required
-                    onClick={() => setTaskListVisible(!TaskListVisible)}
+                    onClick={() => !task && setTaskListVisible(!TaskListVisible)}
                     placeholder='--selecciona una tarea--'
                     value={Task.description ? Task.description : ''}
                     {...register('taskDescription')} />
@@ -163,13 +192,11 @@ const newActivity = () => {
                                 )
                                 :
                                 <div></div>
-
                         }
                     </section>
                 </div>
             }
             <div>
-
             </div>
             <br />
             <button>{Activity.id ? 'Actualizar' : 'Crear'}</button>

@@ -38,7 +38,7 @@ const newInventary = () => {
     }
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
-            <i className='bx bx-x-circle close' onClick={() => dispatch(setVisibleInventary(!NewInventaryVisible))}></i>
+            <i className='bx bx-x-circle close' onClick={() => (dispatch(setVisibleInventary(!NewInventaryVisible)),dispatch(setItem(false)))}></i>
             <h2>{Inventary.id ? 'Editar Inventario' : 'Nuevo Inventario'}</h2>
             <div className='createGrid'>
                 <div>* Nombre:</div>

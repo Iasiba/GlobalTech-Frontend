@@ -35,7 +35,7 @@ const newNote = () => {
     }
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
-            <i className='bx bx-x-circle close' onClick={() => dispatch(setVisibleNote(!NewNoteVisible))}></i>
+            <i className='bx bx-x-circle close' onClick={() => (dispatch(setVisibleNote(!NewNoteVisible)),dispatch(setItem(false)))}></i>
             <h2>{Note.id ? 'Editar Nota' : 'Nueva Nota'}</h2>
             <div className='createGrid'>
                 <div>* Titulo:</div>

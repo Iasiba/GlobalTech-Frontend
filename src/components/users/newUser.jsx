@@ -9,7 +9,7 @@ import './users.css'
 import { setVisibleUser } from './../../store/slices/NewsVisibleSlice'
 import { useDispatch, useSelector } from 'react-redux'
 const newUser = () => {
-    const dispatch=useDispatch()
+    const dispatch = useDispatch()
     const NewUserVisible = useSelector(state => state.NewsVisible)[9]
     const Roles = AxiosGetHook('http://localhost:8000/api/v1/roles')
     const AllRoles = Roles.data.data?.roles
@@ -38,7 +38,7 @@ const newUser = () => {
     }
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
-            <i className='bx bx-x-circle close' onClick={() => dispatch(setVisibleUser(false))}></i>
+            <i className='bx bx-x-circle close' onClick={() => (dispatch(setVisibleUser(false)), dispatch(setItem(false)))}></i>
             <h2>Nuevo Usuario</h2>
             <div className='createGrid'>
                 <div>* Nombre:</div>

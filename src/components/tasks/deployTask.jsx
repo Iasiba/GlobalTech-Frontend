@@ -7,12 +7,14 @@ import { useDispatch } from 'react-redux'
 import { setItem } from '../../store/slices/ItemSlice'
 import Activities from '../activities/activities'
 import { setVisibleTask } from './../../store/slices/NewsVisibleSlice'
+import NewActivity from '../activities/newActivity'
 const deployTask = ({ task, searchTasks }) => {
     const dispatch = useDispatch()
     const [MenuVisible, setMenuVisible] = useState(false)
     const [UserListVisible, setUserListVisible] = useState(false)
     const [Visible, setVisible] = useState(false)
     const [ActivityVisible, setActivityVisible] = useState(false)
+    const [VisibleReport, setVisibleReport] = useState(false)
     return (
         <>
             <div className='deploy'>
@@ -36,6 +38,7 @@ const deployTask = ({ task, searchTasks }) => {
                     MenuVisible
                     &&
                     <div className='itemList itemListPrimary '>
+                        <p className='items materialItemsWidth' onClick={() => { setMenuVisible(false), setVisibleReport(true) }}>Reporte</p>
                         <p className='items materialItemsWidth' onClick={() => { setMenuVisible(false), setUserListVisible(true) }}>Asignar</p>
                         <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(task)), dispatch(setVisibleTask(true)), setMenuVisible(false) }}>Editar</p>
                         <p className='items materialItemsWidth' onClick={() => ((
@@ -70,6 +73,14 @@ const deployTask = ({ task, searchTasks }) => {
                     {ActivityVisible && <Activities taskId={task.id} />}
                 </div>
             </div>}
+            {
+                VisibleReport
+                &&
+                < NewActivity
+                    task={task}
+                    setVisibleReport={setVisibleReport}
+                />
+            }
         </>
     )
 }

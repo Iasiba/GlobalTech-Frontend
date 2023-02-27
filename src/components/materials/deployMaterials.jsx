@@ -9,40 +9,35 @@ import getConfig from '../../utils/getConfig'
 import { useDispatch, useSelector } from 'react-redux'
 import { setItem } from '../../store/slices/ItemSlice'
 import { setVisibleMaterial } from './../../store/slices/NewsVisibleSlice'
-const deployMaterials = ({ material, MaterialList, searchMaterials, viewUserList }) => {
+const deployMaterials = ({ material, MaterialList, searchMaterials, setviewUserList }) => {
   const dispatch = useDispatch()
-  const NewMaterialVisible = useSelector(state => state.NewsVisible)[6]
   const [Visible, setVisible] = useState(false)
   const [MenuVisible, setMenuVisible] = useState(false)
-  const [UserListVisible, setUserListVisible] = useState(false)
 
   const [Selected, setSelected] = useState(false)
-  //const [MaterialList, setMaterialList] = useState([])
   const [Refresh, setRefresh] = useState(false)
-  const [UserSelected, setUserSelected] = useState('')
+  function addToMaterialList() {
+    if (MaterialList.includes(material)) {
+      for (let i = 0; i < MaterialList.length; i++) {
+        if (material === MaterialList[i]) {
+          MaterialList.splice(i, 1)
+        }
+      }
+    } else {
+      MaterialList.push(material)
+    }
+    setRefresh(!Refresh)
+    setSelected(!Selected)
+  }
   return (
     <>
       <div className='deploy'>
         <div className='selectListBackground selectMaterial'
-          onClick={
-            () => {
-              if (MaterialList.includes(material)) {
-                for (let i = 0; i < MaterialList.length; i++) {
-                  if (material === MaterialList[i]) {
-                    MaterialList.splice(i, 1)
-                  }
-                }
-              } else {
-                MaterialList.push(material)
-              }
-              setRefresh(!Refresh)
-              setSelected(!Selected)
-            }
-          }
+          onClick={() => addToMaterialList()}
         >
           <div className={'select Select ' + `${Selected && !material.onHold && 'selection'}`}></div>
         </div>
-        <div onClick={() => setVisible(!Visible)} className='materialsBody tableHover'>
+        <div onClick={() => setVisible(!Visible)} className={`materialsBody tableHover ${material.damaged ? "damaged" : (material.installed ? "installed" : material.assigned && "assigned")}`}>
           <p>{material.name}</p>
           <p>{material.amount}</p>
           {material.project?.name && <p>{material.project.name}</p>}
@@ -55,7 +50,7 @@ const deployMaterials = ({ material, MaterialList, searchMaterials, viewUserList
         {
           MenuVisible &&
           <div className='itemList itemListPrimary '>
-            {!material.onHold && <p className='items materialItemsWidth' onClick={() => { setUserListVisible(true), setMenuVisible(false) }}>Asignar</p>}
+            {!material.onHold && <p className='items materialItemsWidth' onClick={() => { addToMaterialList(), Selected ? setviewUserList(false) : setviewUserList(true), setMenuVisible(false) }}>Asignar</p>}
             <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(material)), dispatch(setVisibleMaterial(true)), setMenuVisible(false) }}>Editar</p>
             <p className='items materialItemsWidth'
               onClick={() => ((
@@ -79,14 +74,16 @@ const deployMaterials = ({ material, MaterialList, searchMaterials, viewUserList
       </div>
       {
         Visible && <div className='content'>
+          <p>Inventario: {material.inventory.name}</p>
           <p>Cantidad: {material.amount}</p>
           {material.project?.name && <p>Proyecto: {material.project.name}</p>}
+          {material.room?.name && <p>Lugar de Instalacion: {material.room.name}</p>}
           <p>En espera: {material.onHold ? "si" : "no"}</p>
+          <p>Asignado: {material.assigned ? "si" : "no"}</p>
           <p>Entregado: {material.delivered ? "si" : "no"}</p>
           <p>Instalado: {material.installed ? "si" : "no"}</p>
           <p>Retornado: {material.returned ? "si" : "no"}</p>
           <p>Dañado: {material.damaged ? "si" : "no"}</p>
-          <p>Inventario: {material.inventory.name}</p>
           <p>Usuario Asignado: {material.user.firstName + ' ' + (material.user && material.user.lastName)}</p>
         </div>
       }

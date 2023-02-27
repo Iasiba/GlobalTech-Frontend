@@ -53,7 +53,7 @@ const materials = ({ projectId, myhome, home, materials }) => {
             MaterialList={MaterialList}
             material={material}
             searchMaterials={searchMaterials}
-            viewUserList={viewUserList}
+            setviewUserList={setviewUserList}
           />
         )
       }

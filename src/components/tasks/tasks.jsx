@@ -11,14 +11,23 @@ const tasks = ({ roomId, home, myhome }) => {
   function searchTasks() {
     let url = 'http://localhost:8000/api/v1/tasks'// home y otras opciones
     if (roomId) url = `http://localhost:8000/api/v1/rooms/${roomId}/tasks`
-    if (myhome) url = 'http://localhost:8000/api/v1/users/me/tasks'
+    if (myhome) url = 'http://localhost:8000/api/v1/users/me/taskList'
     axios.get(url, getConfig())
       .then(res => {
-        if (res.data?.tasks) {
-          setAllTasks(res.data?.tasks)
+        if (myhome) {
+          console.log(res)
+          let aux = []
+          res.data.map(taskList => aux.push(taskList.task))
+          setAllTasks(aux)
         } else {
-          setAllTasks(res.data)
+          if (res.data?.tasks) {
+            setAllTasks(res.data?.tasks)
+          } else {
+            setAllTasks(res.data)
+          }
         }
+
+
       })
   }
 
