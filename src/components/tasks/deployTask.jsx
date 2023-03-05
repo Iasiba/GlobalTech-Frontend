@@ -76,10 +76,12 @@ const deployTask = ({ task, searchTasks }) => {
             {
                 VisibleReport
                 &&
-                < NewActivity
-                    task={task}
-                    setVisibleReport={setVisibleReport}
-                />
+                <div className='report'>
+                    < NewActivity
+                        task={task}
+                        setVisibleReport={setVisibleReport}
+                    />
+                </div>
             }
         </>
     )

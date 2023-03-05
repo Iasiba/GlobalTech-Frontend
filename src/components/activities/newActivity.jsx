@@ -99,7 +99,7 @@ const newActivity = ({ task, setVisibleReport }) => {
                 task.userId=null,
                 axios.put(`http://localhost:8000/api/v1/tasks/${task.id}`, task, getConfig())
                 .then(res => {
-                    console.log(res, "Activiad Actualizada")
+                    console.log(res, "Tarea Actualizada")
                 })
                 .catch(err => console.log(err))
                 .finally(dispatch(setItem(false)))
@@ -165,7 +165,7 @@ const newActivity = ({ task, setVisibleReport }) => {
                     {
                         VisibleMaterialAsignedToMe &&
                         <div>
-                            {MaterialsAsignatesToMe.map(MaterialAsignatedToMe => <div className='MaterialAsignatedToMe' onClick={() => { setMaterialSelected(MaterialAsignatedToMe), setVisibleMaterialAsignedToMe(false) }} key={MaterialAsignatedToMe.id}>{MaterialAsignatedToMe.name}</div>)}
+                            {MaterialsAsignatesToMe.map(MaterialAsignatedToMe => !MaterialAsignatedToMe.installed&&(<div className='MaterialAsignatedToMe' onClick={() => { setMaterialSelected(MaterialAsignatedToMe), setVisibleMaterialAsignedToMe(false) }} key={MaterialAsignatedToMe.id}>{MaterialAsignatedToMe.name}</div>))}
                         </div>
                     }
                     <div onClick={() => {
