@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
 import './activities.css'
 import axios from 'axios'
@@ -7,12 +7,26 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setItem } from '../../store/slices/ItemSlice'
 import getConfig from '../../utils/getConfig'
 import { setVisibleActivity } from './../../store/slices/NewsVisibleSlice'
+import { setRefresh } from '../../store/slices/RefreshSlice'
 const deployActivities = ({ activity, searcActivities }) => {
   const dispatch = useDispatch()
   const NewActivityVisible = useSelector(state => state.NewsVisible)[3]
   const [Visible, setVisible] = useState(false)
   const [MenuVisible, setMenuVisible] = useState(false)
 
+  const Refresh = useSelector(state => state.Refresh)
+  const [Click, setClick] = useState(false)
+  useEffect(
+    () => {
+      if (Click) {
+        setMenuVisible(!MenuVisible),
+          setClick(false)
+      } else {
+        setMenuVisible(false)
+      }
+    }, [Refresh]
+  )
+  
   return (
     <>
       <div className='deploy'>
@@ -22,7 +36,14 @@ const deployActivities = ({ activity, searcActivities }) => {
           <p>{activity.createdAt}</p>
           <p>{activity.user.firstName}</p>
         </div>
-        <aside className='threePoints' onClick={() => setMenuVisible(!MenuVisible)} ><p>...</p></aside>
+        <aside className='threePoints'
+          onClick={
+            () => (
+              dispatch(setRefresh(!Refresh)),
+              setClick(true)
+            )
+          }
+        ><p>...</p></aside>
         {
           MenuVisible
           &&

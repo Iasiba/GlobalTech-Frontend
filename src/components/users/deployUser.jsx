@@ -1,15 +1,29 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './users.css'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setItem } from '../../store/slices/ItemSlice'
 import axios from 'axios'
 import getConfig from '../../utils/getConfig'
+import { setRefresh } from '../../store/slices/RefreshSlice'
 const deployUser = ({ user, searchUsers }) => {
   const dispatch = useDispatch()
   const [Visible, setVisible] = useState(false)
   const [MenuVisible, setMenuVisible] = useState(false)
+
+  const Refresh = useSelector(state => state.Refresh)
+  const [Click, setClick] = useState(false)
+  useEffect(
+    () => {
+      if (Click) {
+        setMenuVisible(!MenuVisible),
+          setClick(false)
+      } else {
+        setMenuVisible(false)
+      }
+    }, [Refresh]
+  )
   return (
     <>
       <div className='deploy'>
@@ -17,7 +31,14 @@ const deployUser = ({ user, searchUsers }) => {
           <p>{user.firstName} {user.lastName}</p>
           {user.tasks[0] && <p>{user.tasks && user.tasks[0].description}</p>}
         </div>
-        <aside className='threePoints' onClick={() => setMenuVisible(!MenuVisible)} ><p>...</p></aside>
+        <aside className='threePoints'
+          onClick={
+            () => (
+              dispatch(setRefresh(!Refresh)),
+              setClick(true)
+            )
+          }
+        ><p>...</p></aside>
         {
           MenuVisible
           &&

@@ -1,13 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import axios from 'axios'
 import { useState } from 'react'
 import UserList from '../users/userList'
 import getConfig from '../../utils/getConfig'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setItem } from '../../store/slices/ItemSlice'
 import Activities from '../activities/activities'
 import { setVisibleTask } from './../../store/slices/NewsVisibleSlice'
 import NewActivity from '../activities/newActivity'
+import { setRefresh } from '../../store/slices/RefreshSlice'
 const deployTask = ({ task, searchTasks }) => {
     const dispatch = useDispatch()
     const [MenuVisible, setMenuVisible] = useState(false)
@@ -15,6 +16,20 @@ const deployTask = ({ task, searchTasks }) => {
     const [Visible, setVisible] = useState(false)
     const [ActivityVisible, setActivityVisible] = useState(false)
     const [VisibleReport, setVisibleReport] = useState(false)
+
+    const Refresh = useSelector(state => state.Refresh)
+    const [Click, setClick] = useState(false)
+    useEffect(
+        () => {
+            if (Click) {
+                setMenuVisible(!MenuVisible),
+                    setClick(false)
+            } else {
+                setMenuVisible(false)
+            }
+        }, [Refresh]
+    )
+
     return (
         <>
             <div className='deploy'>
@@ -33,7 +48,16 @@ const deployTask = ({ task, searchTasks }) => {
                     </aside>
 
                 </div>
-                <aside className='threePoints' onClick={() => setMenuVisible(!MenuVisible)} ><p>...</p></aside>
+
+                <aside className='threePoints'
+                    onClick={
+                        () => (
+                            dispatch(setRefresh(!Refresh)),
+                            setClick(true)
+                        )
+                    }
+                ><p>...</p></aside>
+
                 {
                     MenuVisible
                     &&

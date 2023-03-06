@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -7,10 +7,24 @@ import { setItem } from '../../store/slices/ItemSlice'
 import getConfig from '../../utils/getConfig'
 import './backups.css'
 import { setVisibleBackup } from './../../store/slices/NewsVisibleSlice'
+import { setRefresh } from '../../store/slices/RefreshSlice'
 const deployBackups = ({ backup, search }) => {
   const dispatch = useDispatch()
   const NewBackupVisible = useSelector(state => state.NewsVisible)[7]
   const [MenuVisible, setMenuVisible] = useState(false)
+
+  const Refresh = useSelector(state => state.Refresh)
+  const [Click, setClick] = useState(false)
+  useEffect(
+      () => {
+          if (Click) {
+              setMenuVisible(!MenuVisible),
+                  setClick(false)
+          } else {
+              setMenuVisible(false)
+          }
+      }, [Refresh]
+  )
   return (
     <>
       <div className='deploy'>
@@ -23,7 +37,14 @@ const deployBackups = ({ backup, search }) => {
           </a>
         </div>
 
-        <aside className='threePoints' onClick={() => setMenuVisible(!MenuVisible)} ><p>...</p></aside>
+        <aside className='threePoints'
+          onClick={
+            () => (
+              dispatch(setRefresh(!Refresh)),
+              setClick(true)
+            )
+          }
+        ><p>...</p></aside>
         {
           MenuVisible
           &&

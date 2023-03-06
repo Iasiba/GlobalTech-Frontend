@@ -17,7 +17,8 @@ const tasks = ({ roomId, home, myhome }) => {
         if (myhome) {
           console.log(res.data)
           let aux = []
-          res.data.map(taskList => (aux.push(taskList.task)))
+
+          res.data.map(taskList => (taskList.task.taskListId = taskList.id, aux.push(taskList.task)))
           setAllTasks(aux)
         } else {
           if (res.data?.tasks) {

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './projects.css'
 import { useState } from 'react'
 import Rooms from '../rooms/rooms'
@@ -12,6 +12,7 @@ import axios from 'axios'
 import getConfig from '../../utils/getConfig'
 import Backups from '../backups/backups'
 import { setVisibleProject } from './../../store/slices/NewsVisibleSlice'
+import { setRefresh } from '../../store/slices/RefreshSlice'
 const deployProject = ({ project, searchProjects }) => {
   const dispatch = useDispatch()
   const NewProjectVisible = useSelector(state => state.NewsVisible)[0]
@@ -24,13 +25,34 @@ const deployProject = ({ project, searchProjects }) => {
   const [InfoVisible, setInfoVisible] = useState(false)
 
   const [MenuVisible, setMenuVisible] = useState(false)
+
+
+  const Refresh = useSelector(state => state.Refresh)
+  const [Click, setClick] = useState(false)
+  useEffect(
+      () => {
+          if (Click) {
+              setMenuVisible(!MenuVisible),
+                  setClick(false)
+          } else {
+              setMenuVisible(false)
+          }
+      }, [Refresh]
+  )
   return (
     <>
       <div className='deploy'>
         <div onClick={() => setVisible(!Visible)} className='tableHover projectTittle'>
           <p>{project.name}</p>
         </div>
-        <aside className='threePoints' onClick={() => setMenuVisible(!MenuVisible)} ><p>...</p></aside>
+        <aside className='threePoints'
+          onClick={
+            () => (
+              dispatch(setRefresh(!Refresh)),
+              setClick(true)
+            )
+          }
+        ><p>...</p></aside>
         {
           MenuVisible
           &&

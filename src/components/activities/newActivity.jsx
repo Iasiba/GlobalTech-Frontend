@@ -105,6 +105,12 @@ const newActivity = ({ task, setVisibleReport }) => {
                 .finally(dispatch(setItem(false)))
                 ,
                 setVisibleReport(false)
+                ,
+                axios.delete(`http://localhost:8000/api/v1/taskList/${task.taskListId}`, getConfig())
+                .then(res => {
+                    console.log(res, "Asignacion Borrada")
+                })
+                .catch(err => console.log(err))
             )
         !task && dispatch(setVisibleActivity(!NewActivityVisible))//ocultar ventana de creacion de actividades
     }

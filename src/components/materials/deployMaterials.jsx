@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import axios from 'axios'
 import './materials.css'
 import '../list/list.css'
@@ -9,13 +9,30 @@ import getConfig from '../../utils/getConfig'
 import { useDispatch, useSelector } from 'react-redux'
 import { setItem } from '../../store/slices/ItemSlice'
 import { setVisibleMaterial } from './../../store/slices/NewsVisibleSlice'
+import { setRefresh } from '../../store/slices/RefreshSlice'
+
 const deployMaterials = ({ material, MaterialList, searchMaterials, setviewUserList }) => {
   const dispatch = useDispatch()
   const [Visible, setVisible] = useState(false)
   const [MenuVisible, setMenuVisible] = useState(false)
 
   const [Selected, setSelected] = useState(false)
-  const [Refresh, setRefresh] = useState(false)
+  const [Actualizar, setActualizar] = useState(false)
+
+  const Refresh = useSelector(state => state.Refresh)
+  const [Click, setClick] = useState(false)
+  useEffect(
+    () => {
+      if (Click) {
+        setMenuVisible(!MenuVisible),
+          setClick(false)
+      } else {
+        setMenuVisible(false)
+      }
+    }, [Refresh]
+  )
+
+
   function addToMaterialList() {
     if (MaterialList.includes(material)) {
       for (let i = 0; i < MaterialList.length; i++) {
@@ -26,7 +43,7 @@ const deployMaterials = ({ material, MaterialList, searchMaterials, setviewUserL
     } else {
       MaterialList.push(material)
     }
-    setRefresh(!Refresh)
+    setActualizar(!Actualizar)
     setSelected(!Selected)
   }
   return (
@@ -42,7 +59,16 @@ const deployMaterials = ({ material, MaterialList, searchMaterials, setviewUserL
           <p>{material.amount}</p>
           {material.project?.name && <p>{material.project.name}</p>}
         </div>
-        <aside className='threePoints' onClick={() => setMenuVisible(!MenuVisible)} ><p>...</p></aside>
+
+        <aside className='threePoints'
+          onClick={
+            () => (
+              dispatch(setRefresh(!Refresh)),
+              setClick(true)
+            )
+          }
+        ><p>...</p></aside>
+
         {
           <div className='backgroundthreePoints'>
           </div>

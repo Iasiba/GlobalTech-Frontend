@@ -62,10 +62,12 @@ const materials = ({ projectId, myhome, home, materials }) => {
         /*UserListVisible*/
         viewUserList
         &&
-        <UserList
-          material={MaterialList} /*{Materials}*/
-          setviewUserList={setviewUserList}
-        />
+        <div className='backgroundAssignMaterial'>
+          <UserList
+            material={MaterialList} /*{Materials}*/
+            setviewUserList={setviewUserList}
+          />
+        </div>
       }
     </div>
   )
