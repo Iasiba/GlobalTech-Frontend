@@ -41,7 +41,6 @@ const userList = ({ setmenuvisible, material, setUserListVisible, task, setviewU
         }
         setviewUserList(false)
     }
-
     return (
         <div className='itemLists  itemListSecondary'>
             {
@@ -50,6 +49,14 @@ const userList = ({ setmenuvisible, material, setUserListVisible, task, setviewU
                 <div className='TittleMaterialSelected'>
                     <div>Material Selecionado</div>
                     {material.map(material => <div className='MaterialSelected' key={material.id}>{material.name}</div>)}
+                </div>
+            }
+            {
+                task
+                &&
+                <div className='TittleMaterialSelected'>
+                    <div>Tarea Selecionada</div>
+                    <div>{task.description+" en "+ task.room.name+"-"+task.room.project.name}</div>
                 </div>
             }
             {

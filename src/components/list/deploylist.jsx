@@ -9,7 +9,7 @@ const deploylist = ({ user, setmenuvisible, setUserListVisible, material, task, 
         setSelected(true)
     }
     function asign() {
-        console.log(user, task)
+        
         if (Selected || Amount > 0) {
             if (material) {
                 material.userId = user.id

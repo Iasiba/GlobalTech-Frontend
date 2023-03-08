@@ -16,7 +16,7 @@ const newActivity = ({ task, setVisibleReport }) => {
 
     const Tasks = AxiosGetHook('http://localhost:8000/api/v1/tasks')
     const AllTasks = Tasks.data.data?.tasks
-    console.log(AllTasks)
+
     const [Task, setTask] = useState('')
     const [TaskId, setTaskId] = useState('')
     const [TaskListVisible, setTaskListVisible] = useState(false)
@@ -94,7 +94,6 @@ const newActivity = ({ task, setVisibleReport }) => {
         task
             &&
             (
-                console.log(task),
                 task.assigned=false,
                 task.userId=null,
                 axios.put(`http://localhost:8000/api/v1/tasks/${task.id}`, task, getConfig())

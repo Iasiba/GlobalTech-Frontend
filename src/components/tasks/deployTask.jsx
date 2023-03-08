@@ -76,11 +76,13 @@ const deployTask = ({ task, searchTasks }) => {
                 {
                     UserListVisible
                     &&
-                    <UserList
-                        task={task}
-                        menuvisible={MenuVisible} setmenuvisible={setMenuVisible}
-                        userlistvisible={UserListVisible} setUserListVisible={setUserListVisible}
-                    />
+                    <div className='backgroundUserList'>
+                        <UserList
+                            task={task}
+                            menuvisible={MenuVisible} setmenuvisible={setMenuVisible}
+                            userlistvisible={UserListVisible} setUserListVisible={setUserListVisible}
+                        />
+                    </div>
                 }
             </div>
             {Visible && <div className='content'>

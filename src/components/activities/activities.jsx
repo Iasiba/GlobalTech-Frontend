@@ -14,14 +14,26 @@ const activities = ({ taskId, myhome, home }) => {
 
         axios.get(url, getConfig())
             .then(res => {
+
                 if (res.data?.data?.activities) {
                     setAllActivity(res.data.data.activities)
                 } else {
                     if (res.data?.activities) {
-                        setAllActivity(res.data.activities)
+                        if (home) {
+                            const date = new Date()
+                            const day = date.getDate() < 10 ? "-0" + date.getDate() : date.getDate()
+                            const month = date.getMonth() < 10 ? "-0" + (1 + date.getMonth()) : (1 + date.getMonth())
+                            const today = date.getFullYear() + month + day
+                            const aux = []
+                            res.data.activities.map(activity => { if (activity.createdAt === today) { aux.push(activity) } })
+                            setAllActivity(aux)
+                        } else {
+                            setAllActivity(res.data.activities)
+                        }
                     } else {
                         setAllActivity(res.data)
                     }
+
                 }
                 /*
                 console.log(res)
@@ -33,11 +45,11 @@ const activities = ({ taskId, myhome, home }) => {
     }
     return (
         <div className='contentDeploy'>
-            <div className='activitiesHeader tableHeader'>
+            <div className={`${!myhome && "activitiesHeader"} tableHeader ${myhome && "myHomeActivityHeader"}`}>
+                <p>fecha</p>
                 <p>Proyecto</p>
                 <p>Description</p>
-                <p>fecha</p>
-                <p>Tecnico</p>
+                {!myhome && <p>Tecnico</p>}
             </div>
             {
                 AllActivity && AllActivity?.map(activity => {
@@ -46,6 +58,7 @@ const activities = ({ taskId, myhome, home }) => {
                             key={activity.id}
                             activity={activity}
                             searcActivities={searcActivities}
+                            myhome={myhome}
                         />
                     )
                 })

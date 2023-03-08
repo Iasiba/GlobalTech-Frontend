@@ -15,9 +15,7 @@ const tasks = ({ roomId, home, myhome }) => {
     axios.get(url, getConfig())
       .then(res => {
         if (myhome) {
-          console.log(res.data)
           let aux = []
-
           res.data.map(taskList => (taskList.task.taskListId = taskList.id, aux.push(taskList.task)))
           setAllTasks(aux)
         } else {
@@ -54,7 +52,6 @@ const tasks = ({ roomId, home, myhome }) => {
     }
   }, [AllTasks])
 
-  console.log(AllTasks)
   return (
     <div className='contentDeploy'>
       <div className="taskHeader tableHeader">

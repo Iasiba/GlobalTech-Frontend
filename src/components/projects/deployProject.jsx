@@ -30,14 +30,14 @@ const deployProject = ({ project, searchProjects }) => {
   const Refresh = useSelector(state => state.Refresh)
   const [Click, setClick] = useState(false)
   useEffect(
-      () => {
-          if (Click) {
-              setMenuVisible(!MenuVisible),
-                  setClick(false)
-          } else {
-              setMenuVisible(false)
-          }
-      }, [Refresh]
+    () => {
+      if (Click) {
+        setMenuVisible(!MenuVisible),
+          setClick(false)
+      } else {
+        setMenuVisible(false)
+      }
+    }, [Refresh]
   )
   return (
     <>

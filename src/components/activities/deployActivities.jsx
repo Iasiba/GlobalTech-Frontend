@@ -8,7 +8,7 @@ import { setItem } from '../../store/slices/ItemSlice'
 import getConfig from '../../utils/getConfig'
 import { setVisibleActivity } from './../../store/slices/NewsVisibleSlice'
 import { setRefresh } from '../../store/slices/RefreshSlice'
-const deployActivities = ({ activity, searcActivities }) => {
+const deployActivities = ({ activity, searcActivities, myhome }) => {
   const dispatch = useDispatch()
   const NewActivityVisible = useSelector(state => state.NewsVisible)[3]
   const [Visible, setVisible] = useState(false)
@@ -26,15 +26,15 @@ const deployActivities = ({ activity, searcActivities }) => {
       }
     }, [Refresh]
   )
-  
+
   return (
     <>
       <div className='deploy'>
-        <div onClick={() => setVisible(!Visible)} className={`activity table`}>
+        <div onClick={() => setVisible(!Visible)} className={`${myhome ? "myHomeActivity" : "activity"} table`}>
+          <p>{activity.createdAt}</p>
           <p>{activity.task.room.project.name}</p>
           <p>{activity.description}</p>
-          <p>{activity.createdAt}</p>
-          <p>{activity.user.firstName}</p>
+          {!myhome && <p>{activity.user.firstName}</p>}
         </div>
         <aside className='threePoints'
           onClick={
@@ -48,7 +48,7 @@ const deployActivities = ({ activity, searcActivities }) => {
           MenuVisible
           &&
           <div className='itemList itemListPrimary '>
-            <p className='items materialItemsWidth' onClick={() => {dispatch(setItem(activity)),dispatch(setVisibleActivity(!NewActivityVisible)),setMenuVisible(!MenuVisible)}}>Editar</p>
+            <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(activity)), dispatch(setVisibleActivity(!NewActivityVisible)), setMenuVisible(!MenuVisible) }}>Editar</p>
             <p className='items materialItemsWidth' onClick={() => ((
               axios.delete(`http://localhost:8000/api/v1/activities/${activity.id}`, getConfig())
                 .then(searcActivities()),

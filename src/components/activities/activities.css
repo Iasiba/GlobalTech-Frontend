@@ -68,3 +68,15 @@
     cursor: pointer;
     color: var(--primary-color);
 }
+.myHomeActivityHeader{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 32% 32% 32% 4%;
+}
+.myHomeActivity {
+    width: 96%;
+    display: grid;
+    justify-content: center;
+    text-align: center;
+    grid-template-columns: 33% 33% 33%;
+}

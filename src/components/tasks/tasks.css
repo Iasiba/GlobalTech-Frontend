@@ -36,3 +36,12 @@
     align-items: center;
     z-index: 1;
 }
+.backgroundUserList{
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

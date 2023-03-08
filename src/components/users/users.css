@@ -12,6 +12,7 @@
 }
 .TittleMaterialSelected{
     color: var(--primary-color);
+    text-align: center;
 }
 
 .itemLists {
