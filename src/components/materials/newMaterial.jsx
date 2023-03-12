@@ -48,17 +48,25 @@ const newMaterial = () => {
                 .catch(err => console.log(err))
                 .finally(() => dispatch(setItem(false)))
             :
+            createMaterial(URL, data)
+
+
+        dispatch(setVisibleMaterial(!NewMaterialVisible))//ocultar ventana de creacion de materiales
+    }
+    function createMaterial(URL, data) {
+        const Amount = data.amount
+        data.amount = 1
+        for (let i = 0; i < Amount; i++) {
             axios.post(URL, data, getConfig())
                 .then(res => {
                     console.log(res, "Material creado")
                 })
                 .catch(err => console.log(err))
-        dispatch(setVisibleMaterial(!NewMaterialVisible))//ocultar ventana de creacion de materiales
+        }
     }
-    // 
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
-            <i className='bx bx-x-circle close' onClick={() => (dispatch(setVisibleMaterial(!NewMaterialVisible)),dispatch(setItem(false)))}></i>
+            <i className='bx bx-x-circle close' onClick={() => (dispatch(setVisibleMaterial(!NewMaterialVisible)), dispatch(setItem(false)))}></i>
             {Material.id ? <h2>Editar Material</h2> : <h2>Nuevo Material</h2>}
 
             <div className='createGrid'>

@@ -8,6 +8,7 @@ import '../../App.css'
 import './users.css'
 import { setVisibleUser } from './../../store/slices/NewsVisibleSlice'
 import { useDispatch, useSelector } from 'react-redux'
+import { setItem } from '../../store/slices/ItemSlice'
 const newUser = () => {
     const dispatch = useDispatch()
     const NewUserVisible = useSelector(state => state.NewsVisible)[9]

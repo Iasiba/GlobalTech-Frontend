@@ -45,21 +45,23 @@ const activities = ({ taskId, myhome, home }) => {
     }
     return (
         <div className='contentDeploy'>
-            <div className={`${!myhome && "activitiesHeader"} tableHeader ${myhome && "myHomeActivityHeader"}`}>
-                <p>fecha</p>
-                <p>Proyecto</p>
-                <p>Description</p>
-                {!myhome && <p>Tecnico</p>}
-            </div>
             {
                 AllActivity && AllActivity?.map(activity => {
                     return (
-                        <DeployAtivity
-                            key={activity.id}
-                            activity={activity}
-                            searcActivities={searcActivities}
-                            myhome={myhome}
-                        />
+                        <>
+                            <div className={`${!myhome && "activitiesHeader"} tableHeader ${myhome && "myHomeActivityHeader"}`}>
+                                <p>fecha</p>
+                                <p>Proyecto</p>
+                                <p>Description</p>
+                                {!myhome && <p>Tecnico</p>}
+                            </div>
+                            <DeployAtivity
+                                key={activity.id}
+                                activity={activity}
+                                searcActivities={searcActivities}
+                                myhome={myhome}
+                            />
+                        </>
                     )
                 })
             }

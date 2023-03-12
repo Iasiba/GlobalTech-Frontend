@@ -55,7 +55,7 @@ const deployMaterials = ({ material, MaterialList, searchMaterials, setviewUserL
           <div className={'select Select ' + `${Selected && !material.onHold && 'selection'}`}></div>
         </div>
 
-        <div onClick={() => setVisible(!Visible)} className={`materialsBody tableHover ${material.damaged ? "damaged" : (material.installed ? "installed" : material.assigned && "assigned")}`}>
+        <div onClick={() => setVisible(!Visible)} className={`materialsBody tableHover ${material.onHold ? "onHold" : (material.damaged ? "damaged" : (material.installed ? "installed" : material.assigned && "assigned"))}`}>
           <p>{material.name}</p>
           <p>{material.amount}</p>
           {material.project?.name && <p>{material.project.name}</p>}
