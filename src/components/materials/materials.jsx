@@ -4,23 +4,27 @@ import DeployMaterials from './deployMaterials'
 import axios from 'axios'
 import getConfig from '../../utils/getConfig'
 import UserList from '../users/userList'
+import { useSelector } from 'react-redux'
 const materials = ({ projectId, myhome, home, materials }) => {
   const [Materials, setMaterials] = useState('')
   const [MaterialList, setMaterialList] = useState([])
   const [viewUserList, setviewUserList] = useState(false)
+  const Refresh = useSelector(state => state.Refresh)
   useEffect(() => {
     if (materials) {
       setMaterials(materials)
     } else {
       searchMaterials()
     }
-  }, [])
+    setMaterialList([])
+  }, [Refresh, projectId, myhome, home, materials])
+
 
   function searchMaterials() {
-    let url = `http://localhost:8000/api/v1/materials`
-    if (home) url = `http://localhost:8000/api/v1/materials/pendings`
-    if (projectId) url = `http://localhost:8000/api/v1/projects/${projectId}/materials`
-    if (myhome) url = `http://localhost:8000/api/v1/users/me/materials`
+    let url = `http://192.168.0.253:8000/api/v1/materials`
+    if (home) url = `http://192.168.0.253:8000/api/v1/materials/pendings`
+    if (projectId) url = `http://192.168.0.253:8000/api/v1/projects/${projectId}/materials`
+    if (myhome) url = `http://192.168.0.253:8000/api/v1/users/me/materials`
     axios.get(url, getConfig())
       .then(res => {
         if (res.data?.materials) {
@@ -52,19 +56,18 @@ const materials = ({ projectId, myhome, home, materials }) => {
             key={material.id}
             MaterialList={MaterialList}
             material={material}
-            searchMaterials={searchMaterials}
             setviewUserList={setviewUserList}
           />
         )
       }
       )}
       {
-        /*UserListVisible*/
         viewUserList
         &&
         <div className='backgroundAssignMaterial'>
           <UserList
-            material={MaterialList} /*{Materials}*/
+            material={MaterialList}
+            setMaterialList={setMaterialList}
             setviewUserList={setviewUserList}
           />
         </div>

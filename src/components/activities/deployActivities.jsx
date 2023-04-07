@@ -2,19 +2,19 @@ import React, { useEffect } from 'react'
 import { useState } from 'react'
 import './activities.css'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { setItem } from '../../store/slices/ItemSlice'
 import getConfig from '../../utils/getConfig'
 import { setVisibleActivity } from './../../store/slices/NewsVisibleSlice'
-import { setRefresh } from '../../store/slices/RefreshSlice'
-const deployActivities = ({ activity, searcActivities, myhome }) => {
+import {updateRefreshMenu} from '../../store/slices/RefreshMenuSlice'
+import { updateRefresh } from '../../store/slices/RefreshSlice'
+const deployActivities = ({ activity, myhome }) => {
   const dispatch = useDispatch()
   const NewActivityVisible = useSelector(state => state.NewsVisible)[3]
   const [Visible, setVisible] = useState(false)
   const [MenuVisible, setMenuVisible] = useState(false)
 
-  const Refresh = useSelector(state => state.Refresh)
+  const RefreshMenu = useSelector(state => state.RefreshMenu)
   const [Click, setClick] = useState(false)
   useEffect(
     () => {
@@ -24,9 +24,9 @@ const deployActivities = ({ activity, searcActivities, myhome }) => {
       } else {
         setMenuVisible(false)
       }
-    }, [Refresh]
+    }, [RefreshMenu]
   )
-
+  useEffect( () => {}, [activity, myhome])
   return (
     <>
       <div className='deploy'>
@@ -39,7 +39,7 @@ const deployActivities = ({ activity, searcActivities, myhome }) => {
         <aside className='threePoints'
           onClick={
             () => (
-              dispatch(setRefresh(!Refresh)),
+              dispatch(updateRefreshMenu()),
               setClick(true)
             )
           }
@@ -50,8 +50,8 @@ const deployActivities = ({ activity, searcActivities, myhome }) => {
           <div className='itemList itemListPrimary '>
             <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(activity)), dispatch(setVisibleActivity(!NewActivityVisible)), setMenuVisible(!MenuVisible) }}>Editar</p>
             <p className='items materialItemsWidth' onClick={() => ((
-              axios.delete(`http://localhost:8000/api/v1/activities/${activity.id}`, getConfig())
-                .then(searcActivities()),
+              axios.delete(`http://192.168.0.253:8000/api/v1/activities/${activity.id}`, getConfig())
+                .then(dispatch(updateRefresh())),
               setMenuVisible(!MenuVisible)
             ))}>Eliminar</p>
           </div>

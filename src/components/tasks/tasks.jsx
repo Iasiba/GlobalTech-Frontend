@@ -3,31 +3,45 @@ import "./tasks.css"
 import DeployTask from './deployTask'
 import axios from 'axios'
 import getConfig from '../../utils/getConfig'
+import { useSelector } from 'react-redux'
 const tasks = ({ roomId, home, myhome }) => {
   const [AllTasks, setAllTasks] = useState('')
   const [Home, setHome] = useState('')
-  useEffect(() => searchTasks(), [])
+  const Refresh = useSelector(state => state.Refresh)
+  useEffect(() => searchTasks(), [Refresh, roomId, home, myhome])
 
   function searchTasks() {
-    let url = 'http://localhost:8000/api/v1/tasks'// home y otras opciones
-    if (roomId) url = `http://localhost:8000/api/v1/rooms/${roomId}/tasks`
-    if (myhome) url = 'http://localhost:8000/api/v1/users/me/taskList'
+    let url = 'http://192.168.0.253:8000/api/v1/tasks'// home y otras opciones
+    if (roomId) url = `http://192.168.0.253:8000/api/v1/rooms/${roomId}/tasks`
+    if (myhome) url = 'http://192.168.0.253:8000/api/v1/users/me/taskList'
     axios.get(url, getConfig())
       .then(res => {
+        console.log(res)
         if (myhome) {
           let aux = []
           res.data.map(taskList => (taskList.task.taskListId = taskList.id, aux.push(taskList.task)))
           setAllTasks(aux)
         } else {
           if (res.data?.tasks) {
-            setAllTasks(res.data?.tasks)
+            if (home) {
+              let aux = res.data?.tasks?.filter(task => (task.iscanceled == false && task.isfinished == false))
+              setAllTasks(aux)
+            } else {
+              setAllTasks(res.data?.tasks)
+            }
           } else {
             setAllTasks(res.data)
           }
         }
-
-
       })
+
+    if (home) {
+      if (Home == '' && AllTasks && home) {
+        let aux = AllTasks?.filter(task => (task.iscanceled == false && task.isfinished == false))
+        setAllTasks(aux)
+        setHome(home)
+      }
+    }
   }
 
   useEffect(() => {
@@ -37,18 +51,12 @@ const tasks = ({ roomId, home, myhome }) => {
         x = parseInt(x.join(""), 10)
         let y = AllTasks[i].executionDate.split("-")
         y = parseInt(y.join(""), 10)
-        //console.log(x," x ",y," y ")
         if (x > y) {
           let aux = AllTasks[i]
           AllTasks[i] = AllTasks[j]
           AllTasks[j] = aux
         }
       }
-    }
-    if (Home == '' && AllTasks && home) {
-      let aux = AllTasks?.filter(task => (task.iscanceled == false && task.isfinished == false))
-      setAllTasks(aux)
-      setHome(home)
     }
   }, [AllTasks])
 
@@ -66,7 +74,6 @@ const tasks = ({ roomId, home, myhome }) => {
             <DeployTask
               key={task.id}
               task={task}
-              searchTasks={searchTasks}
             />)
         })
       }

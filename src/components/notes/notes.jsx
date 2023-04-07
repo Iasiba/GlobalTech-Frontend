@@ -3,12 +3,14 @@ import './notes.css'
 import DeployNotes from './deployNotes'
 import axios from 'axios'
 import getConfig from '../../utils/getConfig'
+import { useSelector } from 'react-redux'
 const notes = () => {
+  const Refresh = useSelector(state => state.Refresh)
   const [AllNotes, setAllNotes] = useState('')
   useEffect(() => {
     axios.get('http://localhost:8000/api/v1/users/me/notes', getConfig())
-      .then((res) =>setAllNotes(res.data))
-  }, [])
+      .then((res) => setAllNotes(res.data))
+  }, [Refresh])
 
   return (
     <div>

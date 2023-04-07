@@ -9,18 +9,18 @@ import { useSelector } from 'react-redux'
 import { setItem } from '../../store/slices/ItemSlice'
 import { useDispatch } from 'react-redux'
 import { setVisibleInventary } from './../../store/slices/NewsVisibleSlice'
+import { updateRefresh } from '../../store/slices/RefreshSlice'
 const newInventary = () => {
     const dispatch = useDispatch()
     const Inventary = useSelector(state => state.Item)
     const NewInventaryVisible = useSelector(state => state.NewsVisible)[5]
 
     const { handleSubmit, reset, register } = useForm()
-    const navigate = useNavigate()
 
     const submit = data => {
 
         Inventary.id ?
-            axios.put(`http://localhost:8000/api/v1/inventories/${Inventary.id}`, data, getConfig())
+            axios.put(`http://192.168.0.253:8000/api/v1/inventories/${Inventary.id}`, data, getConfig())
                 .then(res => {
                     console.log(res, "Inventario creado")
                 })
@@ -29,12 +29,13 @@ const newInventary = () => {
                     dispatch(setItem(false))
                 )
             :
-            axios.post(`http://localhost:8000/api/v1/inventories`, data, getConfig())
+            axios.post(`http://192.168.0.253:8000/api/v1/inventories`, data, getConfig())
                 .then(res => {
                     console.log(res, "Inventario creado")
                 })
                 .catch(err => console.log(err))
         dispatch(setVisibleInventary(!NewInventaryVisible))//ocultar ventana de creacion de inventarios
+        dispatch(updateRefresh())
     }
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >

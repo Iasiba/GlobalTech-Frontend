@@ -2,19 +2,19 @@ import axios from 'axios'
 import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
 import { setItem } from '../../store/slices/ItemSlice'
 import getConfig from '../../utils/getConfig'
 import Tasks from '../tasks/tasks'
 import { setVisibleRoom } from './../../store/slices/NewsVisibleSlice'
-import { setRefresh } from '../../store/slices/RefreshSlice'
-const deployRooms = ({ room, searchRooms }) => {
+import { updateRefreshMenu } from '../../store/slices/RefreshMenuSlice'
+import { updateRefresh } from '../../store/slices/RefreshSlice'
+const deployRooms = ({ room }) => {
     const dispatch = useDispatch()
     const NewRoomVisible = useSelector(state => state.NewsVisible)[1]
     const [Visible, setVisible] = useState(false)
     const [MenuVisible, setMenuVisible] = useState(false)
 
-    const Refresh = useSelector(state => state.Refresh)
+    const RefreshMenu = useSelector(state => state.RefreshMenu)
     const [Click, setClick] = useState(false)
     useEffect(
         () => {
@@ -24,9 +24,9 @@ const deployRooms = ({ room, searchRooms }) => {
             } else {
                 setMenuVisible(false)
             }
-        }, [Refresh]
+        }, [RefreshMenu]
     )
-
+    useEffect(() => {}, [room])
     return (
         <>
             <div className='deploy'>
@@ -36,7 +36,7 @@ const deployRooms = ({ room, searchRooms }) => {
                 <aside className='threePoints'
                     onClick={
                         () => (
-                            dispatch(setRefresh(!Refresh)),
+                            dispatch(updateRefreshMenu()),
                             setClick(true)
                         )
                     }
@@ -48,8 +48,8 @@ const deployRooms = ({ room, searchRooms }) => {
                     <div className='itemList itemListPrimary '>
                         <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(room)), dispatch(setVisibleRoom(!NewRoomVisible)), setMenuVisible(!MenuVisible) }}>Editar</p>
                         <p className='items materialItemsWidth' onClick={() => ((
-                            axios.delete(`http://localhost:8000/api/v1/rooms/${room.id}`, getConfig())
-                                .then(searchRooms()),
+                            axios.delete(`http://192.168.0.253:8000/api/v1/rooms/${room.id}`, getConfig())
+                                .then(dispatch(updateRefresh())),
                             setMenuVisible(!MenuVisible)))
                         }>Eliminar</p>
                     </div>

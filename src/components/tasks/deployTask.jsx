@@ -8,8 +8,9 @@ import { setItem } from '../../store/slices/ItemSlice'
 import Activities from '../activities/activities'
 import { setVisibleTask } from './../../store/slices/NewsVisibleSlice'
 import NewActivity from '../activities/newActivity'
-import { setRefresh } from '../../store/slices/RefreshSlice'
-const deployTask = ({ task, searchTasks }) => {
+import { updateRefreshMenu } from '../../store/slices/RefreshMenuSlice'
+import { updateRefresh } from '../../store/slices/RefreshSlice'
+const deployTask = ({ task }) => {
     const dispatch = useDispatch()
     const [MenuVisible, setMenuVisible] = useState(false)
     const [UserListVisible, setUserListVisible] = useState(false)
@@ -17,7 +18,7 @@ const deployTask = ({ task, searchTasks }) => {
     const [ActivityVisible, setActivityVisible] = useState(false)
     const [VisibleReport, setVisibleReport] = useState(false)
 
-    const Refresh = useSelector(state => state.Refresh)
+    const RefreshMenu = useSelector(state => state.RefreshMenu)
     const [Click, setClick] = useState(false)
     useEffect(
         () => {
@@ -27,13 +28,13 @@ const deployTask = ({ task, searchTasks }) => {
             } else {
                 setMenuVisible(false)
             }
-        }, [Refresh]
+        }, [RefreshMenu]
     )
-
+console.log(task)
     return (
         <>
             <div className='deploy'>
-                <div onClick={() => setVisible(!Visible)} className={`task tableHover ${task.iscanceled && "canceled"} ${task.isfinished && "finished"}`}>
+                <div onClick={() => setVisible(!Visible)} className={`task tableHover ${task.iscanceled && "canceled"} ${task.isfinished && "finished"} ${task.taskLists.length && "assigned"} `}>
                     <aside>
                         <p>{task.executionDate}</p>
                     </aside>
@@ -52,7 +53,7 @@ const deployTask = ({ task, searchTasks }) => {
                 <aside className='threePoints'
                     onClick={
                         () => (
-                            dispatch(setRefresh(!Refresh)),
+                            dispatch(updateRefreshMenu()),
                             setClick(true)
                         )
                     }
@@ -66,9 +67,9 @@ const deployTask = ({ task, searchTasks }) => {
                         <p className='items materialItemsWidth' onClick={() => { setMenuVisible(false), setUserListVisible(true) }}>Asignar</p>
                         <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(task)), dispatch(setVisibleTask(true)), setMenuVisible(false) }}>Editar</p>
                         <p className='items materialItemsWidth' onClick={() => ((
-                            axios.delete(`http://localhost:8000/api/v1/tasks/${task.id}/activities`, getConfig()),
-                            axios.delete(`http://localhost:8000/api/v1/tasks/${task.id}`, getConfig())
-                                .then(searchTasks()),
+                            axios.delete(`http://192.168.0.253:8000/api/v1/tasks/${task.id}/activities`, getConfig()),
+                            axios.delete(`http://192.168.0.253:8000/api/v1/tasks/${task.id}`, getConfig())
+                                .then(dispatch(updateRefresh())),
                             setMenuVisible(!MenuVisible)))
                         }>Eliminar</p>
                     </div>

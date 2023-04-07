@@ -9,12 +9,13 @@ import './activities.css'
 import { useSelector, useDispatch } from 'react-redux'
 import { setItem } from '../../store/slices/ItemSlice'
 import { setVisibleActivity } from './../../store/slices/NewsVisibleSlice'
+import { updateRefresh } from '../../store/slices/RefreshSlice'
 const newActivity = ({ task, setVisibleReport }) => {
     const dispatch = useDispatch()
     const Activity = useSelector(state => state.Item)
     const NewActivityVisible = useSelector(state => state.NewsVisible)[3]
 
-    const Tasks = AxiosGetHook('http://localhost:8000/api/v1/tasks')
+    const Tasks = AxiosGetHook('http://192.168.0.253:8000/api/v1/tasks')
     const AllTasks = Tasks.data.data?.tasks
 
     const [Task, setTask] = useState('')
@@ -36,7 +37,7 @@ const newActivity = ({ task, setVisibleReport }) => {
         () => {
             Task.id && setTaskId(Task.id),
                 Task.id && setRooms(Task.room.project.rooms),
-                axios.get('http://localhost:8000/api/v1/users/me/materials', getConfig())
+                axios.get('http://192.168.0.253:8000/api/v1/users/me/materials', getConfig())
                     .then(res => setMaterialsAsignatesToMe(res.data))
         }, [Task]
     )
@@ -64,7 +65,7 @@ const newActivity = ({ task, setVisibleReport }) => {
     }
     const submit = data => {
         data.taskId = Task.id
-        const URL = Activity.id ? `http://localhost:8000/api/v1/activities/${Activity.id}` : `http://localhost:8000/api/v1/tasks/${TaskId}/activities`
+        const URL = Activity.id ? `http://192.168.0.253:8000/api/v1/activities/${Activity.id}` : `http://192.168.0.253:8000/api/v1/tasks/${TaskId}/activities`
         Activity.id ?
             axios.put(URL, data, getConfig())
                 .then(res => {
@@ -84,34 +85,45 @@ const newActivity = ({ task, setVisibleReport }) => {
                 MaterialsInstalleds[i].installed = true
                 MaterialsInstalleds[i].projectId = MaterialsInstalleds[i].RoomSelected.projectId
                 MaterialsInstalleds[i].roomId = MaterialsInstalleds[i].RoomSelected.id
-                axios.put(`http://localhost:8000/api/v1/materials/${MaterialId}`, MaterialsInstalleds[i], getConfig())
+                axios.put(`http://192.168.0.253:8000/api/v1/materials/${MaterialId}`, MaterialsInstalleds[i], getConfig())
                     .then(res => {
                         console.log(res, "Material instalado")
                     })
                     .catch(err => console.log(err))
             }
         }
+
         task
             &&
             (
-                task.assigned=false,
-                task.userId=null,
-                axios.put(`http://localhost:8000/api/v1/tasks/${task.id}`, task, getConfig())
-                .then(res => {
-                    console.log(res, "Tarea Actualizada")
-                })
-                .catch(err => console.log(err))
-                .finally(dispatch(setItem(false)))
+                task.assigned = false,
+                task.userId = null,
+                axios.put(`http://192.168.0.253:8000/api/v1/tasks/${task.id}`, task, getConfig())
+                    .then(res => {
+                        console.log(res, "Tarea Actualizada")
+                    })
+                    .catch(err => console.log(err))
+                    .finally(dispatch(setItem(false)))
                 ,
                 setVisibleReport(false)
                 ,
-                axios.delete(`http://localhost:8000/api/v1/taskList/${task.taskListId}`, getConfig())
-                .then(res => {
-                    console.log(res, "Asignacion Borrada")
-                })
-                .catch(err => console.log(err))
+                axios.get("http://192.168.0.253:8000/api/v1/users/me", getConfig())
+                    .then(res => {
+                        const meId = res.data.id
+                        for (let i = 0; i < task.taskLists.length; i++) {
+                            if (task.taskLists[i].userId === meId) {
+                                axios.delete(`http://192.168.0.253:8000/api/v1/taskList/${task.taskLists[i].id}`, getConfig())
+                                    .then(res => {
+                                        console.log(res, "Asignacion Borrada"),
+                                            dispatch(updateRefresh())
+                                    })
+                                    .catch(err => console.log(err))
+                            }
+                        }
+                    })
             )
         !task && dispatch(setVisibleActivity(!NewActivityVisible))//ocultar ventana de creacion de actividades
+        dispatch(updateRefresh())
     }
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
@@ -170,7 +182,7 @@ const newActivity = ({ task, setVisibleReport }) => {
                     {
                         VisibleMaterialAsignedToMe &&
                         <div>
-                            {MaterialsAsignatesToMe.map(MaterialAsignatedToMe => !MaterialAsignatedToMe.installed&&(<div className='MaterialAsignatedToMe' onClick={() => { setMaterialSelected(MaterialAsignatedToMe), setVisibleMaterialAsignedToMe(false) }} key={MaterialAsignatedToMe.id}>{MaterialAsignatedToMe.name}</div>))}
+                            {MaterialsAsignatesToMe.map(MaterialAsignatedToMe => !MaterialAsignatedToMe.installed && (<div className='MaterialAsignatedToMe' onClick={() => { setMaterialSelected(MaterialAsignatedToMe), setVisibleMaterialAsignedToMe(false) }} key={MaterialAsignatedToMe.id}>{MaterialAsignatedToMe.name}</div>))}
                         </div>
                     }
                     <div onClick={() => {

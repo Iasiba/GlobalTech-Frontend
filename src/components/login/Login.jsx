@@ -10,7 +10,7 @@ const Login = () => {
   const navigate = useNavigate()
 
   const submit = data => {
-    const URL = 'http://localhost:8000/api/v1/auth/login'
+    const URL = 'http://192.168.0.253:8000/api/v1/auth/login'
     axios.post(URL, data)
       .then(res => {
         console.log("intento de logueo exitoso",res.data.token, "intento de logueo exitoso")

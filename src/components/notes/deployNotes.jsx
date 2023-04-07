@@ -8,11 +8,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setItem } from '../../store/slices/ItemSlice'
 import getConfig from '../../utils/getConfig'
 import { setVisibleNote } from './../../store/slices/NewsVisibleSlice'
-import { setRefresh } from '../../store/slices/RefreshSlice'
+import { updateRefresh } from '../../store/slices/RefreshSlice'
+import { updateRefreshMenu } from '../../store/slices/RefreshMenuSlice'
 const deployNotes = ({ note, setAllNotes }) => {
     const dispatch = useDispatch()
     const NewNoteVisible = useSelector(state => state.NewsVisible)[8]
-    const Refresh = useSelector(state => state.Refresh)
+    const RefreshMenu = useSelector(state => state.RefreshMenu)
     const [MenuVisible, setMenuVisible] = useState(false)
     const [Click, setClick] = useState(false)
 
@@ -24,7 +25,7 @@ const deployNotes = ({ note, setAllNotes }) => {
             } else {
                 setMenuVisible(false)
             }
-        }, [Refresh]
+        }, [RefreshMenu]
     )
 
     return (
@@ -37,7 +38,7 @@ const deployNotes = ({ note, setAllNotes }) => {
                 <aside className='threePoints'
                     onClick={
                         () => (
-                            dispatch(setRefresh(!Refresh)),
+                            dispatch(updateRefreshMenu()),
                             setClick(true)
                         )
                     }
@@ -50,8 +51,7 @@ const deployNotes = ({ note, setAllNotes }) => {
                         <p className='items materialItemsWidth' onClick={() => ((
                             axios.delete(`http://localhost:8000/api/v1/notes/${note.id}`, getConfig())
                                 .then(
-                                    axios.get('http://localhost:8000/api/v1/users/me/notes', getConfig())
-                                        .then(res => setAllNotes(res.data))
+                                    dispatch(updateRefresh())
                                 ),
                             setMenuVisible(!MenuVisible)))
                         }>Eliminar</p>

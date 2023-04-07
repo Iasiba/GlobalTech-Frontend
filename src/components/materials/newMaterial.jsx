@@ -9,6 +9,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { setItem } from '../../store/slices/ItemSlice'
 import { setVisibleMaterial } from './../../store/slices/NewsVisibleSlice'
+
+import { setRefresh, updateRefresh } from '../../store/slices/RefreshSlice'
 const newMaterial = () => {
     const dispatch = useDispatch()
     const Material = useSelector(state => state.Item)
@@ -21,12 +23,14 @@ const newMaterial = () => {
     const [ProjectId, setProjectId] = useState('')
     const [ProjectListVisible, setProjectListVisible] = useState(false)
 
-    const Inventories = AxiosGetHook('http://localhost:8000/api/v1/inventories')
+    const Inventories = AxiosGetHook('http://192.168.0.253:8000/api/v1/inventories')
     const AllInventories = Inventories.data.data?.inventory
     const [InventoryName, setInventoryName] = useState('')
     const [Inventory, setInventory] = useState('')
     const [InventoryId, setInventoryId] = useState('')
     const [InventoryListVisible, setInventoryListVisible] = useState('')
+
+    //const Refresh = useSelector(state=>state.Refresh)
     const { handleSubmit, reset, register } = useForm()
 
     const navigate = useNavigate()
@@ -38,7 +42,7 @@ const newMaterial = () => {
     const submit = data => {
         data.projectId = ProjectId
         data.inventoryId = InventoryId
-        const URL = Material.id ? `http://localhost:8000/api/v1/materials/${Material.id}` : `http://localhost:8000/api/v1/inventories/${InventoryId}/materials`
+        const URL = Material.id ? `http://192.168.0.253:8000/api/v1/materials/${Material.id}` : `http://192.168.0.253:8000/api/v1/inventories/${InventoryId}/materials`
 
         Material.id ?
             axios.put(URL, data, getConfig())
@@ -49,9 +53,8 @@ const newMaterial = () => {
                 .finally(() => dispatch(setItem(false)))
             :
             createMaterial(URL, data)
-
-
         dispatch(setVisibleMaterial(!NewMaterialVisible))//ocultar ventana de creacion de materiales
+        dispatch(updateRefresh())//dispatch(setRefresh(!Refresh))
     }
     function createMaterial(URL, data) {
         const Amount = data.amount

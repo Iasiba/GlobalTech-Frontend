@@ -12,8 +12,9 @@ import axios from 'axios'
 import getConfig from '../../utils/getConfig'
 import Backups from '../backups/backups'
 import { setVisibleProject } from './../../store/slices/NewsVisibleSlice'
-import { setRefresh } from '../../store/slices/RefreshSlice'
-const deployProject = ({ project, searchProjects }) => {
+import { updateRefresh } from '../../store/slices/RefreshSlice'
+import { updateRefreshMenu } from '../../store/slices/RefreshMenuSlice'
+const deployProject = ({ project }) => {
   const dispatch = useDispatch()
   const NewProjectVisible = useSelector(state => state.NewsVisible)[0]
 
@@ -26,8 +27,8 @@ const deployProject = ({ project, searchProjects }) => {
 
   const [MenuVisible, setMenuVisible] = useState(false)
 
-
   const Refresh = useSelector(state => state.Refresh)
+  const RefreshMenu = useSelector(state => state.RefreshMenu)
   const [Click, setClick] = useState(false)
   useEffect(
     () => {
@@ -37,7 +38,10 @@ const deployProject = ({ project, searchProjects }) => {
       } else {
         setMenuVisible(false)
       }
-    }, [Refresh]
+    }, [RefreshMenu]
+  )
+  useEffect(
+    (/** */) => {}, [project, Refresh]
   )
   return (
     <>
@@ -48,7 +52,7 @@ const deployProject = ({ project, searchProjects }) => {
         <aside className='threePoints'
           onClick={
             () => (
-              dispatch(setRefresh(!Refresh)),
+              dispatch(updateRefreshMenu()),
               setClick(true)
             )
           }
@@ -59,12 +63,13 @@ const deployProject = ({ project, searchProjects }) => {
           <div className='itemList itemListPrimary '>
             <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(project)), dispatch(setVisibleProject(true)), setMenuVisible(!MenuVisible) }}>Editar</p>
             <p className='items materialItemsWidth' onClick={() => ((
-              axios.delete(`http://localhost:8000/api/v1/projects/${project.id}`, getConfig())
-                .then(searchProjects(),
+              axios.delete(`http://192.168.0.253:8000/api/v1/projects/${project.id}`, getConfig())
+                .then(/*,
                   console.log('eliminado con exito falta eliminar todo el contenido de el proyecto para que funcione sin roblemas')
-                  /*axios.get('http://localhost:8000/api/v1/users/me/notes', getConfig())
+                  axios.get('http://localhost:8000/api/v1/users/me/notes', getConfig())
                     .then(res => { console.log(res), setAllNotes(res.data) })*/
                 ),
+              dispatch(updateRefresh()),
               setMenuVisible(!MenuVisible)))
             }>Eliminar</p>
           </div>

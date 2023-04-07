@@ -9,12 +9,13 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { setItem } from '../../store/slices/ItemSlice'
 import { setVisibleTask } from './../../store/slices/NewsVisibleSlice'
+import { updateRefresh } from '../../store/slices/RefreshSlice'
 const newTask = () => {
     const NewTaskVisible = useSelector(state => state.NewsVisible)[2]
     const dispatch = useDispatch()
     const Task = useSelector(state => state.Item)
 
-    const Projects = AxiosGetHook('http://localhost:8000/api/v1/projects')
+    const Projects = AxiosGetHook('http://192.168.0.253:8000/api/v1/projects')
     const AllProjects = Projects.data.data?.projects
     const [projectName, setProjectName] = useState('')
     const [Project, setProject] = useState('')
@@ -28,7 +29,7 @@ const newTask = () => {
         AllProjects && setProject(AllProjects.filter(project => project.name === projectName)[0])
     }, [projectName])
     useEffect(() => {
-        Project && axios.get(`http://localhost:8000/api/v1/projects/${Project.id}/rooms`, getConfig())
+        Project && axios.get(`http://192.168.0.253:8000/api/v1/projects/${Project.id}/rooms`, getConfig())
             .then(res => setRooms(res.data))
             .catch(err => console.log(err))
     }, [Project])
@@ -47,19 +48,20 @@ const newTask = () => {
     const submit = data => {
         data.roomId = Room.id
         Task.id ?
-            axios.put(`http://localhost:8000/api/v1/tasks/${Task.id}`, data, getConfig())
+            axios.put(`http://192.168.0.253:8000/api/v1/tasks/${Task.id}`, data, getConfig())
                 .then(res => {
                     console.log(res, "Tarea Actualizada")
                 })
                 .catch(err => console.log(err))
                 .finally(dispatch(setItem(false)))
             :
-            axios.post(`http://localhost:8000/api/v1/rooms/${Room.id}/tasks`, data, getConfig())
+            axios.post(`http://192.168.0.253:8000/api/v1/rooms/${Room.id}/tasks`, data, getConfig())
                 .then(res => {
                     console.log(res, "Tarea Creada")
                 })
                 .catch(err => console.log(err))
         dispatch(setVisibleTask(!NewTaskVisible))//ocultar ventana de creacion de Tareas
+        dispatch(updateRefresh())
     }
 
     return (

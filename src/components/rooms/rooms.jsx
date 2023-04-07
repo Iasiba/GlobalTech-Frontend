@@ -5,12 +5,14 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import axios from 'axios'
 import getConfig from '../../utils/getConfig'
+import { useSelector } from 'react-redux'
 const rooms = ({ projectId }) => {
+    const Refresh = useSelector(state => state.Refresh)
     const [Rooms, setRooms] = useState('')
-    useEffect(() => searchRooms(), [])
+    useEffect(() => searchRooms(), [projectId, Refresh])
 
     function searchRooms() {
-        const URL = projectId ? `http://localhost:8000/api/v1/projects/${projectId}/rooms` : `http://localhost:8000/api/v1/rooms`
+        const URL = projectId ? `http://192.168.0.253:8000/api/v1/projects/${projectId}/rooms` : `http://localhost:8000/api/v1/rooms`
         axios.get(URL, getConfig())
             .then(res => {
                 if (res.data?.rooms) {

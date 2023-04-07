@@ -6,11 +6,14 @@ import AxiosGetHook from '../../hooks/axiosGetHook'
 import Deploylist from '../list/deploylist'
 import axios from 'axios'
 import getConfig from '../../utils/getConfig'
-const userList = ({ setmenuvisible, material, setUserListVisible, task, setviewUserList }) => {
+import { useDispatch } from 'react-redux'
+import { updateRefresh } from '../../store/slices/RefreshSlice'
+const userList = ({ setmenuvisible, material,setMaterialList, setUserListVisible, task, setviewUserList }) => {
+    const dispatch = useDispatch()
     const [AssingItem, setAssingItem] = useState(false)
     const [UserSelected, setUserSelected] = useState('')
     const [AllUsers, setAllUsers] = useState('')
-    const [Refresh, setRefresh] = useState(false)
+    const [RefreshSelection, setRefreshSelection] = useState(false)
     function setSelectedToUser() {
         if (AllUsers) {
             for (let i = 0; i < AllUsers.length; i++) {
@@ -19,7 +22,7 @@ const userList = ({ setmenuvisible, material, setUserListVisible, task, setviewU
         }
     }
     useEffect(() => {
-        axios.get('http://localhost:8000/api/v1/users', getConfig())
+        axios.get('http://192.168.0.253:8000/api/v1/users', getConfig())
             .then(res => setAllUsers(res.data.users))
     }, [])
     useEffect(() => { setSelectedToUser() }, [AllUsers])
@@ -31,15 +34,18 @@ const userList = ({ setmenuvisible, material, setUserListVisible, task, setviewU
                 AllUsers[i].selected = false
             }
         }
-        setRefresh(!Refresh)
+        setRefreshSelection(!RefreshSelection)
     }, [UserSelected])
 
     function assignMaterial() {
         for (let i = 0; i < material.length; i++) {
-            axios.put(`http://localhost:8000/api/v1/materials/${material[i].id}`, { "assigned": true, "userId": UserSelected.id }, getConfig())
+            axios.put(`http://192.168.0.253:8000/api/v1/materials/${material[i].id}`, { "assigned": true, "userId": UserSelected.id }, getConfig())
                 .then(() => console.log("Material asignado"))
         }
         setviewUserList(false)
+        setRefreshSelection(!RefreshSelection)
+        setMaterialList([])
+        dispatch(updateRefresh())
     }
     return (
         <div className='itemLists  itemListSecondary'>

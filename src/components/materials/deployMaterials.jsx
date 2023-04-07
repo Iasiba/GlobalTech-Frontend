@@ -3,15 +3,13 @@ import axios from 'axios'
 import './materials.css'
 import '../list/list.css'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import UserList from '../users/userList'
 import getConfig from '../../utils/getConfig'
 import { useDispatch, useSelector } from 'react-redux'
 import { setItem } from '../../store/slices/ItemSlice'
 import { setVisibleMaterial } from './../../store/slices/NewsVisibleSlice'
-import { setRefresh } from '../../store/slices/RefreshSlice'
-
-const deployMaterials = ({ material, MaterialList, searchMaterials, setviewUserList }) => {
+import { updateRefresh } from '../../store/slices/RefreshSlice'
+import { updateRefreshMenu } from '../../store/slices/RefreshMenuSlice'
+const deployMaterials = ({ material, MaterialList, setviewUserList }) => {
   const dispatch = useDispatch()
   const [Visible, setVisible] = useState(false)
   const [MenuVisible, setMenuVisible] = useState(false)
@@ -19,6 +17,7 @@ const deployMaterials = ({ material, MaterialList, searchMaterials, setviewUserL
   const [Selected, setSelected] = useState(false)
   const [Actualizar, setActualizar] = useState(false)
 
+  const RefreshMenu = useSelector(state => state.RefreshMenu)
   const Refresh = useSelector(state => state.Refresh)
   const [Click, setClick] = useState(false)
   useEffect(
@@ -29,6 +28,20 @@ const deployMaterials = ({ material, MaterialList, searchMaterials, setviewUserL
       } else {
         setMenuVisible(false)
       }
+    }, [RefreshMenu]
+  )
+
+  useEffect(
+    () => {
+      /*if(MaterialList.length = 0){
+        setSelected(false)
+      }
+      Se actualiza la informacion que se crea o borra*/ 
+    }, [material, MaterialList]
+  )
+  useEffect(
+    () => {
+      setSelected(false)
     }, [Refresh]
   )
 
@@ -40,12 +53,15 @@ const deployMaterials = ({ material, MaterialList, searchMaterials, setviewUserL
           MaterialList.splice(i, 1)
         }
       }
+      setSelected(false)
     } else {
       MaterialList.push(material)
+      setSelected(true)
     }
     setActualizar(!Actualizar)
-    setSelected(!Selected)
   }
+
+
   return (
     <>
       <div className='deploy'>
@@ -64,7 +80,7 @@ const deployMaterials = ({ material, MaterialList, searchMaterials, setviewUserL
         <aside className='threePoints'
           onClick={
             () => (
-              dispatch(setRefresh(!Refresh)),
+              dispatch(updateRefreshMenu()),
               setClick(true)
             )
           }
@@ -77,12 +93,12 @@ const deployMaterials = ({ material, MaterialList, searchMaterials, setviewUserL
         {
           MenuVisible &&
           <div className='itemList itemListPrimary '>
-            {!material.onHold && <p className='items materialItemsWidth' onClick={() => { addToMaterialList(), Selected ? setviewUserList(false) : setviewUserList(true), setMenuVisible(false) }}>Asignar</p>}
+            {!material.onHold && <p className='items materialItemsWidth' onClick={() => { addToMaterialList(), /*Selected ? setviewUserList(false)*/!Selected && setviewUserList(true)/*: setviewUserList(true)*/, setMenuVisible(false) }}>Asignar</p>}
             <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(material)), dispatch(setVisibleMaterial(true)), setMenuVisible(false) }}>Editar</p>
             <p className='items materialItemsWidth'
               onClick={() => ((
-                axios.delete(`http://localhost:8000/api/v1/materials/${material.id}`, getConfig())
-                  .then(searchMaterials()),
+                axios.delete(`http://192.168.0.253:8000/api/v1/materials/${material.id}`, getConfig())
+                  .then(dispatch(updateRefresh())),
                 setMenuVisible(!MenuVisible)
               ))}
             >Eliminar</p>

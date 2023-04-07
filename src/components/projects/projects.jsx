@@ -4,12 +4,14 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import axios from 'axios'
 import getConfig from '../../utils/getConfig'
+import { useSelector } from 'react-redux'
 const projects = () => {
+  const Refresh = useSelector(state => state.Refresh)
   const [AllProjects, setAllProjects] = useState('')
-  useEffect(() => searchProjects(), [])
+  useEffect(() => searchProjects(), [Refresh])
 
   function searchProjects() {
-    axios.get('http://localhost:8000/api/v1/projects', getConfig())
+    axios.get('http://192.168.0.253:8000/api/v1/projects', getConfig())
       .then(res => setAllProjects(res.data.projects))
   }
   return (
@@ -20,7 +22,6 @@ const projects = () => {
             <DeployProject
               key={project.id}
               project={project}
-              searchProjects={searchProjects}
             />
           )
         }

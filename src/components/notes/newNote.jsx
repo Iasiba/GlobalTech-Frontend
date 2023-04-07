@@ -8,6 +8,7 @@ import './notes.css'
 import { useSelector, useDispatch } from 'react-redux'
 import { setItem } from '../../store/slices/ItemSlice'
 import { setVisibleNote } from './../../store/slices/NewsVisibleSlice'
+import { updateRefresh } from '../../store/slices/RefreshSlice'
 const newNote = () => {
     const dispatch = useDispatch()
     const Note = useSelector(state => state.Item)
@@ -32,6 +33,7 @@ const newNote = () => {
                 })
                 .catch(err => console.log(err))
         dispatch(setVisibleNote(!NewNoteVisible))//ocultar ventana de creacion y edicion de notas
+        dispatch(updateRefresh())
     }
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >

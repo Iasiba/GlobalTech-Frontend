@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './home.css'
 import Tasks from '../tasks/tasks'
 import Notes from '../notes/notes'
 import Materials from '../materials/materials'
 import Activities from '../activities/activities'
+import { useSelector } from 'react-redux'
 const HomeScreen = () => {
    /*function downloadFile(link, fileName) {
     const downloadInstance = document.createElement('a')
@@ -25,6 +26,9 @@ const HomeScreen = () => {
         }
       >download</button>
   */
+ const Refresh = useSelector(state => state.Refresh)
+ useEffect(() => {}, [Refresh])
+ 
   return (
     <div className='home'>
       <p>Pendientes</p>

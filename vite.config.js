@@ -6,6 +6,7 @@ export default defineConfig({
   plugins: [react()],
   server:{
     host:true,
-    open:['./index.html']
+    origin: 'http://localhost:5173'
+   // open:['./index.html']
   }
 })

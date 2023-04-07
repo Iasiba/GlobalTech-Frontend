@@ -14,6 +14,7 @@ import ItemName from './slices/ItemNameSlice'
 import NewsVisible from './slices/NewsVisibleSlice'
 import UserListVisible from './slices/UserListVisibleSlice'
 import Refresh from './slices/RefreshSlice'
+import RefreshMenu from './slices/RefreshMenuSlice'
 export default configureStore({
     reducer: {
         UserMenu,
@@ -23,6 +24,7 @@ export default configureStore({
         ItemName,
         NewsVisible,
         UserListVisible,
-        Refresh
+        Refresh,
+        RefreshMenu
     }
 })

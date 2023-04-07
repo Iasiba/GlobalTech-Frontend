@@ -1,17 +1,18 @@
-import React from 'react'
+import { React, useState, useEffect } from 'react'
 import DeployInventary from './deployInventary'
 import axios from 'axios'
 import getConfig from '../../utils/getConfig'
-import { useState } from 'react'
-import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 const inventaries = () => {
+  const Refresh = useSelector(state => state.Refresh)
   const [AllInventaries, setAllInventaries] = useState('')
-  useEffect(() => searchInventary(), [])
+  useEffect(() => searchInventary(), [Refresh])//useEffect(() => searchInventary(), [Refresh])
 
   function searchInventary() {
-    axios.get('http://localhost:8000/api/v1/inventories', getConfig())
+    axios.get('http://192.168.0.253:8000/api/v1/inventories', getConfig())
       .then(res => (setAllInventaries(res.data.inventory)))
   }
+
   return (
     <div className='contentDeploy'>
       {

@@ -8,6 +8,7 @@ import './projects.css'
 import { setItem } from '../../store/slices/ItemSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { setVisibleProject } from './../../store/slices/NewsVisibleSlice'
+import { updateRefresh } from '../../store/slices/RefreshSlice'
 const newProject = () => {
     const NewProjectVisible = useSelector(state => state.NewsVisible)[0]
     const Project = useSelector(state => state.Item)
@@ -17,7 +18,7 @@ const newProject = () => {
 
     const submit = data => {
         Project.id ?
-            axios.put(`http://localhost:8000/api/v1/projects/${Project.id}`, data, getConfig())
+            axios.put(`http://192.168.0.253:8000/api/v1/projects/${Project.id}`, data, getConfig())
                 .then(res => {
                     console.log(res, "Proyecto Actualizado")
                 })
@@ -26,12 +27,13 @@ const newProject = () => {
                     dispatch(setItem(false)),
                 )
             :
-            axios.post(`http://localhost:8000/api/v1/projects`, data, getConfig())
+            axios.post(`http://192.168.0.253:8000/api/v1/projects`, data, getConfig())
                 .then(res => {
                     console.log(res, "Proyecto creado")
                 })
                 .catch(err => console.log(err))
         dispatch(setVisibleProject(!NewProjectVisible))//ocultar ventana de creacion de projectos
+        dispatch(updateRefresh())
     }
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter newProject new' >

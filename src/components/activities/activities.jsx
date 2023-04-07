@@ -3,14 +3,16 @@ import './activities.css'
 import DeployAtivity from './deployActivities'
 import axios from 'axios'
 import getConfig from '../../utils/getConfig'
+import { useSelector } from 'react-redux'
 const activities = ({ taskId, myhome, home }) => {
+    const Refresh = useSelector(state => state.Refresh)
     const [AllActivity, setAllActivity] = useState('')
-    useEffect(() => searcActivities(), [])
+    useEffect(() => searcActivities(), [Refresh, taskId, myhome, home])
     function searcActivities() {
-        let url = 'http://localhost:8000/api/v1/activities'//!home && !myhome && !taskId
-        if (home) url = 'http://localhost:8000/api/v1/activities'
-        if (myhome) url = `http://localhost:8000/api/v1/users/me/activities`
-        if (taskId) url = `http://localhost:8000/api/v1/tasks/${taskId}/activities`
+        let url = 'http://192.168.0.253:8000/api/v1/activities'//!home && !myhome && !taskId
+        if (home) url = 'http://192.168.0.253:8000/api/v1/activities'
+        if (myhome) url = `http://192.168.0.253:8000/api/v1/users/me/activities`
+        if (taskId) url = `http://192.168.0.253:8000/api/v1/tasks/${taskId}/activities`
 
         axios.get(url, getConfig())
             .then(res => {
@@ -45,16 +47,16 @@ const activities = ({ taskId, myhome, home }) => {
     }
     return (
         <div className='contentDeploy'>
+            <div className={`${!myhome && "activitiesHeader"} tableHeader ${myhome && "myHomeActivityHeader"}`}>
+                <p>fecha</p>
+                <p>Proyecto</p>
+                <p>Description</p>
+                {!myhome && <p>Tecnico</p>}
+            </div>
             {
                 AllActivity && AllActivity?.map(activity => {
                     return (
                         <>
-                            <div className={`${!myhome && "activitiesHeader"} tableHeader ${myhome && "myHomeActivityHeader"}`}>
-                                <p>fecha</p>
-                                <p>Proyecto</p>
-                                <p>Description</p>
-                                {!myhome && <p>Tecnico</p>}
-                            </div>
                             <DeployAtivity
                                 key={activity.id}
                                 activity={activity}
