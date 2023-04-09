@@ -15,8 +15,7 @@ const newMaterial = () => {
     const dispatch = useDispatch()
     const Material = useSelector(state => state.Item)
     const NewMaterialVisible = useSelector(state => state.NewsVisible)[6]
-
-    const Projects = AxiosGetHook('http://localhost:8000/api/v1/projects')
+    const Projects = AxiosGetHook('http://192.168.0.253:8000/api/v1/projects')
     const AllProjects = Projects.data.data?.projects
     const [projectName, setProjectName] = useState('')
     const [Project, setProject] = useState('')

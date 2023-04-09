@@ -30,7 +30,6 @@ const deployTask = ({ task }) => {
             }
         }, [RefreshMenu]
     )
-console.log(task)
     return (
         <>
             <div className='deploy'>
@@ -67,7 +66,7 @@ console.log(task)
                         <p className='items materialItemsWidth' onClick={() => { setMenuVisible(false), setUserListVisible(true) }}>Asignar</p>
                         <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(task)), dispatch(setVisibleTask(true)), setMenuVisible(false) }}>Editar</p>
                         <p className='items materialItemsWidth' onClick={() => ((
-                            axios.delete(`http://192.168.0.253:8000/api/v1/tasks/${task.id}/activities`, getConfig()),
+                            //axios.delete(`http://192.168.0.253:8000/api/v1/tasks/${task.id}/activities`, getConfig()),
                             axios.delete(`http://192.168.0.253:8000/api/v1/tasks/${task.id}`, getConfig())
                                 .then(dispatch(updateRefresh())),
                             setMenuVisible(!MenuVisible)))

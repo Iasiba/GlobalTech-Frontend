@@ -15,6 +15,7 @@ const deployRooms = ({ room }) => {
     const [MenuVisible, setMenuVisible] = useState(false)
 
     const RefreshMenu = useSelector(state => state.RefreshMenu)
+    const Refresh = useSelector(state => state.Refresh)
     const [Click, setClick] = useState(false)
     useEffect(
         () => {
@@ -26,7 +27,24 @@ const deployRooms = ({ room }) => {
             }
         }, [RefreshMenu]
     )
-    useEffect(() => {}, [room])
+    useEffect(() => { }, [room, Refresh])
+    function deleteRoom() {
+        axios.get(`http://192.168.0.253:8000/api/v1/rooms/${room.id}/tasks`, getConfig())
+            .then(res => {
+                let i
+                for (i = 0; i < res.data.length; i++) {
+                    axios.delete(`http://192.168.0.253:8000/api/v1/tasks/${res.data[i].id}`, getConfig())
+                    dispatch(updateRefresh())
+                }
+                if (i === res.data.length) {
+                    i += 1
+                    axios.delete(`http://192.168.0.253:8000/api/v1/rooms/${room.id}`, getConfig())
+                    dispatch(updateRefresh())
+                }
+            })
+        dispatch(updateRefresh())
+    }
+
     return (
         <>
             <div className='deploy'>
@@ -47,11 +65,12 @@ const deployRooms = ({ room }) => {
                     &&
                     <div className='itemList itemListPrimary '>
                         <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(room)), dispatch(setVisibleRoom(!NewRoomVisible)), setMenuVisible(!MenuVisible) }}>Editar</p>
-                        <p className='items materialItemsWidth' onClick={() => ((
-                            axios.delete(`http://192.168.0.253:8000/api/v1/rooms/${room.id}`, getConfig())
-                                .then(dispatch(updateRefresh())),
-                            setMenuVisible(!MenuVisible)))
-                        }>Eliminar</p>
+                        <p className='items materialItemsWidth' onClick={() => (
+                            deleteRoom(),
+                            dispatch(updateRefresh()),
+                            setMenuVisible(!MenuVisible),
+                            dispatch(updateRefresh())
+                        )}>Eliminar</p>
                     </div>
                 }
             </div>

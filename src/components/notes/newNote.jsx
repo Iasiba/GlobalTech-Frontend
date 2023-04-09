@@ -18,7 +18,7 @@ const newNote = () => {
     const navigate = useNavigate()
 
     const submit = data => {
-        const URL = Note.id ? `http://localhost:8000/api/v1/notes/${Note.id}` : `http://localhost:8000/api/v1/notes`
+        const URL = Note.id ? `http://192.168.0.253:8000/api/v1/notes/${Note.id}` : `http://192.168.0.253:8000/api/v1/notes`
         Note.id ?
             axios.put(URL, data, getConfig())
                 .then(res => {

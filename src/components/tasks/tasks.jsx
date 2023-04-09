@@ -16,7 +16,6 @@ const tasks = ({ roomId, home, myhome }) => {
     if (myhome) url = 'http://192.168.0.253:8000/api/v1/users/me/taskList'
     axios.get(url, getConfig())
       .then(res => {
-        console.log(res)
         if (myhome) {
           let aux = []
           res.data.map(taskList => (taskList.task.taskListId = taskList.id, aux.push(taskList.task)))

@@ -49,7 +49,7 @@ const deployNotes = ({ note, setAllNotes }) => {
                     <div className='itemList itemListPrimary '>
                         <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(note)), dispatch(setVisibleNote(!NewNoteVisible)), setMenuVisible(!MenuVisible) }}>Editar</p>
                         <p className='items materialItemsWidth' onClick={() => ((
-                            axios.delete(`http://localhost:8000/api/v1/notes/${note.id}`, getConfig())
+                            axios.delete(`http://192.168.0.253:8000/api/v1/notes/${note.id}`, getConfig())
                                 .then(
                                     dispatch(updateRefresh())
                                 ),

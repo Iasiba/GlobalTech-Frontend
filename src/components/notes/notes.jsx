@@ -8,7 +8,7 @@ const notes = () => {
   const Refresh = useSelector(state => state.Refresh)
   const [AllNotes, setAllNotes] = useState('')
   useEffect(() => {
-    axios.get('http://localhost:8000/api/v1/users/me/notes', getConfig())
+    axios.get('http://192.168.0.253:8000/api/v1/users/me/notes', getConfig())
       .then((res) => setAllNotes(res.data))
   }, [Refresh])
 

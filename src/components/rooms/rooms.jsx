@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux'
 const rooms = ({ projectId }) => {
     const Refresh = useSelector(state => state.Refresh)
     const [Rooms, setRooms] = useState('')
-    useEffect(() => searchRooms(), [projectId, Refresh])
+    useEffect(() => { searchRooms()}, [projectId, Refresh])
 
     function searchRooms() {
         const URL = projectId ? `http://192.168.0.253:8000/api/v1/projects/${projectId}/rooms` : `http://localhost:8000/api/v1/rooms`
@@ -27,11 +27,10 @@ const rooms = ({ projectId }) => {
             {
                 Rooms && Rooms?.map(room => {
                     return (
-                    <DeployRooms 
-                    key={room.id} 
-                    room={room} 
-                    searchRooms={searchRooms}
-                    />
+                        <DeployRooms
+                            key={room.id}
+                            room={room}
+                        />
                     )
                 })
             }
