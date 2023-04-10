@@ -8,7 +8,7 @@ import { setItem } from '../../store/slices/ItemSlice'
 const myAccounts = () => {
   const dispatch=useDispatch()
   const navigate=useNavigate()
-  const Users = AxiosGetHook('http://localhost:8000/api/v1/users/me')
+  const Users = AxiosGetHook('http://192.168.0.253:8000/api/v1/users/me')
   const me = Users.data.data
   return (
     <>

@@ -6,13 +6,15 @@ import { Link } from 'react-router-dom'
 import { setItem } from '../../store/slices/ItemSlice'
 import getConfig from '../../utils/getConfig'
 import { setVisibleAccount } from './../../store/slices/NewsVisibleSlice'
-import { setRefresh } from '../../store/slices/RefreshSlice'
-const deployAccounts = ({ account, searchAccounts }) => {
+import { updateRefresh } from '../../store/slices/RefreshSlice'
+import { updateRefreshMenu } from '../../store/slices/RefreshMenuSlice'
+const deployAccounts = ({ account }) => {
     const dispatch = useDispatch()
     const NewAccountVisible = useSelector(state => state.NewsVisible)[4]
     const [Visible, setVisible] = useState(false)
     const [MenuVisible, setMenuVisible] = useState(false)
 
+    const RefreshMenu = useSelector(state => state.RefreshMenu)
     const Refresh = useSelector(state => state.Refresh)
     const [Click, setClick] = useState(false)
     useEffect(
@@ -23,9 +25,11 @@ const deployAccounts = ({ account, searchAccounts }) => {
             } else {
                 setMenuVisible(false)
             }
-        }, [Refresh]
+        }, [RefreshMenu]
     )
-
+    useEffect(
+        () => { }, [RefreshMenu, Refresh]
+    )
     return (
         <>
             <div className='deploy'>
@@ -37,7 +41,7 @@ const deployAccounts = ({ account, searchAccounts }) => {
                 <aside className='threePoints'
                     onClick={
                         () => (
-                            dispatch(setRefresh(!Refresh)),
+                            dispatch(updateRefreshMenu()),
                             setClick(true)
                         )
                     }
@@ -48,10 +52,11 @@ const deployAccounts = ({ account, searchAccounts }) => {
                     <div className='itemList itemListPrimary '>
                         <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(account)), setMenuVisible(!MenuVisible), dispatch(setVisibleAccount(true)) }}>Editar</p>
                         <p className='items materialItemsWidth' onClick={() => ((
-                            axios.delete(`http://localhost:8000/api/v1/accounts/${account.id}`, getConfig())
-                                .then(searchAccounts()),
-                            setMenuVisible(!MenuVisible)))
-                        }>Eliminar</p>
+                            axios.delete(`http://192.168.0.253:8000/api/v1/accounts/${account.id}`, getConfig())
+                                .then(dispatch(updateRefresh())),
+                            setMenuVisible(!MenuVisible)),
+                            dispatch(updateRefresh())
+                        )}>Eliminar</p>
                     </div>
                 }
             </div>

@@ -1,18 +1,20 @@
 import React, { useEffect } from 'react'
 import './users.css'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { setItem } from '../../store/slices/ItemSlice'
 import axios from 'axios'
 import getConfig from '../../utils/getConfig'
-import { setRefresh } from '../../store/slices/RefreshSlice'
-const deployUser = ({ user, searchUsers }) => {
+import { updateRefresh } from '../../store/slices/RefreshSlice'
+import { updateRefreshMenu } from '../../store/slices/RefreshMenuSlice'
+
+
+const deployUser = ({ user }) => {
   const dispatch = useDispatch()
   const [Visible, setVisible] = useState(false)
   const [MenuVisible, setMenuVisible] = useState(false)
 
   const Refresh = useSelector(state => state.Refresh)
+  const RefreshMenu = useSelector(state => state.RefreshMenu)
   const [Click, setClick] = useState(false)
   useEffect(
     () => {
@@ -22,8 +24,9 @@ const deployUser = ({ user, searchUsers }) => {
       } else {
         setMenuVisible(false)
       }
-    }, [Refresh]
+    }, [RefreshMenu]
   )
+  useEffect(() => { }, [Refresh])
   return (
     <>
       <div className='deploy'>
@@ -34,7 +37,7 @@ const deployUser = ({ user, searchUsers }) => {
         <aside className='threePoints'
           onClick={
             () => (
-              dispatch(setRefresh(!Refresh)),
+              dispatch(updateRefreshMenu()),
               setClick(true)
             )
           }
@@ -44,8 +47,9 @@ const deployUser = ({ user, searchUsers }) => {
           &&
           <div className='itemList itemListPrimary '>
             <p className='items materialItemsWidth' onClick={() => ((
-              axios.delete(`http://localhost:8000/api/v1/users/${user.id}`, getConfig())
-                .then(searchUsers()),
+              axios.delete(`http://192.168.0.253:8000/api/v1/users/${user.id}`, getConfig())
+                .then(dispatch(updateRefresh())),
+              dispatch(updateRefresh()),
               setMenuVisible(!MenuVisible)))
             }>Eliminar</p>
           </div>

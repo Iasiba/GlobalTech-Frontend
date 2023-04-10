@@ -9,11 +9,12 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { setItem } from '../../store/slices/ItemSlice'
 import { setVisibleBackup } from './../../store/slices/NewsVisibleSlice'
+import { updateRefresh } from '../../store/slices/RefreshSlice'
 const newBackup = () => {
     const dispatch = useDispatch()
     const Backup = useSelector(state => state.Item)
     const NewBackupVisible = useSelector(state => state.NewsVisible)[7]
-    const Projects = AxiosGetHook('http://localhost:8000/api/v1/projects')
+    const Projects = AxiosGetHook('http://192.168.0.253:8000/api/v1/projects')
 
     const AllProjects = Projects.data.data?.projects
     const [projectName, setProjectName] = useState('')
@@ -41,15 +42,15 @@ const newBackup = () => {
         data.projectId = Project.id
         data.date = year + '/' + month + '/' + day//Today // "2020/06/12"//
         data.name = Project.name + year + month + day + 'V' + data.version
-        console.log(data,Data)
+        console.log(data, Data)
         const URL = Backup.id ?
-            `http://localhost:8000/api/v1/backups/${Backup.id}`
+            `http://192.168.0.253:8000/api/v1/backups/${Backup.id}`
             :
-            `http://localhost:8000/api/v1/backups`
+            `http://192.168.0.253:8000/api/v1/backups`
         Backup.id ?
             axios.put(URL, data, getConfig())
                 .then(() => {
-                    axios.post(`http://localhost:8000/api/v1/backups/${Backup.id}`, Data, getConfig())
+                    axios.post(`http://192.168.0.253:8000/api/v1/backups/${Backup.id}`, Data, getConfig())
                         .then(res => { console.log(res) })
                 })
                 .catch(err => console.log(err))
@@ -64,12 +65,12 @@ const newBackup = () => {
                 })
                 .catch(err => console.log(err))
         dispatch(setVisibleBackup(!NewBackupVisible))
-        navigate('/myhome')
+        dispatch(updateRefresh())
     }
 
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
-            <i className='bx bx-x-circle close' onClick={() => (dispatch(setVisibleBackup(!NewBackupVisible)),dispatch(setItem(false)))}></i>
+            <i className='bx bx-x-circle close' onClick={() => (dispatch(setVisibleBackup(!NewBackupVisible)), dispatch(setItem(false)))}></i>
             {Backup.id ? <h2>Editar Respaldo</h2> : <h2>Nuevo Respaldo</h2>}
             <div className='createGrid'>
                 <div>* Proyecto:</div>

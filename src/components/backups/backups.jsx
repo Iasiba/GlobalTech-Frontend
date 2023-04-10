@@ -4,15 +4,17 @@ import DeployBackups from './deployBackups'
 import axios from 'axios'
 import getConfig from '../../utils/getConfig'
 import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 const backups = ({ projectId }) => {
+  const Refresh = useSelector(state => state.Refresh)
   const [Backups, setBackups] = useState('')
-  useEffect(() => search(), [])
+  useEffect(() => search(), [Refresh])
 
   function search() {
     const URL = projectId ?
-      `http://localhost:8000/api/v1/projects/${projectId}/backups`
+      `http://192.168.0.253:8000/api/v1/projects/${projectId}/backups`
       :
-      `http://localhost:8000/api/v1/backups`
+      `http://192.168.0.253:8000/api/v1/backups`
     axios.get(URL, getConfig())
       .then(
         res => {
@@ -40,7 +42,6 @@ const backups = ({ projectId }) => {
             <DeployBackups
               key={backup.id}
               backup={backup}
-              search={search}
             />
           )
         })

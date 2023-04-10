@@ -1,10 +1,16 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './programming.css'
 import DeployProgramming from './deployProgramming'
-import AxiosGetHook from '../../hooks/axiosGetHook'
+import { useSelector } from 'react-redux'
+import getConfig from '../../utils/getConfig'
+import axios from 'axios'
 const programming = () => {
-  const programing = AxiosGetHook('http://localhost:8000/api/v1/programmings')
-  const AllProgrammings = programing.data.data?.programmingGuide
+  const [AllProgrammings, setAllProgrammings] = useState('')
+  const Refresh = useSelector(state => state.Refresh)
+  useEffect(() => {
+    axios.get('http://192.168.0.253:8000/api/v1/programmings',getConfig())
+    .then(res=>setAllProgrammings(res.data.programmingGuide))
+  }, [Refresh])
   return (
     <div className='contentDeploy'>
       <div className="backupGrid tableHeader">
@@ -14,8 +20,8 @@ const programming = () => {
         <p>Tutorial</p>
       </div>
       {
-        AllProgrammings && AllProgrammings?.map(Programming =>{ 
-            return (<DeployProgramming key={Programming.id} programming={Programming}/>)
+        AllProgrammings && AllProgrammings?.map(Programming => {
+          return (<DeployProgramming key={Programming.id} programming={Programming} />)
         })
       }
     </div>

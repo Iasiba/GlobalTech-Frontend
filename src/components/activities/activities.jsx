@@ -60,7 +60,6 @@ const activities = ({ taskId, myhome, home }) => {
                             <DeployAtivity
                                 key={activity.id}
                                 activity={activity}
-                                searcActivities={searcActivities}
                                 myhome={myhome}
                             />
                         </>

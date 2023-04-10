@@ -5,12 +5,13 @@ import axios from 'axios'
 import getConfig from '../../utils/getConfig'
 import { useState } from 'react'
 import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 const accounts = ({ projectId }) => {
   const [Accounts, setAccounts] = useState('')
-  useEffect(() => searchAccounts(), [])
-
+  const Refresh = useSelector(state => state.Refresh)
+  useEffect(() => searchAccounts(), [Refresh])
   function searchAccounts() {
-    const URL = projectId ? `http://localhost:8000/api/v1/projects/${projectId}/accounts` : `http://localhost:8000/api/v1/accounts`
+    const URL = projectId ? `http://192.168.0.253:8000/api/v1/projects/${projectId}/accounts` : `http://192.168.0.253:8000/api/v1/accounts`
     axios.get(URL, getConfig())
       .then(res => {
         if (res.data?.accounts) {
@@ -29,7 +30,6 @@ const accounts = ({ projectId }) => {
             <DeployAccounts
               key={account.id}
               account={account}
-              searchAccounts={searchAccounts}
             />
           )
         })

@@ -9,10 +9,11 @@ import './users.css'
 import { setVisibleUser } from './../../store/slices/NewsVisibleSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { setItem } from '../../store/slices/ItemSlice'
+import { updateRefresh } from '../../store/slices/RefreshSlice'
 const newUser = () => {
     const dispatch = useDispatch()
     const NewUserVisible = useSelector(state => state.NewsVisible)[9]
-    const Roles = AxiosGetHook('http://localhost:8000/api/v1/roles')
+    const Roles = AxiosGetHook('http://192.168.0.253:8000/api/v1/roles')
     const AllRoles = Roles.data.data?.roles
 
     const [RoleName, setRoleName] = useState('')
@@ -28,14 +29,14 @@ const newUser = () => {
 
     const submit = data => {
         data.roleId = RoleId
-        console.log(data)
-        const URL = `http://localhost:8000/api/v1/auth/register`
+        const URL = `http://192.168.0.253:8000/api/v1/auth/register`
         axios.post(URL, data, getConfig())
             .then(res => {
                 console.log(res, "Usuario creado")
             })
             .catch(err => console.log(err))
         dispatch(setVisibleUser(!NewUserVisible))//Ocultar ventana de creacion de usuarios
+        dispatch(updateRefresh())
     }
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >

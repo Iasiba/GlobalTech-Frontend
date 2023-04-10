@@ -5,12 +5,14 @@ import { useState } from 'react'
 import axios from 'axios'
 import getConfig from '../../utils/getConfig'
 import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 const users = () => {
+  const Refresh = useSelector(state => state.Refresh)
   const [AllUsers, setAllUsers] = useState('')
-  useEffect(() => searchUsers(), [])
+  useEffect(() => searchUsers(), [Refresh])
 
   function searchUsers() {
-    axios.get('http://localhost:8000/api/v1/users', getConfig())
+    axios.get('http://192.168.0.253:8000/api/v1/users', getConfig())
       .then(res => setAllUsers(res.data.users))
   }
   return (
@@ -23,7 +25,6 @@ const users = () => {
         return (
           <DeployUser
             key={user.id}
-            searchUsers={searchUsers}
             user={user}
           />
         )

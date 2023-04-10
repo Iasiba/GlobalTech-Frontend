@@ -7,24 +7,27 @@ import { setItem } from '../../store/slices/ItemSlice'
 import getConfig from '../../utils/getConfig'
 import './backups.css'
 import { setVisibleBackup } from './../../store/slices/NewsVisibleSlice'
-import { setRefresh } from '../../store/slices/RefreshSlice'
-const deployBackups = ({ backup, search }) => {
+import { updateRefresh } from '../../store/slices/RefreshSlice'
+import { updateRefreshMenu } from '../../store/slices/RefreshMenuSlice'
+const deployBackups = ({ backup }) => {
   const dispatch = useDispatch()
   const NewBackupVisible = useSelector(state => state.NewsVisible)[7]
   const [MenuVisible, setMenuVisible] = useState(false)
 
+  const RefreshMenu = useSelector(state => state.RefreshMenu)
   const Refresh = useSelector(state => state.Refresh)
   const [Click, setClick] = useState(false)
   useEffect(
-      () => {
-          if (Click) {
-              setMenuVisible(!MenuVisible),
-                  setClick(false)
-          } else {
-              setMenuVisible(false)
-          }
-      }, [Refresh]
+    () => {
+      if (Click) {
+        setMenuVisible(!MenuVisible),
+          setClick(false)
+      } else {
+        setMenuVisible(false)
+      }
+    }, [RefreshMenu]
   )
+  useEffect(() => { }, [Refresh])
   return (
     <>
       <div className='deploy'>
@@ -40,7 +43,7 @@ const deployBackups = ({ backup, search }) => {
         <aside className='threePoints'
           onClick={
             () => (
-              dispatch(setRefresh(!Refresh)),
+              dispatch(updateRefreshMenu()),
               setClick(true)
             )
           }
@@ -49,10 +52,11 @@ const deployBackups = ({ backup, search }) => {
           MenuVisible
           &&
           <div className='itemList itemListPrimary '>
-            <p className='items materialItemsWidth' onClick={() => {dispatch(setItem(backup)),dispatch(setVisibleBackup(!NewBackupVisible)),setMenuVisible(!MenuVisible)}}>Editar</p>
+            <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(backup)), dispatch(setVisibleBackup(!NewBackupVisible)), setMenuVisible(!MenuVisible) }}>Editar</p>
             <p className='items materialItemsWidth' onClick={() => ((
-              axios.delete(`http://localhost:8000/api/v1/backups/${backup.id}`, getConfig())
-                .then(search()),
+              axios.delete(`http://192.168.0.253:8000/api/v1/backups/${backup.id}`, getConfig())
+                .then(dispatch(updateRefresh())),
+              dispatch(updateRefresh()),
               setMenuVisible(!MenuVisible)))
             }>Eliminar</p>
           </div>
