@@ -37,12 +37,12 @@ const newBackup = () => {
 
     const submit = data => {
         const Data = new FormData()
-        Data.append("backups", File)
+        Data.append('backups', File)
 
         data.projectId = Project.id
         data.date = year + '/' + month + '/' + day//Today // "2020/06/12"//
         data.name = Project.name + year + month + day + 'V' + data.version
-        console.log(data, Data)
+        console.log(File, data, Data, "datos con archivo")
         const URL = Backup.id ?
             `http://192.168.0.253:8000/api/v1/backups/${Backup.id}`
             :
@@ -56,12 +56,13 @@ const newBackup = () => {
                 .catch(err => console.log(err))
                 .finally(() => dispatch(setItem(false)))
             :
+            /*axios.post(`http://localhost:8000/api/v1/backups/df45cad5-f0fa-40dd-9b4b-ce908d209714`, Data, getConfig())
+                        .then(res => { console.log(res) })*/
             axios.post(URL, data, getConfig())
                 .then(res => {
                     console.log(res)
-                    /*axios.post(`http://localhost:8000/api/v1/backups/${res.data.backup.id}`, Data, getConfig())
-                        .then(res => { console.log(res) })*/
-
+                    axios.post(`http://192.168.0.253:8000/api/v1/backups/${res.data.backup.id}`, Data, getConfig())
+                        .then(res => { console.log(res) })
                 })
                 .catch(err => console.log(err))
         dispatch(setVisibleBackup(!NewBackupVisible))

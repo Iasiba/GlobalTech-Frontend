@@ -25,6 +25,15 @@ const backups = ({ projectId }) => {
           }
         }
       )
+
+      //
+      axios.get(`http://192.168.0.253:8000/public/Houser 230413 v15.10.hwqs`, getConfig())
+      .then(
+        res => {
+          console.log(res)
+        }
+      )
+      //
   }
   return (
     <div>

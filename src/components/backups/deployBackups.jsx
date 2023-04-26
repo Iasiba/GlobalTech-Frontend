@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import { setItem } from '../../store/slices/ItemSlice'
 import getConfig from '../../utils/getConfig'
 import './backups.css'
@@ -17,6 +17,7 @@ const deployBackups = ({ backup }) => {
   const RefreshMenu = useSelector(state => state.RefreshMenu)
   const Refresh = useSelector(state => state.Refresh)
   const [Click, setClick] = useState(false)
+
   useEffect(
     () => {
       if (Click) {
@@ -35,7 +36,7 @@ const deployBackups = ({ backup }) => {
           <p>{backup.software}</p>
           <p>{backup.name}</p>
           <p>{backup.user.firstName}</p>
-          <a href={`${backup.backup}`}>
+          <a href={'http://'+`${backup.backup}`} target="_blank">
             <i className='bx bxs-download'></i>
           </a>
         </div>
