@@ -18,15 +18,17 @@
     color: rgb(13, 255, 0);
 }
 
-.activityGrid{
+.activityGrid {
     display: grid;
     grid-template-columns: 25% 75%;
 }
-.inputdescription{
+
+.inputdescription {
     width: 0px;
     height: auto;
 }
-.report{
+
+.report {
     height: 100vh;
     width: 100vw;
     position: fixed;
@@ -36,7 +38,8 @@
     align-items: center;
     z-index: 1;
 }
-.backgroundUserList{
+
+.backgroundUserList {
     width: 100vw;
     height: 100vh;
     position: fixed;
@@ -44,4 +47,36 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+
+.tasksub {
+    color: var(--borderTable-color);
+    margin: 0 5px;
+    text-align: center;
+}
+
+.tasksub:hover {
+    color: var(--primary-color);
+    cursor: pointer;
+}
+
+.selected {
+    color: var(--primary-color);
+}
+
+.taskcontent {
+    display: grid;
+    align-content: center;
+}
+
+.tasksubcontent {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 5px;
+}
+.taskActivity{
+    border: 2px solid var(--primary-color);
+    /*box-shadow: 0 0 1px blue;*/
 }

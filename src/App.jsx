@@ -12,6 +12,7 @@ import NewMaterial from './components/materials/newMaterial'
 import NewBackup from './components/backups/newBackup'
 import NewUser from './components/users/newUser'
 import NewNote from './components/notes/newNote'
+import NewGuide from './components/programming/newGuide'
 import { useSelector } from 'react-redux'
 function App() {
   const NewProjectVisible = useSelector(state => state.NewsVisible)[0]
@@ -24,7 +25,7 @@ function App() {
   const NewBackupVisible = useSelector(state => state.NewsVisible)[7]
   const NewNoteVisible = useSelector(state => state.NewsVisible)[8]
   const NewUserVisible = useSelector(state => state.NewsVisible)[9]
-
+  const NewGuideVisible = useSelector(state => state.NewsVisible)[10]
   return (
     <div
       className={
@@ -37,8 +38,9 @@ function App() {
           NewInventaryVisible ||
           NewMaterialVisible ||
           NewBackupVisible ||
+          NewNoteVisible ||
           NewUserVisible ||
-          NewNoteVisible
+          NewGuideVisible
         ) && 'overlay'}`
       }
     >
@@ -46,7 +48,8 @@ function App() {
       <Rutas />
       {(NewProjectVisible || NewRoomVisible || NewTaskVisible ||
         NewActivityVisible || NewAccountVisible || NewInventaryVisible ||
-        NewMaterialVisible || NewBackupVisible || NewUserVisible || NewNoteVisible
+        NewMaterialVisible || NewBackupVisible || NewUserVisible ||
+        NewNoteVisible || NewGuideVisible
       ) && <section className='News'>
           {NewProjectVisible && <NewProject />}
           {NewRoomVisible && <NewRoom />}
@@ -58,6 +61,7 @@ function App() {
           {NewBackupVisible && <NewBackup />}
           {NewNoteVisible && <NewNote />}
           {NewUserVisible && <NewUser />}
+          {NewGuideVisible && <NewGuide />}
         </section>}
       {/*<Footer/>*/}
     </div>

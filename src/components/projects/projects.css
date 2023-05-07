@@ -1,11 +1,41 @@
-
-.info>p{
+.info>p {
     text-align: left;
     padding: 0px 20px;
 }
-.projectTittle{
+
+.projectTittle {
     width: 96%;
+    background-color: var(--sub-color);
 }
-.newProject{
+
+.newProject {
     max-width: 500px;
+}
+
+
+
+.projectcontent {
+    display: grid;
+    align-content: center;
+}
+
+.projectsubcontent {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin:5px;
+}
+
+.projectsub {
+    color: var(--borderTable-color);
+    margin: 0 5px;
+    text-align: center;
+}
+
+.projectsub:hover {
+    color: var(--primary-color);
+    cursor: pointer;
+}
+.selected {
+    color: var(--primary-color);
 }

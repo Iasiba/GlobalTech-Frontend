@@ -15,8 +15,9 @@ const deployTask = ({ task }) => {
     const [MenuVisible, setMenuVisible] = useState(false)
     const [UserListVisible, setUserListVisible] = useState(false)
     const [Visible, setVisible] = useState(false)
-    const [ActivityVisible, setActivityVisible] = useState(false)
     const [VisibleReport, setVisibleReport] = useState(false)
+    const [InformationVisible, setInformationVisible] = useState(true)
+    const [ActivityVisible, setActivityVisible] = useState(false)
 
     const RefreshMenu = useSelector(state => state.RefreshMenu)
     const [Click, setClick] = useState(false)
@@ -30,10 +31,18 @@ const deployTask = ({ task }) => {
             }
         }, [RefreshMenu]
     )
+    function watchActivities() {
+        setActivityVisible(!ActivityVisible)
+        setInformationVisible(false)
+    }
+    function watchInformation() {
+        setActivityVisible(false)
+        setInformationVisible(!InformationVisible)
+    }
     return (
         <>
             <div className='deploy'>
-                <div onClick={() => setVisible(!Visible)} className={`task tableHover ${task.iscanceled && "canceled"} ${task.isfinished && "finished"} ${task.taskLists.length && "assigned"} `}>
+                <div onClick={() => setVisible(!Visible)} className={`task tableHover ${task.iscanceled ? "canceled" : task.isfinished ? "finished" : task.taskLists.length ? "assigned" : ""} `}>
                     <aside>
                         <p>{task.executionDate}</p>
                     </aside>
@@ -85,19 +94,25 @@ const deployTask = ({ task }) => {
                     </div>
                 }
             </div>
-            {Visible && <div className='content'>
-                <p>Tarea: {task.description}</p>
-                <p>Observaciones: {task.observation}</p>
-                <p>Proyecto: {task.room.project.name}</p>
-                <p>Area: {task.room.name}</p>
-                <p>Fecha de Ejecucion: {task.executionDate}</p>
-                <p>Direccion: {task.room.project.address}</p>
-                <p>Coordenadas: {task.room.project.coordinates}</p>
-                <p>Material: {task.material}</p>
-                <div className={`subcontent ${ActivityVisible && 'activityGrid'}`}>
-                    <p onClick={() => setActivityVisible(!ActivityVisible)} className={`sub`}>Actividades</p>
-                    {ActivityVisible && <Activities taskId={task.id} />}
+            {Visible && <div className='taskcontent'>
+                <div className={`tasksubcontent`}>
+                    <p onClick={() => watchInformation()} className={`tasksub ${InformationVisible && 'selected'}`}>Informacion</p>
+                    <p onClick={() => watchActivities()} className={`tasksub ${ActivityVisible && 'selected'}`}>Actividades</p>
                 </div>
+                {InformationVisible && <div>
+                    <p>Tarea: {task.description}</p>
+                    <p>Observaciones: {task.observation}</p>
+                    <p>Proyecto: {task.room.project.name}</p>
+                    <p>Area: {task.room.name}</p>
+                    <p>Fecha de Ejecucion: {task.executionDate}</p>
+                    <p>Direccion: {task.room.project.address}</p>
+                    <p>Coordenadas: {task.room.project.coordinates}</p>
+                    <p>Material: {task.material}</p>
+                </div>}
+                <section className="taskActivity" >
+                    {ActivityVisible && <Activities taskId={task.id} />}
+                </section>
+              
             </div>}
             {
                 VisibleReport

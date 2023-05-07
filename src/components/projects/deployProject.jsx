@@ -19,11 +19,11 @@ const deployProject = ({ project }) => {
   const NewProjectVisible = useSelector(state => state.NewsVisible)[0]
 
   const [Visible, setVisible] = useState(false)
+  const [InfoVisible, setInfoVisible] = useState(true)
   const [RoomsVisible, setRoomsVisible] = useState(false)
   const [AccountsVisible, setAccountsVisible] = useState(false)
   const [MaterialsVisible, setMaterialsVisible] = useState(false)
   const [BackupsVisible, setBackupsVisible] = useState(false)
-  const [InfoVisible, setInfoVisible] = useState(false)
 
   const [MenuVisible, setMenuVisible] = useState(false)
 
@@ -41,8 +41,43 @@ const deployProject = ({ project }) => {
     }, [RefreshMenu]
   )
   useEffect(
-    (/** */) => {}, [project, Refresh]
+    (/** */) => { }, [project, Refresh]
   )
+  function watchInfo() {
+    setInfoVisible(!InfoVisible)
+    setRoomsVisible(false)
+    setAccountsVisible(false)
+    setMaterialsVisible(false)
+    setBackupsVisible(false)
+  }
+  function watchRooms() {
+    setInfoVisible(false)
+    setRoomsVisible(!RoomsVisible)
+    setAccountsVisible(false)
+    setMaterialsVisible(false)
+    setBackupsVisible(false)
+  }
+  function watchAccounts() {
+    setInfoVisible(false)
+    setRoomsVisible(false)
+    setAccountsVisible(!AccountsVisible)
+    setMaterialsVisible(false)
+    setBackupsVisible(false)
+  }
+  function watchMaterials() {
+    setInfoVisible(false)
+    setRoomsVisible(false)
+    setAccountsVisible(false)
+    setMaterialsVisible(!MaterialsVisible)
+    setBackupsVisible(false)
+  }
+  function watchBackups() {
+    setInfoVisible(false)
+    setRoomsVisible(false)
+    setAccountsVisible(false)
+    setMaterialsVisible(false)
+    setBackupsVisible(!BackupsVisible)
+  }
   return (
     <>
       <div className='deploy'>
@@ -68,43 +103,36 @@ const deployProject = ({ project }) => {
                   console.log('eliminado con exito falta eliminar todo el contenido de el proyecto para que funcione sin roblemas')
                   axios.get('http://localhost:8000/api/v1/users/me/notes', getConfig())
                     .then(res => { console.log(res), setAllNotes(res.data) })*/
-                ),
+              ),
               dispatch(updateRefresh()),
               setMenuVisible(!MenuVisible)))
             }>Eliminar</p>
           </div>
         }
       </div>
-      {Visible && <div className='content'>
-        <div className={`subcontent ${InfoVisible && 'activityGrid'}`}>
-          <p onClick={() => setInfoVisible(!InfoVisible)} className={`sub`}>Informacion</p>
+      {Visible && <div className='projectcontent'>
+        <div className='projectsubcontent'>
+          <p onClick={() => watchInfo()/*setInfoVisible(!InfoVisible)*/} className={`projectsub ${InfoVisible && 'selected'}`}>Informacion</p>
+          <p onClick={() => watchRooms() /*setRoomsVisible(!RoomsVisible)*/} className={`projectsub ${RoomsVisible && 'selected'}`}>Habitaciones</p>
+          <p onClick={() => watchAccounts() /*setAccountsVisible(!AccountsVisible)*/} className={`projectsub ${AccountsVisible && 'selected'}`}>Cuentas</p>
+          <p onClick={() => watchMaterials() /*setMaterialsVisible(!MaterialsVisible)*/} className={`projectsub ${MaterialsVisible && 'selected'}`}>Materials</p>
+          <p onClick={() => watchBackups() /*setBackupsVisible(!BackupsVisible)*/} className={`projectsub ${BackupsVisible && 'selected'}`}>Respaldos</p>
+        </div>
+        <aside>
           {InfoVisible && <div className='info'>
             <p><b>Pais:</b>  {project.country}</p>
             <p><b>Ciudad:</b> {project.city}</p>
-            <p><b>Direction:</b> {project.address}</p>
+            <p><b>Direccion:</b> {project.address}</p>
             <p><b>Referencias:</b> {project.reference}</p>
-            <p><b>Coordenadas:</b> {project.coordinates}</p>
-            <p><b>Planos:</b> <a href={`${project.plane}`}>{`${project.plane}`}</a></p>
+            <p><b>Coordenadas:</b> {'25.653315, -100.382917'} <a href={`https://maps.google.com/?q=${project.coordinates}`} className='projectsub'>¿Como llegar?</a></p>
+            <p><b>Planos:</b> <a href={`${project.plane}`} className='projectsub'>Ver planos</a></p>
             <p><b>Propietario:</b> {project.user.firstName}</p>
           </div>}
-        </div>
-
-
-        <div className={`subcontent ${RoomsVisible && 'activityGrid'}`}>
-          <p onClick={() => setRoomsVisible(!RoomsVisible)} className={`sub`}>Habitaciones</p>
           {RoomsVisible && <Rooms projectId={project.id} />}
-        </div>
-
-        <div className={`subcontent ${AccountsVisible && 'activityGrid'}`}>
-          <p onClick={() => setAccountsVisible(!AccountsVisible)} className={`sub`}>Cuentas</p>
           {AccountsVisible && <Accounts projectId={project.id} />}
-        </div>
-
-        <div className={`subcontent ${MaterialsVisible && 'activityGrid'}`}>
-          <p onClick={() => setMaterialsVisible(!MaterialsVisible)} className={`sub`}>Materials</p>
           {MaterialsVisible && <Materials projectId={project.id} />}
-        </div>
-
+          {BackupsVisible && <Backups projectId={project.id} />}
+        </aside>
         {
           /* 
             <div className={`subcontent ${TasksVisible && 'activityGrid'}`}>
@@ -113,11 +141,6 @@ const deployProject = ({ project }) => {
             </div>
           */
         }
-
-        <div className={`subcontent ${BackupsVisible && 'activityGrid'}`}>
-          <p onClick={() => setBackupsVisible(!BackupsVisible)} className={`sub`}>Respaldos</p>
-          {BackupsVisible && <Backups projectId={project.id} />}
-        </div>
 
       </div>}
     </>

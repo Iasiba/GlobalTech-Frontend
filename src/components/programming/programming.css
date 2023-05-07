@@ -1,0 +1,47 @@
+.programmingGrid{
+    width: 96%;
+    display: grid;
+    grid-template-columns: auto 50px 50px 50px;
+    text-align: center;
+    align-content: center;
+    
+    border-bottom: solid 1px  var(--primary-color) ;
+    
+    
+    /*
+    align-items: center;
+    justify-content: center;
+
+    grid-template-columns: 24% 24% 24% 24% 4%;
+    text-align: start;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+    align-content: first baseline;
+    */
+}
+.programmingGridHeader{
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto 50px 50px 50px 4%;
+    text-align: center;
+}
+/*
+.programmingGrid > p{
+    text-align: start;
+}
+*/
+.link{
+    width: 200px;
+    display: flex;
+    justify-content: space-around;
+}
+.downloads{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/*
+.bx{
+    display: initial;
+}
+*/

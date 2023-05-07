@@ -5,6 +5,7 @@ import axios from 'axios'
 import getConfig from '../../utils/getConfig'
 import { updateRefresh } from '../../store/slices/RefreshSlice'
 import { setItem } from '../../store/slices/ItemSlice'
+import { setVisibleGuide } from '../../store/slices/NewsVisibleSlice'
 
 const deployProgramming = ({ programming }) => {
   const dispatch = useDispatch()
@@ -12,6 +13,7 @@ const deployProgramming = ({ programming }) => {
   const [Click, setClick] = useState(false)
   const Refresh = useSelector(state => state.Refresh)
   const RefreshMenu = useSelector(state => state.RefreshMenu)
+  const NewGuideVisible = useSelector(state => state.NewsVisible)[10]
   useEffect(
     () => {
       if (Click) {
@@ -22,15 +24,17 @@ const deployProgramming = ({ programming }) => {
       }
     }, [RefreshMenu]
   )
-  useEffect(() => {}, [programming, Refresh])
+  useEffect(() => { }, [programming, Refresh])
   return (
     <>
       <div className='deploy'>
-        <div className={`table backupGrid`}>
+        <div className={`${/*'table'*/ ''} programmingGrid`}>
           <p>{programming.name}</p>
-          <a href={`${programming.datasheet}`}><i className='bx bxs-download'></i></a>
-          <a href={`${programming.guide}`}><i className='bx bxs-download'></i></a>
-          <a href={`${programming.tutorial}`}><i className='bx bxs-download'></i></a>
+          <a href={`${programming.datasheet}`} className='downloads'><i className='bx bxs-download'></i></a>
+          <a href={`${programming.guide}`} className='downloads'><i className='bx bxs-download'></i></a>
+          <a href={`${programming.tutorial}`} className='downloads'><i className='bx bxs-download'></i></a>
+          <aside className=''>
+          </aside>
         </div>
         <aside className='threePoints'
           onClick={
@@ -44,11 +48,11 @@ const deployProgramming = ({ programming }) => {
           MenuVisible
           &&
           <div className='itemList itemListPrimary '>
-            <p className='items materialItemsWidth' onClick={() => {dispatch(setItem(programming)), /*dispatch(setVisibleTask(true)), falta el poder dar de alta los manuales de programacion*/ setMenuVisible(false) }}>Editar</p>
+            <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(programming)), dispatch(setVisibleGuide(!NewGuideVisible)), setMenuVisible(false) }}>Editar</p>
             <p className='items materialItemsWidth' onClick={() => ((
               axios.delete(`http://192.168.0.253:8000/api/v1/programmings/${programming.id}`, getConfig())
                 .then(dispatch(updateRefresh())),
-                dispatch(updateRefresh()),
+              dispatch(updateRefresh()),
               setMenuVisible(!MenuVisible)))
             }>Eliminar</p>
           </div>
