@@ -31,6 +31,7 @@ import NewUser from '../components/users/newUser'
 import MyHome from '../components/home/MyHome'
 import UserList from '../components/users/userList'
 import NewBackup from '../components/backups/newBackup'
+import NewGuide from '../components/programming/newGuide'
 const Rutas = () => {
     return (
         <Routes>
@@ -52,10 +53,10 @@ const Rutas = () => {
             <Route path="/users" element={<Users />} />
             <Route path='/userList' element={<UserList />} />
             <Route path="/programming" element={<Programming />} />
-           { /*
+           
             <Route path="/newAccount" element={<NewAccount />} />
             <Route path='/newProject' element={<NewProject />} />
-            <Route path='/newRoom' element={<NewRoom />} />
+            <Route path='/newLocation' element={<NewRoom />} />
             <Route path='/newTask' element={<NewTask />} />
             <Route path='/newInventary' element={<NewInventary />} />
             <Route path='/newMaterial' element={<NewMaterial />} />
@@ -64,7 +65,7 @@ const Rutas = () => {
             <Route path='/newRole' element={<NewRole />} />
             <Route path='/newUser' element={<NewUser />} />
             <Route path='/newBackup' element={<NewBackup />} />
-*/}
+            <Route path='/newGuide' element={<NewGuide />} />
             <Route element={<ProtectedRoutes />}>
             </Route>
             {/*

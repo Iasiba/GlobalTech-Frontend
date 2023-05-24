@@ -16,6 +16,7 @@ const newUser = () => {
     const Roles = AxiosGetHook('http://192.168.0.253:8000/api/v1/roles')
     const AllRoles = Roles.data.data?.roles
 
+    const [User, setUser] = useState('')
     const [RoleName, setRoleName] = useState('')
     const [Role, setRole] = useState('')
     const [RoleId, setRoleId] = useState('')
@@ -29,18 +30,24 @@ const newUser = () => {
 
     const submit = data => {
         data.roleId = RoleId
+        auxSubmit(data)
+        navigate(-1)
+    }
+    async function auxSubmit(data) {
         const URL = `http://192.168.0.253:8000/api/v1/auth/register`
-        axios.post(URL, data, getConfig())
+        const aux = await axios.post(URL, data, getConfig())
             .then(res => {
                 console.log(res, "Usuario creado")
             })
             .catch(err => console.log(err))
+
         dispatch(setVisibleUser(!NewUserVisible))//Ocultar ventana de creacion de usuarios
         dispatch(updateRefresh())
     }
+
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
-            <i className='bx bx-x-circle close' onClick={() => (dispatch(setVisibleUser(false)), dispatch(setItem(false)))}></i>
+            <i className='bx bx-x-circle close' onClick={() => (dispatch(setVisibleUser(false)), dispatch(setItem(false)),navigate(-1))}></i>
             <h2>Nuevo Usuario</h2>
             <div className='createGrid'>
                 <div>* Nombre:</div>
@@ -112,6 +119,102 @@ const newUser = () => {
                     }
                 </div>
             </div>
+
+            <section>
+                <h3>Permisos</h3>
+                <div>
+                    <aside>
+                        <h4>Ver</h4>
+                        <div className='checks'>
+                            <aside className='check'>
+                                <input type="checkbox" defaultChecked={User.id ? User.watchActivities : false}{...register('watchActivities')} />
+                                <div>Actividades</div>
+                            </aside>
+                            <aside className='check'>
+                                <input type="checkbox" defaultChecked={User.id ? User.watchDocumentation : false}{...register('watchDocumentation')} />
+                                <div>Documentacion</div>
+                            </aside>
+                            <aside className='check'>
+                                <input type="checkbox" defaultChecked={User.id ? User.watchHome : false}{...register('watchHome')} />
+                                <div>Home</div>
+                            </aside>
+                            <aside className='check'>
+                                <input type="checkbox" defaultChecked={User.id ? User.watchInventaries : false}{...register('watchInventaries')} />
+                                <div>Inventarios</div>
+                            </aside>
+                            <aside className='check'>
+                                <input type="checkbox" defaultChecked={User.id ? User.watchMyAccount : false}{...register('watchMyAccount')} />
+                                <div>Mi Cuenta</div>
+                            </aside>
+                            <aside className='check'>
+                                <input type="checkbox" defaultChecked={User.id ? User.watchMyHome : false}{...register('watchMyHome')} />
+                                <div>My Home</div>
+                            </aside>
+                            <aside className='check'>
+                                <input type="checkbox" defaultChecked={User.id ? User.watchProjects : false}{...register('watchProjects')} />
+                                <div>Proyectos</div>
+                            </aside>
+                            <aside className='check'>
+                                <input type="checkbox" defaultChecked={User.id ? User.watchTasks : false}{...register('watchTasks')} />
+                                <div>Tareas</div>
+                            </aside>
+                            <aside className='check'>
+                                <input type="checkbox" defaultChecked={User.id ? User.watchUsers : false}{...register('watchUsers')} />
+                                <div>Usuarios</div>
+                            </aside>
+                        </div>
+                    </aside>
+                    <aside>
+                        <h4>Crear y Editar</h4>
+                        <div className='checks'>
+                            <aside className='check'>
+                                <input type="checkbox" defaultChecked={User.id ? User.createOrEditAccount : false}{...register('createOrEditAccount')} />
+                                <div>Cuentas</div>
+                            </aside>
+                            <aside className='check'>
+                                <input type="checkbox" defaultChecked={User.id ? User.createOrEditActivities : false}{...register('createOrEditActivities')} />
+                                <div>Actividades</div>
+                            </aside>
+                            <aside className='check'>
+                                <input type="checkbox" defaultChecked={User.id ? User.createOrEditArea : false}{...register('createOrEditArea')} />
+                                <div>Area</div>
+                            </aside>
+                            <aside className='check'>
+                                <input type="checkbox" defaultChecked={User.id ? User.createOrEditBackup : false}{...register('createOrEditBackup')} />
+                                <div>Respaldo</div>
+                            </aside>
+                            <aside className='check'>
+                                <input type="checkbox" defaultChecked={User.id ? User.createOrEditGuide : false}{...register('createOrEditGuide')} />
+                                <div>Documentacion</div>
+                            </aside>
+                            <aside className='check'>
+                                <input type="checkbox" defaultChecked={User.id ? User.createOrEditMaterial : false}{...register('createOrEditMaterial')} />
+                                <div>Material</div>
+                            </aside>
+                            <aside className='check'>
+                                <input type="checkbox" defaultChecked={User.id ? User.createOrEditInventary : false}{...register('createOrEditInventary')} />
+                                <div>Inventario</div>
+                            </aside>
+                            <aside className='check'>
+                                <input type="checkbox" defaultChecked={User.id ? User.createOrEditNote : false}{...register('createOrEditNote')} />
+                                <div>Notas</div>
+                            </aside>
+                            <aside className='check'>
+                                <input type="checkbox" defaultChecked={User.id ? User.createOrEditProject : false}{...register('createOrEditProject')} />
+                                <div>Proyectos</div>
+                            </aside>
+                            <aside className='check'>
+                                <input type="checkbox" defaultChecked={User.id ? User.createOrEditTask : false}{...register('createOrEditTask')} />
+                                <div>Tareas</div>
+                            </aside>
+                            <aside className='check'>
+                                <input type="checkbox" defaultChecked={User.id ? User.createOrEditUser : false}{...register('createOrEditUser')} />
+                                <div>Usuarios</div>
+                            </aside>
+                        </div>
+                    </aside>
+                </div>
+            </section>
             <br />
             <button>Crear</button>
         </form>

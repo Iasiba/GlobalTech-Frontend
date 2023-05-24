@@ -9,8 +9,10 @@ import { setItem } from '../../store/slices/ItemSlice'
 import { setVisibleMaterial } from './../../store/slices/NewsVisibleSlice'
 import { updateRefresh } from '../../store/slices/RefreshSlice'
 import { updateRefreshMenu } from '../../store/slices/RefreshMenuSlice'
+import { useNavigate } from 'react-router-dom'
 const deployMaterials = ({ material, MaterialList, setviewUserList }) => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const [Visible, setVisible] = useState(false)
   const [MenuVisible, setMenuVisible] = useState(false)
 
@@ -36,7 +38,7 @@ const deployMaterials = ({ material, MaterialList, setviewUserList }) => {
       /*if(MaterialList.length = 0){
         setSelected(false)
       }
-      Se actualiza la informacion que se crea o borra*/ 
+      Se actualiza la informacion que se crea o borra*/
     }, [material, MaterialList]
   )
   useEffect(
@@ -94,7 +96,7 @@ const deployMaterials = ({ material, MaterialList, setviewUserList }) => {
           MenuVisible &&
           <div className='itemList itemListPrimary '>
             {!material.onHold && <p className='items materialItemsWidth' onClick={() => { addToMaterialList(), /*Selected ? setviewUserList(false)*/!Selected && setviewUserList(true)/*: setviewUserList(true)*/, setMenuVisible(false) }}>Asignar</p>}
-            <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(material)), dispatch(setVisibleMaterial(true)), setMenuVisible(false) }}>Editar</p>
+            <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(material)), navigate('/NewMaterial') /*,dispatch(setVisibleMaterial(true)), setMenuVisible(false)*/ }}>Editar</p>
             <p className='items materialItemsWidth'
               onClick={() => ((
                 axios.delete(`http://192.168.0.253:8000/api/v1/materials/${material.id}`, getConfig())

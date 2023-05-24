@@ -13,7 +13,6 @@ import { updateRefresh } from '../../store/slices/RefreshSlice'
 const newGuide = () => {
     const dispatch = useDispatch()
     const Guide = useSelector(state => state.Item)
-    console.log(Guide, "la guia")
     const NewGuideVisible = useSelector(state => state.NewsVisible)[10]
     const [File, setFile] = useState('')
 
@@ -30,28 +29,35 @@ const newGuide = () => {
 
     const submit = data => {
         const Data = new FormData()
-        const key = data.guide ? 'guide' : data.datasheet ? 'datasheet' : data.tutorial ? 'tutorial' : ''
+        const key = data.guides ? 'guide' : data.datasheets ? 'datasheet' : data.tutorials ? 'tutorial' : ''
         Data.append(key, File)
 
         data.date = year + '/' + month + '/' + day//Today // "2020/06/12"//
         data.name = data.name + year + month + day
-        console.log(data, "dfdsgfgfgs")
+        console.log( "dfdsgfgfgs", Guide)
         const URL = `http://192.168.0.253:8000/api/v1/programmings`
-        axios.post(URL, data, getConfig())
-            .then(res => {
-                console.log(res)
-                axios.post(`http://192.168.0.253:8000/api/v1/programmings/${res.data.programmingGuide.id}/${key}`, Data, getConfig())
-                    .then(res => { console.log(res) })
-            })
-            .catch(err => console.log(err))
-            .finally(dispatch(setItem(false)))
+        Guide.id ?
+            axios.post(`http://192.168.0.253:8000/api/v1/programmings/${Guide.id}/${key}`, Data, getConfig())
+                .then(res => { console.log(res) })
+                .finally(dispatch(setItem(false)))
+            :
+            axios.post(URL, data, getConfig())
+                .then(res => {
+                    console.log(res)
+                    axios.post(`http://192.168.0.253:8000/api/v1/programmings/${res.data.programmingGuide.id}/${key}`, Data, getConfig())
+                        .then(res => { console.log(res) })
+                })
+                .catch(err => console.log(err))
+                .finally(dispatch(setItem(false)))
+
         dispatch(setVisibleGuide(!NewGuideVisible))
         dispatch(updateRefresh())
+        navigate(-1)
     }
 
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
-            <i className='bx bx-x-circle close' onClick={() => (dispatch(setVisibleGuide(!NewGuideVisible)), dispatch(setItem(false)))}></i>
+            <i className='bx bx-x-circle close' onClick={() => (dispatch(setVisibleGuide(!NewGuideVisible)), dispatch(setItem(false)), navigate(-1))}></i>
             <h2>Nueva Guia</h2>
             <div className='createGrid'>
                 <div>* Sistema, Equipo o Software:</div>
@@ -63,22 +69,22 @@ const newGuide = () => {
 
             <div className='checks'>
                 <aside className='check'>
-                    <input type="checkbox" defaultChecked={false}{...register('tutorial')} />
+                    <input type="checkbox" defaultChecked={false}{...register('tutorials')} />
                     <div>Tutorial</div>
                 </aside>
                 <aside className='check'>
-                    <input type="checkbox" defaultChecked={false}{...register('datasheet')} />
+                    <input type="checkbox" defaultChecked={false}{...register('datasheets')} />
                     <div>Manual</div>
                 </aside>
                 <aside className='check'>
-                    <input type="checkbox" defaultChecked={false}{...register('guide')} />
+                    <input type="checkbox" defaultChecked={false}{...register('guides')} />
                     <div>Guia</div>
                 </aside>
             </div>
 
             <div className='createGrid'>
                 <div>Respaldo:</div>
-                <input type="file"  required onChange={event => setFile(event.target.files[0])} />
+                <input type="file" required onChange={event => setFile(event.target.files[0])} />
             </div>
             <br />
             <button>{Guide.id ? 'Actualizar' : 'Crear'}</button>

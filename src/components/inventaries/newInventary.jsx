@@ -15,6 +15,7 @@ const newInventary = () => {
     const Inventary = useSelector(state => state.Item)
     const NewInventaryVisible = useSelector(state => state.NewsVisible)[5]
 
+    const navigate = useNavigate()
     const { handleSubmit, reset, register } = useForm()
 
     const submit = data => {
@@ -36,10 +37,11 @@ const newInventary = () => {
                 .catch(err => console.log(err))
         dispatch(setVisibleInventary(!NewInventaryVisible))//ocultar ventana de creacion de inventarios
         dispatch(updateRefresh())
+        navigate(-1)
     }
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
-            <i className='bx bx-x-circle close' onClick={() => (dispatch(setVisibleInventary(!NewInventaryVisible)),dispatch(setItem(false)))}></i>
+            <i className='bx bx-x-circle close' onClick={() => (/*dispatch(setVisibleInventary(!NewInventaryVisible)),*/dispatch(setItem(false)), navigate(-1))}></i>
             <h2>{Inventary.id ? 'Editar Inventario' : 'Nuevo Inventario'}</h2>
             <div className='createGrid'>
                 <div>* Nombre:</div>

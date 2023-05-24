@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { setItem } from '../../store/slices/ItemSlice'
 import getConfig from '../../utils/getConfig'
 import { setVisibleAccount } from './../../store/slices/NewsVisibleSlice'
@@ -10,6 +10,7 @@ import { updateRefresh } from '../../store/slices/RefreshSlice'
 import { updateRefreshMenu } from '../../store/slices/RefreshMenuSlice'
 const deployAccounts = ({ account }) => {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const NewAccountVisible = useSelector(state => state.NewsVisible)[4]
     const [Visible, setVisible] = useState(false)
     const [MenuVisible, setMenuVisible] = useState(false)
@@ -50,7 +51,7 @@ const deployAccounts = ({ account }) => {
                     MenuVisible
                     &&
                     <div className='itemList itemListPrimary '>
-                        <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(account)), setMenuVisible(!MenuVisible), dispatch(setVisibleAccount(true)) }}>Editar</p>
+                        <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(account)), setMenuVisible(!MenuVisible),navigate('/NewAccount') /*dispatch(setVisibleAccount(true))*/ }}>Editar</p>
                         <p className='items materialItemsWidth' onClick={() => ((
                             axios.delete(`http://192.168.0.253:8000/api/v1/accounts/${account.id}`, getConfig())
                                 .then(dispatch(updateRefresh())),

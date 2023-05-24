@@ -67,11 +67,12 @@ const newBackup = () => {
                 .catch(err => console.log(err))
         dispatch(setVisibleBackup(!NewBackupVisible))
         dispatch(updateRefresh())
+        navigate(-1)
     }
 
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
-            <i className='bx bx-x-circle close' onClick={() => (dispatch(setVisibleBackup(!NewBackupVisible)), dispatch(setItem(false)))}></i>
+            <i className='bx bx-x-circle close' onClick={() => (dispatch(setVisibleBackup(!NewBackupVisible)), dispatch(setItem(false)), navigate(-1))}></i>
             {Backup.id ? <h2>Editar Respaldo</h2> : <h2>Nuevo Respaldo</h2>}
             <div className='createGrid'>
                 <div>* Proyecto:</div>

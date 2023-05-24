@@ -56,13 +56,11 @@ const activities = ({ taskId, myhome, home }) => {
             {
                 AllActivity && AllActivity?.map(activity => {
                     return (
-                        <>
-                            <DeployAtivity
-                                key={activity.id}
-                                activity={activity}
-                                myhome={myhome}
-                            />
-                        </>
+                        <DeployAtivity
+                            key={activity.id}
+                            activity={activity}
+                            myhome={myhome}
+                        />
                     )
                 })
             }

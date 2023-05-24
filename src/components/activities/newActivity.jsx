@@ -10,9 +10,11 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setItem } from '../../store/slices/ItemSlice'
 import { setVisibleActivity } from './../../store/slices/NewsVisibleSlice'
 import { updateRefresh } from '../../store/slices/RefreshSlice'
-const newActivity = ({ task, setVisibleReport }) => {
+const newActivity = ({ /*task,*/ setVisibleReport }) => {
+    let aux
+    const [task, settask] = useState('')//let task = {}
     const dispatch = useDispatch()
-    const Activity = useSelector(state => state.Item)
+    let Activity = useSelector(state => state.Item)
     const NewActivityVisible = useSelector(state => state.NewsVisible)[3]
 
     const Tasks = AxiosGetHook('http://192.168.0.253:8000/api/v1/tasks')
@@ -42,9 +44,19 @@ const newActivity = ({ task, setVisibleReport }) => {
         }, [Task]
     )
     useEffect(() => { task && setTask(task) }, [task])
+    //Activity.roomId && (task = Activity, Activity = undefined, console.log('entro a borrar activity'))
+    useEffect(() => CreateOrEditActivity(), [Activity])
 
-    if (Activity.id) useEffect(() => { setTask(Activity.task) }, [Activity])//en caso de editar materiales
+    /*if (Activity.roomId) {
+        useEffect(() =>(  settask(Activity), Activity = {} ), [Activity])
+    } else {
+        if (Activity.id) useEffect(() => setTask(Activity.task), [Activity])//en caso de editar actividades
+    }*/
 
+    function CreateOrEditActivity() {
+        Activity.roomId && (settask(Activity), Activity = {}) //en caso de crear actividades en una tarea especifica
+        Activity.task && setTask(Activity.task) //en caso de editar actividades
+    }
     function installMaterial(material) {
         for (let i = 0; i < MaterialsAsignatesToMe.length; i++) {
             if (material.id == MaterialsAsignatesToMe[i].id) {
@@ -65,8 +77,8 @@ const newActivity = ({ task, setVisibleReport }) => {
     }
     const submit = data => {
         data.taskId = Task.id
-        const URL = Activity.id ? `http://192.168.0.253:8000/api/v1/activities/${Activity.id}` : `http://192.168.0.253:8000/api/v1/tasks/${TaskId}/activities`
-        Activity.id ?
+        const URL = Activity.task ? `http://192.168.0.253:8000/api/v1/activities/${Activity.id}` : `http://192.168.0.253:8000/api/v1/tasks/${TaskId}/activities`
+        Activity.task ?
             axios.put(URL, data, getConfig())
                 .then(res => {
                     console.log(res, "Activiad Actualizada")
@@ -96,21 +108,25 @@ const newActivity = ({ task, setVisibleReport }) => {
         task
             &&
             (
-                task.assigned = false,
-                task.userId = null,
-                axios.put(`http://192.168.0.253:8000/api/v1/tasks/${task.id}`, task, getConfig())
+                /*aux = task,
+                console.log(aux),
+                aux.assigned = false,
+                aux.userId = null,
+                axios.put(`http://192.168.0.253:8000/api/v1/tasks/${task.id}`, aux, getConfig())
                     .then(res => {
                         console.log(res, "Tarea Actualizada")
                     })
                     .catch(err => console.log(err))
                     .finally(dispatch(setItem(false)))
+                //,
+                //setVisibleReport(false)
                 ,
-                setVisibleReport(false)
-                ,
+                */
                 axios.get("http://192.168.0.253:8000/api/v1/users/me", getConfig())
                     .then(res => {
                         const meId = res.data.id
                         for (let i = 0; i < task.taskLists.length; i++) {
+                            console.log(task.taskLists)
                             if (task.taskLists[i].userId === meId) {
                                 axios.delete(`http://192.168.0.253:8000/api/v1/taskList/${task.taskLists[i].id}`, getConfig())
                                     .then(res => {
@@ -122,16 +138,22 @@ const newActivity = ({ task, setVisibleReport }) => {
                         }
                     })
             )
-        !task && dispatch(setVisibleActivity(!NewActivityVisible))//ocultar ventana de creacion de actividades
-        dispatch(updateRefresh())
+        //!task && dispatch(setVisibleActivity(!NewActivityVisible))//ocultar ventana de creacion de actividades
+
+        //dispatch(updateRefresh())
+        navigate(-1)
+    }
+    function exit() {
+        dispatch(setItem(false))
+        navigate(-1)
     }
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
-            <i className='bx bx-x-circle close' onClick={() => (task ? setVisibleReport(false) : dispatch(setVisibleActivity(!NewActivityVisible)), dispatch(setItem(false)))}></i>
-            <h2>{Activity.id ? 'Editar Actividad' : 'Nueva Actividad'}</h2>
+            <i className='bx bx-x-circle close' onClick={() => exit() /*(task ? setVisibleReport(false) : dispatch(setVisibleActivity(!NewActivityVisible)), dispatch(setItem(false)), navigate(-1))*/}></i>
+            <h2>{Activity.task ? 'Editar Actividad' : 'Nueva Actividad'}</h2>
             <div className='createGrid'>
                 <div>* Descripcion:</div>
-                <input type="text" required defaultValue={Activity.id && Activity.description} placeholder='Ej. cablee 5 nodos en cocina' {...register('description')} />
+                <input type="text" required defaultValue={Activity.task && Activity.description} placeholder='Ej. cablee 5 nodos en cocina' {...register('description')} />
             </div>
             <div className='createGrid'>
                 <div>* Tarea:</div>
@@ -216,7 +238,7 @@ const newActivity = ({ task, setVisibleReport }) => {
             <div>
             </div>
             <br />
-            <button>{Activity.id ? 'Actualizar' : 'Crear'}</button>
+            <button>{Activity.task ? 'Actualizar' : 'Crear'}</button>
         </form>
     )
 }

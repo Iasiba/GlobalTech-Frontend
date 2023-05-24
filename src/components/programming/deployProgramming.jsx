@@ -6,9 +6,11 @@ import getConfig from '../../utils/getConfig'
 import { updateRefresh } from '../../store/slices/RefreshSlice'
 import { setItem } from '../../store/slices/ItemSlice'
 import { setVisibleGuide } from '../../store/slices/NewsVisibleSlice'
+import { useNavigate } from 'react-router-dom'
 
 const deployProgramming = ({ programming }) => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const [MenuVisible, setMenuVisible] = useState(false)
   const [Click, setClick] = useState(false)
   const Refresh = useSelector(state => state.Refresh)
@@ -28,11 +30,11 @@ const deployProgramming = ({ programming }) => {
   return (
     <>
       <div className='deploy'>
-        <div className={`${/*'table'*/ ''} programmingGrid`}>
+        <div className={`programmingGrid`}>
           <p>{programming.name}</p>
-          <a href={`${programming.datasheet}`} className='downloads'><i className='bx bxs-download'></i></a>
-          <a href={`${programming.guide}`} className='downloads'><i className='bx bxs-download'></i></a>
-          <a href={`${programming.tutorial}`} className='downloads'><i className='bx bxs-download'></i></a>
+          {programming.datasheet ? <a href={`${programming.datasheet}`} className='downloads'><i className='bx bxs-download'></i></a> : <p />}
+          {programming.guide ? <a href={`${programming.guide}`} className='downloads'><i className='bx bxs-download'></i></a> : <p />}
+          {programming.tutorial ? <a href={`${programming.tutorial}`} className='downloads'><i className='bx bxs-download'></i></a> : <p />}
           <aside className=''>
           </aside>
         </div>
@@ -48,7 +50,7 @@ const deployProgramming = ({ programming }) => {
           MenuVisible
           &&
           <div className='itemList itemListPrimary '>
-            <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(programming)), dispatch(setVisibleGuide(!NewGuideVisible)), setMenuVisible(false) }}>Editar</p>
+            <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(programming)), navigate('/NewGuide') /*dispatch(setVisibleGuide(!NewGuideVisible))*/, setMenuVisible(false) }}>Editar</p>
             <p className='items materialItemsWidth' onClick={() => ((
               axios.delete(`http://192.168.0.253:8000/api/v1/programmings/${programming.id}`, getConfig())
                 .then(dispatch(updateRefresh())),

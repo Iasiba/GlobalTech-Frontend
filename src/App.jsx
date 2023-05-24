@@ -29,7 +29,7 @@ function App() {
   return (
     <div
       className={
-        `App ${(
+        `App ${/*(
           NewProjectVisible ||
           NewRoomVisible ||
           NewTaskVisible ||
@@ -41,12 +41,12 @@ function App() {
           NewNoteVisible ||
           NewUserVisible ||
           NewGuideVisible
-        ) && 'overlay'}`
+        ) && 'overlay'*/''}`
       }
     >
       <NavBar />
       <Rutas />
-      {(NewProjectVisible || NewRoomVisible || NewTaskVisible ||
+      {/*(NewProjectVisible || NewRoomVisible || NewTaskVisible ||
         NewActivityVisible || NewAccountVisible || NewInventaryVisible ||
         NewMaterialVisible || NewBackupVisible || NewUserVisible ||
         NewNoteVisible || NewGuideVisible

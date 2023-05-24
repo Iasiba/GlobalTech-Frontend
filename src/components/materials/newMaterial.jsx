@@ -52,8 +52,9 @@ const newMaterial = () => {
                 .finally(() => dispatch(setItem(false)))
             :
             createMaterial(URL, data)
-        dispatch(setVisibleMaterial(!NewMaterialVisible))//ocultar ventana de creacion de materiales
+        //dispatch(setVisibleMaterial(!NewMaterialVisible))//ocultar ventana de creacion de materiales
         dispatch(updateRefresh())//dispatch(setRefresh(!Refresh))
+        navigate(-1)
     }
     function createMaterial(URL, data) {
         const Amount = data.amount
@@ -68,7 +69,7 @@ const newMaterial = () => {
     }
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
-            <i className='bx bx-x-circle close' onClick={() => (dispatch(setVisibleMaterial(!NewMaterialVisible)), dispatch(setItem(false)))}></i>
+            <i className='bx bx-x-circle close' onClick={() => (/*dispatch(setVisibleMaterial(!NewMaterialVisible)), */dispatch(setItem(false)), navigate(-1))}></i>
             {Material.id ? <h2>Editar Material</h2> : <h2>Nuevo Material</h2>}
 
             <div className='createGrid'>

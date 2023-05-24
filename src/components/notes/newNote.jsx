@@ -34,10 +34,11 @@ const newNote = () => {
                 .catch(err => console.log(err))
         dispatch(setVisibleNote(!NewNoteVisible))//ocultar ventana de creacion y edicion de notas
         dispatch(updateRefresh())
+        navigate(-1)
     }
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
-            <i className='bx bx-x-circle close' onClick={() => (dispatch(setVisibleNote(!NewNoteVisible)),dispatch(setItem(false)))}></i>
+            <i className='bx bx-x-circle close' onClick={() => (dispatch(setVisibleNote(!NewNoteVisible)), dispatch(setItem(false)), navigate(-1))}></i>
             <h2>{Note.id ? 'Editar Nota' : 'Nueva Nota'}</h2>
             <div className='createGrid'>
                 <div>* Titulo:</div>

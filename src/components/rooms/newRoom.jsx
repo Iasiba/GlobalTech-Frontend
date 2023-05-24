@@ -24,7 +24,8 @@ const newRoom = () => {
     const { handleSubmit, reset, register } = useForm()
 
     const navigate = useNavigate()
-    if (Room.id) useEffect(() => setProject(Room.project), [])
+    useEffect(() => Room.id && setProject(Room.project), [])
+
     const submit = data => {
         data.projectId = Project.id
         Room.id ?
@@ -44,10 +45,11 @@ const newRoom = () => {
                 .catch(err => console.log(err))
         dispatch(setVisibleRoom(!NewRoomVisible))//ocultar ventana de creacion de habiaciones
         dispatch(updateRefresh())
+        navigate(-1)
     }
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
-            <i className='bx bx-x-circle close' onClick={() => (dispatch(setVisibleRoom(!NewRoomVisible)),dispatch(setItem(false)))}></i>
+            <i className='bx bx-x-circle close' onClick={() => (/*dispatch(setVisibleRoom(!NewRoomVisible)), */dispatch(setItem(false)), navigate(-1))}></i>
             <h2>{Room.id ? 'Editar Area' : 'Nueva Area'}</h2>
             <div className='createGrid'>
                 <div>* Nombre:</div>

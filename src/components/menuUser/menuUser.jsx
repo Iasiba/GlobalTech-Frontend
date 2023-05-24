@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './menuUser.css'
 import { Link, useNavigate } from 'react-router-dom'
 
@@ -6,24 +6,31 @@ import { setVisibleUserMenu } from '../../store/slices/UserMenu'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { setArea } from '../../store/slices/AreaSlice'
+import axios from 'axios'
+import getConfig from '../../utils/getConfig'
 
 const menuUser = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   /**let visible = useSelector(state => state.UserMenu)*/
   let UserMenuVisible = useSelector(state => state.UserMenu)
+  const [Me, setMe] = useState('')
   //let Area = useSelector(state => state.Area)
+  useEffect(() => {
+    axios.get('http://192.168.0.253:8000/api/v1/users/me', getConfig())
+      .then(res => setMe(res.data))
+  }, [])
   return (
     /*visible && */<div className={`menu ${UserMenuVisible && 'openmenuUser'}`}>
-      <div className='menuPlusOptions' onClick={() => (navigate('/activities'), dispatch(setArea("Actividades")), dispatch(setVisibleUserMenu(!UserMenuVisible)))}>Actividades</div>
-      <div className='menuPlusOptions' onClick={() => (navigate('/programming'), dispatch(setArea("Programacion")), dispatch(setVisibleUserMenu(!UserMenuVisible)))}>Documentacion</div>
-      <div className='menuPlusOptions' onClick={() => (navigate('/'), dispatch(setArea("Home")), dispatch(setVisibleUserMenu(!UserMenuVisible)))}>Home</div>
-      <div className='menuPlusOptions' onClick={() => (navigate('/inventaries'), dispatch(setArea("Inventarios")), dispatch(setVisibleUserMenu(!UserMenuVisible)))} >Inventarios</div>
-      <div className='menuPlusOptions' onClick={() => (navigate('/myAccount'), dispatch(setArea("Mi Cuenta")), dispatch(setVisibleUserMenu(!UserMenuVisible)))}>Mi Cuenta</div>
-      <div className='menuPlusOptions' onClick={() => (navigate('/myHome'), dispatch(setArea("MyHome")), dispatch(setVisibleUserMenu(!UserMenuVisible)))}>MyHome</div>
-      <div className='menuPlusOptions' onClick={() => (navigate('/projects'), dispatch(setArea("Proyectos")), dispatch(setVisibleUserMenu(!UserMenuVisible)))}>Proyectos</div>
-      <div className='menuPlusOptions' onClick={() => (navigate('/tasks'), dispatch(setArea("Tareas")), dispatch(setVisibleUserMenu(!UserMenuVisible)))}>Tareas</div>
-      <div className='menuPlusOptions' onClick={() => (navigate('/users'), dispatch(setArea("Usuarios")), dispatch(setVisibleUserMenu(!UserMenuVisible)))}>Usuarios</div>
+      {Me.watchActivities && <div className='menuPlusOptions' onClick={() => (navigate('/activities'), dispatch(setArea("Actividades")), dispatch(setVisibleUserMenu(!UserMenuVisible)))}>Actividades</div>}
+      {Me.watchDocumentation && <div className='menuPlusOptions' onClick={() => (navigate('/programming'), dispatch(setArea("Programacion")), dispatch(setVisibleUserMenu(!UserMenuVisible)))}>Documentacion</div>}
+      {Me.watchHome && <div className='menuPlusOptions' onClick={() => (navigate('/'), dispatch(setArea("Home")), dispatch(setVisibleUserMenu(!UserMenuVisible)))}>Home</div>}
+      {Me.watchInventaries && <div className='menuPlusOptions' onClick={() => (navigate('/inventaries'), dispatch(setArea("Inventarios")), dispatch(setVisibleUserMenu(!UserMenuVisible)))} >Inventarios</div>}
+      {Me.watchMyAccount && <div className='menuPlusOptions' onClick={() => (navigate('/myAccount'), dispatch(setArea("Mi Cuenta")), dispatch(setVisibleUserMenu(!UserMenuVisible)))}>Mi Cuenta</div>}
+      {Me.watchMyHome && <div className='menuPlusOptions' onClick={() => (navigate('/myHome'), dispatch(setArea("MyHome")), dispatch(setVisibleUserMenu(!UserMenuVisible)))}>MyHome</div>}
+      {Me.watchProjects && <div className='menuPlusOptions' onClick={() => (navigate('/projects'), dispatch(setArea("Proyectos")), dispatch(setVisibleUserMenu(!UserMenuVisible)))}>Proyectos</div>}
+      {Me.watchTasks && <div className='menuPlusOptions' onClick={() => (navigate('/tasks'), dispatch(setArea("Tareas")), dispatch(setVisibleUserMenu(!UserMenuVisible)))}>Tareas</div>}
+      {Me.watchUsers && <div className='menuPlusOptions' onClick={() => (navigate('/users'), dispatch(setArea("Usuarios")), dispatch(setVisibleUserMenu(!UserMenuVisible)))}>Usuarios</div>}
       {/*  
     <div><Link to={'/userList'} onClick={() => (dispatch(setArea("Lista de Usuarios")), dispatch(setVisibleUserMenu(!UserMenuVisible)))}>Lista de Usuarios</Link></div>
   */}

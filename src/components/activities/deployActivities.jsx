@@ -8,8 +8,10 @@ import getConfig from '../../utils/getConfig'
 import { setVisibleActivity } from './../../store/slices/NewsVisibleSlice'
 import {updateRefreshMenu} from '../../store/slices/RefreshMenuSlice'
 import { updateRefresh } from '../../store/slices/RefreshSlice'
+import { useNavigate } from 'react-router-dom'
 const deployActivities = ({ activity, myhome }) => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const NewActivityVisible = useSelector(state => state.NewsVisible)[3]
   const [Visible, setVisible] = useState(false)
   const [MenuVisible, setMenuVisible] = useState(false)
@@ -48,7 +50,7 @@ const deployActivities = ({ activity, myhome }) => {
           MenuVisible
           &&
           <div className='itemList itemListPrimary '>
-            <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(activity)), dispatch(setVisibleActivity(!NewActivityVisible)), setMenuVisible(!MenuVisible) }}>Editar</p>
+            <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(activity)), navigate('/NewActivity')/*dispatch(setVisibleActivity(!NewActivityVisible)), setMenuVisible(!MenuVisible) */}}>Editar</p>
             <p className='items materialItemsWidth' onClick={() => ((
               axios.delete(`http://192.168.0.253:8000/api/v1/activities/${activity.id}`, getConfig())
                 .then(dispatch(updateRefresh())),

@@ -11,6 +11,7 @@ const programming = () => {
     axios.get('http://192.168.0.253:8000/api/v1/programmings', getConfig())
       .then(res => setAllProgrammings(res.data.programmingGuide))
   }, [Refresh])
+  
   return (
     <div className='contentDeploy'>
       <div className="programmingGridHeader tableHeader">

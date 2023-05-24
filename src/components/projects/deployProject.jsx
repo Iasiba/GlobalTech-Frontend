@@ -5,7 +5,7 @@ import Rooms from '../rooms/rooms'
 import Accounts from '../accounts/accounts'
 import Materials from '../materials/materials'
 import Tasks from '../tasks/tasks'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { setItem } from '../../store/slices/ItemSlice'
 import axios from 'axios'
@@ -16,6 +16,7 @@ import { updateRefresh } from '../../store/slices/RefreshSlice'
 import { updateRefreshMenu } from '../../store/slices/RefreshMenuSlice'
 const deployProject = ({ project }) => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const NewProjectVisible = useSelector(state => state.NewsVisible)[0]
 
   const [Visible, setVisible] = useState(false)
@@ -96,7 +97,7 @@ const deployProject = ({ project }) => {
           MenuVisible
           &&
           <div className='itemList itemListPrimary '>
-            <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(project)), dispatch(setVisibleProject(true)), setMenuVisible(!MenuVisible) }}>Editar</p>
+            <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(project)), navigate('/NewProject')/*dispatch(setVisibleProject(true)), setMenuVisible(!MenuVisible)*/ }}>Editar</p>
             <p className='items materialItemsWidth' onClick={() => ((
               axios.delete(`http://192.168.0.253:8000/api/v1/projects/${project.id}`, getConfig())
                 .then(/*,

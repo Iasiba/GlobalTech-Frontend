@@ -23,10 +23,10 @@ const newAccount = () => {
     const { handleSubmit, reset, register } = useForm()
 
     const navigate = useNavigate()
-    if (Account.id) useEffect(() => { setProject(Account.project) }, [])
+    useEffect(() => Account.id && setProject(Account.project), [])
 
     const submit = data => {
-        data.projectId = Project.id 
+        data.projectId = Project.id
         Account.id ?
             axios.put(`http://192.168.0.253:8000/api/v1/accounts/${Account.id}`, data, getConfig())
                 .then(res => {
@@ -42,10 +42,11 @@ const newAccount = () => {
                 .catch(err => console.log(err))
         dispatch(setVisibleAccount(!NewAccountVisible))//ocultar ventana de creacion de cuentas
         dispatch(updateRefresh())
+        navigate(-1)
     }
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
-            <i className='bx bx-x-circle close' onClick={()=> (dispatch(setVisibleAccount(!NewAccountVisible)),dispatch(setItem(false)))}></i>
+            <i className='bx bx-x-circle close' onClick={() => (/*dispatch(setVisibleAccount(!NewAccountVisible)), */dispatch(setItem(false)), navigate(-1))}></i>
             <h2>{Account.id ? 'Editar Cuenta' : 'Nueva Cuenta'}</h2>
             <div className='createGrid'>
                 <div>* Software:</div>
@@ -53,7 +54,7 @@ const newAccount = () => {
             </div>
             <div className='createGrid'>
                 <div>Direccion Ip:</div>
-                <input type="text" defaultValue={Account.id ? Account.directionIp:'0.0.0.0'} placeholder='Ej. 0.0.0.0' {...register('directionIp')} />
+                <input type="text" defaultValue={Account.id ? Account.directionIp : '0.0.0.0'} placeholder='Ej. 0.0.0.0' {...register('directionIp')} />
             </div>
             <div className='createGrid'>
                 <div>Propietario:</div>

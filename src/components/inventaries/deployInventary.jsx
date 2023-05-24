@@ -8,8 +8,10 @@ import Materials from '../materials/materials'
 import { setVisibleInventary } from './../../store/slices/NewsVisibleSlice'
 import { updateRefreshMenu } from '../../store/slices/RefreshMenuSlice'
 import { updateRefresh } from '../../store/slices/RefreshSlice'
+import { useNavigate } from 'react-router-dom'
 const deployInventary = ({ inventary }) => {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const NewInventaryVisible = useSelector(state => state.NewsVisible)[5]
     const [Visible, setVisible] = useState(false)
     const [MenuVisible, setMenuVisible] = useState(false)
@@ -44,7 +46,7 @@ const deployInventary = ({ inventary }) => {
                     MenuVisible
                     &&
                     <div className='itemList itemListPrimary '>
-                        <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(inventary)), dispatch(setVisibleInventary(!NewInventaryVisible)), setMenuVisible(!MenuVisible) }}>Editar</p>
+                        <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(inventary)), navigate('/NewInventary')/*, dispatch(setVisibleInventary(!NewInventaryVisible)), setMenuVisible(!MenuVisible) */ }}>Editar</p>
                         <p className='items materialItemsWidth' onClick={() => ((
                             axios.delete(`http://192.168.0.253:8000/api/v1/inventories/${inventary.id}`, getConfig())
                                 .then(dispatch(updateRefresh())),

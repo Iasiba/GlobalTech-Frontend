@@ -62,11 +62,12 @@ const newTask = () => {
                 .catch(err => console.log(err))
         dispatch(setVisibleTask(!NewTaskVisible))//ocultar ventana de creacion de Tareas
         dispatch(updateRefresh())
+        navigate(-1)
     }
 
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
-            <i className='bx bx-x-circle close' onClick={() => (dispatch(setVisibleTask(!NewTaskVisible)),dispatch(setItem(false)))}></i>
+            <i className='bx bx-x-circle close' onClick={() => (dispatch(setVisibleTask(!NewTaskVisible)), dispatch(setItem(false)), navigate(-1))}></i>
             <h2>{Task.id ? 'Editar Tarea' : 'Nueva Tarea'}</h2>
             <div className='createGrid'>
                 <div>* Fecha de ejecucion:</div>

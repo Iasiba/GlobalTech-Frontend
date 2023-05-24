@@ -10,8 +10,10 @@ import { setVisibleTask } from './../../store/slices/NewsVisibleSlice'
 import NewActivity from '../activities/newActivity'
 import { updateRefreshMenu } from '../../store/slices/RefreshMenuSlice'
 import { updateRefresh } from '../../store/slices/RefreshSlice'
+import { useNavigate } from 'react-router-dom'
 const deployTask = ({ task }) => {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const [MenuVisible, setMenuVisible] = useState(false)
     const [UserListVisible, setUserListVisible] = useState(false)
     const [Visible, setVisible] = useState(false)
@@ -55,23 +57,13 @@ const deployTask = ({ task }) => {
                     <aside>
                         <p>{task.description}</p>
                     </aside>
-
                 </div>
-
-                <aside className='threePoints'
-                    onClick={
-                        () => (
-                            dispatch(updateRefreshMenu()),
-                            setClick(true)
-                        )
-                    }
-                ><p>...</p></aside>
-
+                <aside className='threePoints' onClick={() => (dispatch(updateRefreshMenu()), setClick(true))}><p>...</p></aside>
                 {
                     MenuVisible
                     &&
                     <div className='itemList itemListPrimary '>
-                        <p className='items materialItemsWidth' onClick={() => { setMenuVisible(false), setVisibleReport(true) }}>Reporte</p>
+                        <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(task)), setMenuVisible(false), navigate('/NewActivity')/*setVisibleReport(true)*/ }}>Reporte</p>
                         <p className='items materialItemsWidth' onClick={() => { setMenuVisible(false), setUserListVisible(true) }}>Asignar</p>
                         <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(task)), dispatch(setVisibleTask(true)), setMenuVisible(false) }}>Editar</p>
                         <p className='items materialItemsWidth' onClick={() => ((
@@ -112,7 +104,7 @@ const deployTask = ({ task }) => {
                 <section className="taskActivity" >
                     {ActivityVisible && <Activities taskId={task.id} />}
                 </section>
-              
+
             </div>}
             {
                 VisibleReport

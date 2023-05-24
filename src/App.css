@@ -17,6 +17,7 @@
   --color-footer: #3C3C3B;
   --font-family: 'Lato', sans-serif;
   --font-size: 12px;
+  
 }
 
 /* -- Reset -- */
@@ -48,6 +49,7 @@ ul {
   list-style: none;
   padding-left: 0;
 }
+
 /*
 a {
   text-decoration: none;
@@ -67,8 +69,9 @@ img {
 
 .App {
   width: 100%;
+  height: 100vh;
   display: flex;
-  justify-content: center;
+  /*justify-content: center;*/
   flex-direction: column;
   align-items: center;
 }
@@ -124,8 +127,8 @@ img {
 
 
 .createCenter {
-  width: 400px;
-  max-height: 99vh;
+  width: 100vw;
+  height: 100%;
   /********************/
   overflow-y: auto;
   scroll-behavior: smooth;
@@ -140,7 +143,7 @@ img {
 .createGrid {
   width: 100%;
   display: grid;
-  grid-template-columns: 30% 60%;
+  grid-template-columns: 40% 60%;
   justify-content: center;
   align-items: center;
   text-align: start;
@@ -163,8 +166,10 @@ h2 {
 
 .checks {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+
 }
 
 .check {
@@ -249,9 +254,9 @@ input:hover {
 
 /*para las ventanas de creacion*/
 .new {
-  border-radius: 2%;
+  /*border-radius: 2%;
   margin: 0 auto;
-  box-shadow: 0 0 20px black;
+  box-shadow: 0 0 20px black;*/
   position: relative;
 }
 

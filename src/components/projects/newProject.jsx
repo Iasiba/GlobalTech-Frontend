@@ -34,10 +34,11 @@ const newProject = () => {
                 .catch(err => console.log(err))
         dispatch(setVisibleProject(!NewProjectVisible))//ocultar ventana de creacion de projectos
         dispatch(updateRefresh())
+        navigate(-1)
     }
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter newProject new' >
-            <i className='bx bx-x-circle close' onClick={() => (dispatch(setVisibleProject(!NewProjectVisible)),dispatch(setItem(false)))}></i>
+            <i className='bx bx-x-circle close' onClick={() => (dispatch(setVisibleProject(!NewProjectVisible)), dispatch(setItem(false)), navigate(-1))}></i>
             <h2>{Project.id ? 'Editar Proyecto' : 'Nuevo Proyecto'}</h2>
             <div className='createGrid'>
                 <div>* Nombre:</div>
