@@ -16,6 +16,15 @@ const deployUser = ({ user }) => {
   const Refresh = useSelector(state => state.Refresh)
   const RefreshMenu = useSelector(state => state.RefreshMenu)
   const [Click, setClick] = useState(false)
+
+  const [Task, setTask] = useState('')
+  function tasks(){
+    let task=""
+    for(let i=0;i<user.tasks.length;i++){
+      task+=" "+user.tasks[i].description+","
+    }
+    setTask(task)
+  }
   useEffect(
     () => {
       if (Click) {
@@ -26,13 +35,13 @@ const deployUser = ({ user }) => {
       }
     }, [RefreshMenu]
   )
-  useEffect(() => { }, [Refresh])
+  useEffect(() => tasks(), [/*Refresh*/])
   return (
     <>
       <div className='deploy'>
         <div onClick={() => setVisible(!Visible)} className='userHeader tableHover'>
           <p>{user.firstName} {user.lastName}</p>
-          {user.tasks[0] && <p>{user.tasks && user.tasks[0].description}</p>}
+          {user.tasks[0] && <p>{/*user.tasks && user.tasks[0].description*/ Task}</p>}
         </div>
         <aside className='threePoints'
           onClick={
@@ -57,7 +66,7 @@ const deployUser = ({ user }) => {
       </div>
       {Visible && <div className='deployTask'>
         <p>Email: {user.email}</p>
-        <p>Perfil: {user.profileImage}</p>
+        <p>Imagen de Perfil: {user.profileImage}</p>
         <p>Telefono: {user.phone}</p>
         <p>Material: { }</p>
         <p>Proyectos: { }</p>

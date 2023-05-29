@@ -11,7 +11,7 @@ import { setItem } from '../../store/slices/ItemSlice'
 import { setVisibleTask } from './../../store/slices/NewsVisibleSlice'
 import { updateRefresh } from '../../store/slices/RefreshSlice'
 const newTask = () => {
-    const NewTaskVisible = useSelector(state => state.NewsVisible)[2]
+    //const NewTaskVisible = useSelector(state => state.NewsVisible)[2]
     const dispatch = useDispatch()
     const Task = useSelector(state => state.Item)
 
@@ -33,14 +33,9 @@ const newTask = () => {
             .then(res => setRooms(res.data))
             .catch(err => console.log(err))
     }, [Project])
-    if (Task.id) {
-        useEffect(() => {
-            setRoom(Task.room)
-            setRoomName(Task.room.name)
-            setProject(Task.room.project)
-            setProjectName(Task.room.project.name)
-        }, [Task])//en caso de editar tareas
-    }
+
+    useEffect(() => setTaskValues(), [Task])//en caso de editar tareas
+
 
     const { handleSubmit, reset, register } = useForm()
     const navigate = useNavigate()
@@ -60,14 +55,21 @@ const newTask = () => {
                     console.log(res, "Tarea Creada")
                 })
                 .catch(err => console.log(err))
-        dispatch(setVisibleTask(!NewTaskVisible))//ocultar ventana de creacion de Tareas
+        //dispatch(setVisibleTask(!NewTaskVisible))//ocultar ventana de creacion de Tareas
         dispatch(updateRefresh())
         navigate(-1)
     }
-
+    function setTaskValues() {
+        if (Task.id) {
+            setRoom(Task.room)
+            setRoomName(Task.room.name)
+            setProject(Task.room.project)
+            setProjectName(Task.room.project.name)
+        }
+    }
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
-            <i className='bx bx-x-circle close' onClick={() => (dispatch(setVisibleTask(!NewTaskVisible)), dispatch(setItem(false)), navigate(-1))}></i>
+            <i className='bx bx-x-circle close' onClick={() => (/*dispatch(setVisibleTask(!NewTaskVisible)), */dispatch(setItem(false)), navigate(-1))}></i>
             <h2>{Task.id ? 'Editar Tarea' : 'Nueva Tarea'}</h2>
             <div className='createGrid'>
                 <div>* Fecha de ejecucion:</div>

@@ -17,7 +17,7 @@
   --color-footer: #3C3C3B;
   --font-family: 'Lato', sans-serif;
   --font-size: 12px;
-  
+
 }
 
 /* -- Reset -- */
@@ -147,6 +147,10 @@ img {
   justify-content: center;
   align-items: center;
   text-align: start;
+}
+
+.createGrid>div {
+  margin: 0 50%;
 }
 
 .createGrid>input {

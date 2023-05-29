@@ -47,17 +47,17 @@ const menuPlus = () => {
   return (
     /*visible && */<div>
       <div className={`menuPlus ${visible && 'menuPlusOpen'}`}>
-        <div><Link to={'/NewActivity'} onClick={() => { dispatch(setVisibleActivity(!NewActivityVisible), dispatch(setVisiblePlusMenu(!visible))) }} className='menuPlusOptions'>Actividad</Link></div>
-        <div><Link to={'/NewLocation'}  onClick={() => { dispatch(setVisibleRoom(!NewRoomVisible), dispatch(setVisiblePlusMenu(!visible))) }} className='menuPlusOptions'>Area</Link></div>
-        <div><Link to={'/NewAccount'} onClick={() => { dispatch(setVisibleAccount(!NewAccountVisible), dispatch(setVisiblePlusMenu(!visible))) }} className='menuPlusOptions'>Cuenta</Link></div>
-        <div><Link to={'/NewGuide'} onClick={() => { dispatch(setVisibleGuide(!NewGuideVisible), dispatch(setVisiblePlusMenu(!visible))) }} className='menuPlusOptions'>Guia</Link></div>
-        <div><Link to={'/NewInventary'} onClick={() => { dispatch(setVisibleInventary(!NewInventaryVisible), dispatch(setVisiblePlusMenu(!visible))) }} className='menuPlusOptions'>Inventario</Link></div>
-        <div><Link to={'/NewMaterial'} onClick={() => { dispatch(setVisibleMaterial(!NewMaterialVisible), dispatch(setVisiblePlusMenu(!visible))) }} className='menuPlusOptions'>Material</Link></div>
-        <div><Link to={'/NewNote'} onClick={() => { dispatch(setVisibleNote(!NewNoteVisible), dispatch(setVisiblePlusMenu(!visible))) }} className='menuPlusOptions'>Nota</Link></div>
-        <div><Link to={'/NewProject'} onClick={() => { dispatch(setVisibleProject(!NewProjectVisible), dispatch(setVisiblePlusMenu(!visible))) }} className='menuPlusOptions'>Proyecto</Link></div>
-        <div><Link to={'/NewBackup'} onClick={() => { dispatch(setVisibleBackup(!NewBackupVisible), dispatch(setVisiblePlusMenu(!visible))) }} className='menuPlusOptions'>Respaldo</Link></div>
-        <div><Link to={'/NewTask'} onClick={() => { dispatch(setVisibleTask(!NewTaskVisible), dispatch(setVisiblePlusMenu(!visible))) }} className='menuPlusOptions'>Tarea</Link></div>
-        <div><Link to={'/NewUser'} onClick={() => { dispatch(setVisibleUser(!NewUserVisible), dispatch(setVisiblePlusMenu(!visible))) }} className='menuPlusOptions'>Usuario</Link></div>
+        {Me.createOrEditActivities &&<div><Link to={'/NewActivity'} onClick={() => { dispatch(setVisibleActivity(!NewActivityVisible), dispatch(setVisiblePlusMenu(!visible))) }} className='menuPlusOptions'>Actividad</Link></div>}
+        {Me.createOrEditArea && <div><Link to={'/NewLocation'}  onClick={() => { dispatch(setVisibleRoom(!NewRoomVisible), dispatch(setVisiblePlusMenu(!visible))) }} className='menuPlusOptions'>Area</Link></div>}
+        {Me.createOrEditAccount && <div><Link to={'/NewAccount'} onClick={() => { dispatch(setVisibleAccount(!NewAccountVisible), dispatch(setVisiblePlusMenu(!visible))) }} className='menuPlusOptions'>Cuenta</Link></div>}
+        {Me.createOrEditGuide && <div><Link to={'/NewGuide'} onClick={() => { dispatch(setVisibleGuide(!NewGuideVisible), dispatch(setVisiblePlusMenu(!visible))) }} className='menuPlusOptions'>Guia</Link></div>}
+        {Me.createOrEditInventary && <div><Link to={'/NewInventary'} onClick={() => { dispatch(setVisibleInventary(!NewInventaryVisible), dispatch(setVisiblePlusMenu(!visible))) }} className='menuPlusOptions'>Inventario</Link></div>}
+        {Me.createOrEditMaterial && <div><Link to={'/NewMaterial'} onClick={() => { dispatch(setVisibleMaterial(!NewMaterialVisible), dispatch(setVisiblePlusMenu(!visible))) }} className='menuPlusOptions'>Material</Link></div>}
+        {Me.createOrEditNote && <div><Link to={'/NewNote'} onClick={() => { dispatch(setVisibleNote(!NewNoteVisible), dispatch(setVisiblePlusMenu(!visible))) }} className='menuPlusOptions'>Nota</Link></div>}
+        {Me.createOrEditProject && <div><Link to={'/NewProject'} onClick={() => { dispatch(setVisibleProject(!NewProjectVisible), dispatch(setVisiblePlusMenu(!visible))) }} className='menuPlusOptions'>Proyecto</Link></div>}
+        {Me.createOrEditBackup && <div><Link to={'/NewBackup'} onClick={() => { dispatch(setVisibleBackup(!NewBackupVisible), dispatch(setVisiblePlusMenu(!visible))) }} className='menuPlusOptions'>Respaldo</Link></div>}
+        {Me.createOrEditTask && <div><Link to={'/NewTask'} onClick={() => { dispatch(setVisibleTask(!NewTaskVisible), dispatch(setVisiblePlusMenu(!visible))) }} className='menuPlusOptions'>Tarea</Link></div>}
+        {Me.createOrEditUser && <div><Link to={'/NewUser'} onClick={() => { dispatch(setVisibleUser(!NewUserVisible), dispatch(setVisiblePlusMenu(!visible))) }} className='menuPlusOptions'>Usuario</Link></div>}
         {/*<div><Link to={'/updateTaskImage'} onClick={() => (dispatch(setVisiblePlusMenu(!visible)))}>Imagen de Tarea</Link></div>*/}
       </div>
     </div>

@@ -37,7 +37,7 @@ const newMaterial = () => {
     useEffect(() => { setProjectId(Project.id) }, [Project])
     useEffect(() => { setInventoryId(Inventory.id) }, [Inventory])
 
-    if (Material.id) useEffect(() => { setInventoryName(Material.inventory.name), setInventory(Material.inventory), Material.project?.name && setProjectName(Material.project.name), Material.project && setProject(Material.project) }, [Material])//en caso de editar materiales
+    useEffect(() => assignInventory(), [Material])//en caso de editar materiales
     const submit = data => {
         data.projectId = ProjectId
         data.inventoryId = InventoryId
@@ -65,6 +65,14 @@ const newMaterial = () => {
                     console.log(res, "Material creado")
                 })
                 .catch(err => console.log(err))
+        }
+    }
+    function assignInventory() {
+        if (Material.id) {
+            setInventoryName(Material.inventory.name)
+            setInventory(Material.inventory)
+            Material.project?.name && setProjectName(Material.project.name)
+            Material.project && setProject(Material.project)
         }
     }
     return (

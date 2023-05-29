@@ -15,7 +15,7 @@ const newProject = () => {
     const { handleSubmit, reset, register } = useForm()
     const dispatch = useDispatch()
     const navigate = useNavigate()
-
+console.log(Project)
     const submit = data => {
         Project.id ?
             axios.put(`http://192.168.0.253:8000/api/v1/projects/${Project.id}`, data, getConfig())

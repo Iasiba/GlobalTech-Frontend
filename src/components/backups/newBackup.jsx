@@ -26,7 +26,7 @@ const newBackup = () => {
     const { handleSubmit, reset, register } = useForm()
     const navigate = useNavigate()
 
-    if (Backup.id) useEffect(() => { setProject(Backup.project), setProjectName(Backup.project.name) }, [])
+    useEffect(() => assignBackup(), [])
     const tiempoTranscurrido = Date.now()
     const hoy = new Date(tiempoTranscurrido)
     const today = hoy.toLocaleDateString()
@@ -69,7 +69,12 @@ const newBackup = () => {
         dispatch(updateRefresh())
         navigate(-1)
     }
-
+    function assignBackup() {
+        if (Backup.id) {
+            setProject(Backup.project),
+                setProjectName(Backup.project.name)
+        }
+    }
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
             <i className='bx bx-x-circle close' onClick={() => (dispatch(setVisibleBackup(!NewBackupVisible)), dispatch(setItem(false)), navigate(-1))}></i>

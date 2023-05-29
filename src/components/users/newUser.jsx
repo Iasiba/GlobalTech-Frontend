@@ -12,10 +12,11 @@ import { setItem } from '../../store/slices/ItemSlice'
 import { updateRefresh } from '../../store/slices/RefreshSlice'
 const newUser = () => {
     const dispatch = useDispatch()
-    const NewUserVisible = useSelector(state => state.NewsVisible)[9]
+    //const NewUserVisible = useSelector(state => state.NewsVisible)[9]
     const Roles = AxiosGetHook('http://192.168.0.253:8000/api/v1/roles')
     const AllRoles = Roles.data.data?.roles
 
+    const NewUser = useSelector(state => state.Item)
     const [User, setUser] = useState('')
     const [RoleName, setRoleName] = useState('')
     const [Role, setRole] = useState('')
@@ -25,86 +26,98 @@ const newUser = () => {
     const { handleSubmit, reset, register } = useForm()
 
     const navigate = useNavigate()
-
+    useEffect(() => assignUser(), [])
     useEffect(() => { setRoleId(Role.id) }, [Role])
-
+    console.log(NewUser)
+    console.log(User.id)
     const submit = data => {
         data.roleId = RoleId
         auxSubmit(data)
         navigate(-1)
     }
-    async function auxSubmit(data) {
-        const URL = `http://192.168.0.253:8000/api/v1/auth/register`
-        const aux = await axios.post(URL, data, getConfig())
-            .then(res => {
-                console.log(res, "Usuario creado")
-            })
-            .catch(err => console.log(err))
+    function auxSubmit(data) {
+        console.log(data, 'xxx')
 
-        dispatch(setVisibleUser(!NewUserVisible))//Ocultar ventana de creacion de usuarios
+        User.id ?
+            axios.put(`http://192.168.0.253:8000/api/v1/users/me`, data, getConfig())
+                .then(res => {
+                    console.log(res, "Usuario editado")
+                })
+                .catch(err => console.log(err))
+            :
+            axios.post(`http://192.168.0.253:8000/api/v1/auth/register`, data, getConfig())
+                .then(res => {
+                    console.log(res, "Usuario creado")
+                })
+                .catch(err => console.log(err))
+
+        //dispatch(setVisibleUser(!NewUserVisible))//Ocultar ventana de creacion de usuarios
         dispatch(updateRefresh())
     }
-
+    function assignUser() {
+        NewUser.id && setUser(NewUser)
+        NewUser.id && (setRole(NewUser.role), setRoleName(NewUser.role.name))
+    }
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
-            <i className='bx bx-x-circle close' onClick={() => (dispatch(setVisibleUser(false)), dispatch(setItem(false)),navigate(-1))}></i>
-            <h2>Nuevo Usuario</h2>
+            <i className='bx bx-x-circle close' onClick={() => (dispatch(setVisibleUser(false)), dispatch(setItem(false)), navigate(-1))}></i>
+            <h2>{User.id ? 'Editar Usuario' : 'Nuevo Usuario'}</h2>
             <div className='createGrid'>
                 <div>* Nombre:</div>
-                <input type="text" required placeholder='' {...register('first_name')} />
+                <input type="text" required placeholder='' defaultValue={NewUser.firstName} {...register('firstName')} />
             </div>
             <div className='createGrid'>
                 <div>Apellidos:</div>
-                <input type="text" placeholder='' {...register('last_name')} />
+                <input type="text" placeholder='' defaultValue={NewUser.lastName} {...register('lastName')} />
             </div>
             <div className='createGrid'>
                 <div>Genero:</div>
-                <input type="text" placeholder='' {...register('gender')} />
+                <input type="text" placeholder='' defaultValue={NewUser.gender} {...register('gender')} />
             </div>
             <div className='createGrid'>
                 <div>* Email:</div>
-                <input type="text" required placeholder='user@gmail.com' {...register('email')} />
+                <input type="text" required placeholder='user@gmail.com' defaultValue={NewUser.email} {...register('email')} />
             </div>
-            <div className='createGrid'>
+            {!User.id && <div className='createGrid'>
                 <div>* Contraseña:</div>
                 <input type="text" required placeholder='Ej. Password' {...register('password')} />
-            </div>
+            </div>}
 
             <div className='createGrid'>
                 <div>phone:</div>
-                <input type="text" placeholder='Ej. 81XXXXXXXX' {...register('phone')} />
+                <input type="text" placeholder='Ej. 81XXXXXXXX' defaultValue={NewUser.phone} {...register('phone')} />
             </div>
             <div className='createGrid'>
                 <div>Fecha de Nacimiento:</div>
-                <input type="date" placeholder='' {...register('birthday_date')} />
+                <input type="date" placeholder='' defaultValue={NewUser.birthdayDate} {...register('birthdayDate')} />
             </div>
             <div className='createGrid'>
                 <div>DNI:</div>
-                <input type="text" placeholder='DNI' {...register('dni')} />
+                <input type="text" placeholder='DNI' defaultValue={NewUser.dni} {...register('dni')} />
             </div>
             <div className='createGrid'>
                 <div>Direccion:</div>
-                <input type="text" placeholder='Ej. calle vasconcelos 123' {...register('address')} />
+                <input type="text" placeholder='Ej. calle vasconcelos 123' defaultValue={NewUser.address} {...register('address')} />
             </div>
             <div className='createGrid'>
                 <div>Pais:</div>
-                <input type="text" placeholder='Mexico' {...register('country')} />
+                <input type="text" placeholder='Mexico' defaultValue={NewUser.country} {...register('country')} />
             </div>
             <div className='createGrid'>
                 <div>Imagen de Perfil:</div>
-                <input type="url" placeholder='URL' {...register('profile_image')} />
+                <input type="url" placeholder='URL' defaultValue={NewUser.profileImage} {...register('profileImage')} />
             </div>
             <div className='createGrid'>
                 <div>Estado:</div>
-                <input type="text" placeholder='Ej. Password' {...register('status')} />
+                <input type="text" placeholder='Ej. Password' defaultValue={NewUser.status} {...register('status')} />
             </div>
             <div className='createGrid'>
                 <div>Verificado:</div>
-                <input type="text" placeholder='default: no' {...register('verified')} />
+                <input type="text" placeholder='default: no' defaultValue={NewUser.verified} {...register('verified')} />
             </div>
             <div className='createGrid'>
                 <div>* Rol:</div>
-                <input type="text" required onClick={() => setRoleListVisible(!RoleListVisible)} placeholder='Ej. admin' value={RoleName} {...register('roleName')} />
+                <input type="text" required onClick={() => setRoleListVisible(!RoleListVisible)} placeholder='Ej. admin' value={RoleName} /*defaultValue={User.role?.name}*/{...register('roleName')} />
             </div>
 
 
@@ -120,46 +133,46 @@ const newUser = () => {
                 </div>
             </div>
 
-            <section>
+            <div>
                 <h3>Permisos</h3>
                 <div>
                     <aside>
                         <h4>Ver</h4>
                         <div className='checks'>
                             <aside className='check'>
-                                <input type="checkbox" defaultChecked={User.id ? User.watchActivities : false}{...register('watchActivities')} />
+                                <input type="checkbox" defaultChecked={NewUser.id ? NewUser.watchActivities : false}{...register('watchActivities')} />
                                 <div>Actividades</div>
                             </aside>
                             <aside className='check'>
-                                <input type="checkbox" defaultChecked={User.id ? User.watchDocumentation : false}{...register('watchDocumentation')} />
+                                <input type="checkbox" defaultChecked={NewUser.id ? NewUser.watchDocumentation : false}{...register('watchDocumentation')} />
                                 <div>Documentacion</div>
                             </aside>
                             <aside className='check'>
-                                <input type="checkbox" defaultChecked={User.id ? User.watchHome : false}{...register('watchHome')} />
+                                <input type="checkbox" defaultChecked={NewUser.id ? NewUser.watchHome : false}{...register('watchHome')} />
                                 <div>Home</div>
                             </aside>
                             <aside className='check'>
-                                <input type="checkbox" defaultChecked={User.id ? User.watchInventaries : false}{...register('watchInventaries')} />
+                                <input type="checkbox" defaultChecked={NewUser.id ? NewUser.watchInventaries : false}{...register('watchInventaries')} />
                                 <div>Inventarios</div>
                             </aside>
                             <aside className='check'>
-                                <input type="checkbox" defaultChecked={User.id ? User.watchMyAccount : false}{...register('watchMyAccount')} />
+                                <input type="checkbox" defaultChecked={NewUser.id ? NewUser.watchMyAccount : false}{...register('watchMyAccount')} />
                                 <div>Mi Cuenta</div>
                             </aside>
                             <aside className='check'>
-                                <input type="checkbox" defaultChecked={User.id ? User.watchMyHome : false}{...register('watchMyHome')} />
+                                <input type="checkbox" defaultChecked={NewUser.id ? NewUser.watchMyHome : false}{...register('watchMyHome')} />
                                 <div>My Home</div>
                             </aside>
                             <aside className='check'>
-                                <input type="checkbox" defaultChecked={User.id ? User.watchProjects : false}{...register('watchProjects')} />
+                                <input type="checkbox" defaultChecked={NewUser.id ? NewUser.watchProjects : false}{...register('watchProjects')} />
                                 <div>Proyectos</div>
                             </aside>
                             <aside className='check'>
-                                <input type="checkbox" defaultChecked={User.id ? User.watchTasks : false}{...register('watchTasks')} />
+                                <input type="checkbox" defaultChecked={NewUser.id ? NewUser.watchTasks : false}{...register('watchTasks')} />
                                 <div>Tareas</div>
                             </aside>
                             <aside className='check'>
-                                <input type="checkbox" defaultChecked={User.id ? User.watchUsers : false}{...register('watchUsers')} />
+                                <input type="checkbox" defaultChecked={NewUser.id ? NewUser.watchUsers : false}{...register('watchUsers')} />
                                 <div>Usuarios</div>
                             </aside>
                         </div>
@@ -168,55 +181,55 @@ const newUser = () => {
                         <h4>Crear y Editar</h4>
                         <div className='checks'>
                             <aside className='check'>
-                                <input type="checkbox" defaultChecked={User.id ? User.createOrEditAccount : false}{...register('createOrEditAccount')} />
+                                <input type="checkbox" defaultChecked={NewUser.id ? NewUser.createOrEditAccount : false}{...register('createOrEditAccount')} />
                                 <div>Cuentas</div>
                             </aside>
                             <aside className='check'>
-                                <input type="checkbox" defaultChecked={User.id ? User.createOrEditActivities : false}{...register('createOrEditActivities')} />
+                                <input type="checkbox" defaultChecked={NewUser.id ? NewUser.createOrEditActivities : false}{...register('createOrEditActivities')} />
                                 <div>Actividades</div>
                             </aside>
                             <aside className='check'>
-                                <input type="checkbox" defaultChecked={User.id ? User.createOrEditArea : false}{...register('createOrEditArea')} />
+                                <input type="checkbox" defaultChecked={NewUser.id ? NewUser.createOrEditArea : false}{...register('createOrEditArea')} />
                                 <div>Area</div>
                             </aside>
                             <aside className='check'>
-                                <input type="checkbox" defaultChecked={User.id ? User.createOrEditBackup : false}{...register('createOrEditBackup')} />
+                                <input type="checkbox" defaultChecked={NewUser.id ? NewUser.createOrEditBackup : false}{...register('createOrEditBackup')} />
                                 <div>Respaldo</div>
                             </aside>
                             <aside className='check'>
-                                <input type="checkbox" defaultChecked={User.id ? User.createOrEditGuide : false}{...register('createOrEditGuide')} />
+                                <input type="checkbox" defaultChecked={NewUser.id ? NewUser.createOrEditGuide : false}{...register('createOrEditGuide')} />
                                 <div>Documentacion</div>
                             </aside>
                             <aside className='check'>
-                                <input type="checkbox" defaultChecked={User.id ? User.createOrEditMaterial : false}{...register('createOrEditMaterial')} />
+                                <input type="checkbox" defaultChecked={NewUser.id ? NewUser.createOrEditMaterial : false}{...register('createOrEditMaterial')} />
                                 <div>Material</div>
                             </aside>
                             <aside className='check'>
-                                <input type="checkbox" defaultChecked={User.id ? User.createOrEditInventary : false}{...register('createOrEditInventary')} />
+                                <input type="checkbox" defaultChecked={NewUser.id ? NewUser.createOrEditInventary : false}{...register('createOrEditInventary')} />
                                 <div>Inventario</div>
                             </aside>
                             <aside className='check'>
-                                <input type="checkbox" defaultChecked={User.id ? User.createOrEditNote : false}{...register('createOrEditNote')} />
+                                <input type="checkbox" defaultChecked={NewUser.id ? NewUser.createOrEditNote : false}{...register('createOrEditNote')} />
                                 <div>Notas</div>
                             </aside>
                             <aside className='check'>
-                                <input type="checkbox" defaultChecked={User.id ? User.createOrEditProject : false}{...register('createOrEditProject')} />
+                                <input type="checkbox" defaultChecked={NewUser.id ? NewUser.createOrEditProject : false}{...register('createOrEditProject')} />
                                 <div>Proyectos</div>
                             </aside>
                             <aside className='check'>
-                                <input type="checkbox" defaultChecked={User.id ? User.createOrEditTask : false}{...register('createOrEditTask')} />
+                                <input type="checkbox" defaultChecked={NewUser.id ? NewUser.createOrEditTask : false}{...register('createOrEditTask')} />
                                 <div>Tareas</div>
                             </aside>
                             <aside className='check'>
-                                <input type="checkbox" defaultChecked={User.id ? User.createOrEditUser : false}{...register('createOrEditUser')} />
+                                <input type="checkbox" defaultChecked={NewUser.id ? NewUser.createOrEditUser : false}{...register('createOrEditUser')} />
                                 <div>Usuarios</div>
                             </aside>
                         </div>
                     </aside>
                 </div>
-            </section>
+            </div>
             <br />
-            <button>Crear</button>
+            <button>{User.id ? 'Actualizar' : 'Crear'}</button>
         </form>
     )
 }
