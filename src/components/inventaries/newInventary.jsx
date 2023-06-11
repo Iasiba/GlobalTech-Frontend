@@ -45,7 +45,7 @@ const newInventary = () => {
             <h2>{Inventary.id ? 'Editar Inventario' : 'Nuevo Inventario'}</h2>
             <div className='createGrid'>
                 <div>* Nombre:</div>
-                <input type="text" required defaultValue={Inventary.id && Inventary.name} placeholder='Ej. Herramientas' {...register('name')} />
+                <input type="text" autoComplete='off' required defaultValue={Inventary.id && Inventary.name} placeholder='Ej. Herramientas' {...register('name')} />
             </div>
             <br />
             <button>{Inventary.id ? 'Actualizar' : 'Crear'}</button>

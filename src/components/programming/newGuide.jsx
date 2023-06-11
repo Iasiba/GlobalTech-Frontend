@@ -34,7 +34,7 @@ const newGuide = () => {
 
         data.date = year + '/' + month + '/' + day//Today // "2020/06/12"//
         data.name = data.name + year + month + day
-        console.log( "dfdsgfgfgs", Guide)
+        console.log("dfdsgfgfgs", Guide)
         const URL = `http://192.168.0.253:8000/api/v1/programmings`
         Guide.id ?
             axios.post(`http://192.168.0.253:8000/api/v1/programmings/${Guide.id}/${key}`, Data, getConfig())
@@ -61,7 +61,7 @@ const newGuide = () => {
             <h2>Nueva Guia</h2>
             <div className='createGrid'>
                 <div>* Sistema, Equipo o Software:</div>
-                <input type="text" required
+                <input type="text" autoComplete='off' required
                     placeholder='Sistema' defaultValue={Guide.id && Guide.name}
                     {...register('name')}
                 />
@@ -69,22 +69,22 @@ const newGuide = () => {
 
             <div className='checks'>
                 <aside className='check'>
-                    <input type="checkbox" defaultChecked={false}{...register('tutorials')} />
+                    <input type="checkbox" autoComplete='off' defaultChecked={false}{...register('tutorials')} />
                     <div>Tutorial</div>
                 </aside>
                 <aside className='check'>
-                    <input type="checkbox" defaultChecked={false}{...register('datasheets')} />
+                    <input type="checkbox" autoComplete='off' defaultChecked={false}{...register('datasheets')} />
                     <div>Manual</div>
                 </aside>
                 <aside className='check'>
-                    <input type="checkbox" defaultChecked={false}{...register('guides')} />
+                    <input type="checkbox" autoComplete='off' defaultChecked={false}{...register('guides')} />
                     <div>Guia</div>
                 </aside>
             </div>
 
             <div className='createGrid'>
                 <div>Respaldo:</div>
-                <input type="file" required onChange={event => setFile(event.target.files[0])} />
+                <input type="file" autoComplete='off' required onChange={event => setFile(event.target.files[0])} />
             </div>
             <br />
             <button>{Guide.id ? 'Actualizar' : 'Crear'}</button>

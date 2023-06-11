@@ -61,12 +61,12 @@ const tasks = ({ roomId, home, myhome }) => {
 
   return (
     <div className='contentDeploy'>
-      <div className="taskHeader tableHeader">
+      {/*<div className="taskHeader tableHeader">
         <p>Fecha</p>
         <p>Proyecto</p>
         <p>Area</p>
         <p>Descripcion</p>
-      </div>
+  </div>*/}
       {
         AllTasks && AllTasks?.map(task => {
           return (

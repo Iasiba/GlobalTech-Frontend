@@ -15,7 +15,7 @@ const newProject = () => {
     const { handleSubmit, reset, register } = useForm()
     const dispatch = useDispatch()
     const navigate = useNavigate()
-console.log(Project)
+
     const submit = data => {
         Project.id ?
             axios.put(`http://192.168.0.253:8000/api/v1/projects/${Project.id}`, data, getConfig())
@@ -42,35 +42,35 @@ console.log(Project)
             <h2>{Project.id ? 'Editar Proyecto' : 'Nuevo Proyecto'}</h2>
             <div className='createGrid'>
                 <div>* Nombre:</div>
-                <input type="text" required defaultValue={Project.id && Project.name} placeholder='Ej. Global' {...register('name')} />
+                <input type="text" autoComplete='off' required defaultValue={Project.id && Project.name} placeholder='Ej. Global' {...register('name')} />
             </div>
             <div className='createGrid'>
                 <div>* Direccion:</div>
-                <input type="text" required defaultValue={Project.id && Project.address} placeholder='Ej. calle matamorros # 503' {...register('address')} />
+                <input type="text" autoComplete='off' required defaultValue={Project.id && Project.address} placeholder='Ej. calle matamorros # 503' {...register('address')} />
             </div>
             <div className='createGrid'>
                 <div>Plano:</div>
-                <input type="text" defaultValue={Project.id && Project.plane} placeholder='Link' {...register('plane')} />
+                <input type="text" autoComplete='off' defaultValue={Project.id && Project.plane} placeholder='Link' {...register('plane')} />
             </div>
             <div className='createGrid'>
                 <div>* Coordenadas:</div>
-                <input type="text" required defaultValue={Project.id && Project.coordinates} placeholder='Ej. 25.653315,-100.382917' {...register('coordinates')} />
+                <input type="text" autoComplete='off' required defaultValue={Project.id && Project.coordinates} placeholder='Ej. 25.653315,-100.382917' {...register('coordinates')} />
             </div>
             <div className='createGrid'>
                 <div>Referencias:</div>
-                <input type="text" defaultValue={Project.id && Project.reference} placeholder='Ej. frente a un parque' {...register('reference')} />
+                <input type="text" autoComplete='off' defaultValue={Project.id && Project.reference} placeholder='Ej. frente a un parque' {...register('reference')} />
             </div>
             <div className='createGrid'>
                 <div>Ciudad:</div>
-                <input type="text" defaultValue={Project.id && Project.city} placeholder='Ej. Monterrey' {...register('city')} />
+                <input type="text" autoComplete='off' defaultValue={Project.id && Project.city} placeholder='Ej. Monterrey' {...register('city')} />
             </div>
             <div className='createGrid'>
                 <div>Estado:</div>
-                <input type="text" defaultValue={Project.id && Project.state} placeholder='Ej. Nuevo Leon' {...register('state')} />
+                <input type="text" autoComplete='off' defaultValue={Project.id && Project.state} placeholder='Ej. Nuevo Leon' {...register('state')} />
             </div>
             <div className='createGrid'>
                 <div>Pais:</div>
-                <input type="country" defaultValue={Project.id && Project.country} placeholder='Ej. Mexico' {...register('country')} />
+                <input type="country" autoComplete='off' defaultValue={Project.id && Project.country} placeholder='Ej. Mexico' {...register('country')} />
             </div>
             <br />
             <button>{Project.id ? 'Actualizar' : 'Crear'}</button>

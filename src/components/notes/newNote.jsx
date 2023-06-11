@@ -42,11 +42,11 @@ const newNote = () => {
             <h2>{Note.id ? 'Editar Nota' : 'Nueva Nota'}</h2>
             <div className='createGrid'>
                 <div>* Titulo:</div>
-                <input type="text" required defaultValue={Note.id ? Note.tittle : 'Recordatorio'} placeholder='Titulo' {...register('tittle')} />
+                <input type="text" autoComplete='off' required defaultValue={Note.id ? Note.tittle : 'Recordatorio'} placeholder='Titulo' {...register('tittle')} />
             </div>
             <div className='createGrid'>
                 <div>* Nota:</div>
-                <input type="text" required defaultValue={Note.id && Note.note} placeholder='Ej. Recoger material' {...register('note')} />
+                <input type="text" autoComplete='off' required defaultValue={Note.id && Note.note} placeholder='Ej. Recoger material' {...register('note')} />
             </div>
             <br />
             <button>{Note.id ? 'Actualizar' : 'Crear'}</button>

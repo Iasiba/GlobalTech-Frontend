@@ -64,28 +64,28 @@ const newUser = () => {
             <h2>{User.id ? 'Editar Usuario' : 'Nuevo Usuario'}</h2>
             <div className='createGrid'>
                 <div>* Nombre:</div>
-                <input type="text" required placeholder='' defaultValue={NewUser.firstName} {...register('firstName')} />
+                <input type="text" autoComplete='off' required placeholder='' defaultValue={NewUser.firstName} {...register('firstName')} />
             </div>
             <div className='createGrid'>
                 <div>Apellidos:</div>
-                <input type="text" placeholder='' defaultValue={NewUser.lastName} {...register('lastName')} />
+                <input type="text" autoComplete='off' placeholder='' defaultValue={NewUser.lastName} {...register('lastName')} />
             </div>
             <div className='createGrid'>
                 <div>Genero:</div>
-                <input type="text" placeholder='' defaultValue={NewUser.gender} {...register('gender')} />
+                <input type="text" autoComplete='off' placeholder='' defaultValue={NewUser.gender} {...register('gender')} />
             </div>
             <div className='createGrid'>
                 <div>* Email:</div>
-                <input type="text" required placeholder='user@gmail.com' defaultValue={NewUser.email} {...register('email')} />
+                <input type="text" autoComplete='off' required placeholder='user@gmail.com' defaultValue={NewUser.email} {...register('email')} />
             </div>
             {!User.id && <div className='createGrid'>
                 <div>* Contraseña:</div>
-                <input type="text" required placeholder='Ej. Password' {...register('password')} />
+                <input type="text" autoComplete='off' required placeholder='Ej. Password' {...register('password')} />
             </div>}
 
             <div className='createGrid'>
                 <div>phone:</div>
-                <input type="text" placeholder='Ej. 81XXXXXXXX' defaultValue={NewUser.phone} {...register('phone')} />
+                <input type="text" autoComplete='off' placeholder='Ej. 81XXXXXXXX' defaultValue={NewUser.phone} {...register('phone')} />
             </div>
             <div className='createGrid'>
                 <div>Fecha de Nacimiento:</div>
@@ -93,31 +93,31 @@ const newUser = () => {
             </div>
             <div className='createGrid'>
                 <div>DNI:</div>
-                <input type="text" placeholder='DNI' defaultValue={NewUser.dni} {...register('dni')} />
+                <input type="text" autoComplete='off' placeholder='DNI' defaultValue={NewUser.dni} {...register('dni')} />
             </div>
             <div className='createGrid'>
                 <div>Direccion:</div>
-                <input type="text" placeholder='Ej. calle vasconcelos 123' defaultValue={NewUser.address} {...register('address')} />
+                <input type="text" autoComplete='off' placeholder='Ej. calle vasconcelos 123' defaultValue={NewUser.address} {...register('address')} />
             </div>
             <div className='createGrid'>
                 <div>Pais:</div>
-                <input type="text" placeholder='Mexico' defaultValue={NewUser.country} {...register('country')} />
+                <input type="text" autoComplete='off' placeholder='Mexico' defaultValue={NewUser.country} {...register('country')} />
             </div>
             <div className='createGrid'>
                 <div>Imagen de Perfil:</div>
-                <input type="url" placeholder='URL' defaultValue={NewUser.profileImage} {...register('profileImage')} />
+                <input type="url" autoComplete='off' placeholder='URL' defaultValue={NewUser.profileImage} {...register('profileImage')} />
             </div>
             <div className='createGrid'>
                 <div>Estado:</div>
-                <input type="text" placeholder='Ej. Password' defaultValue={NewUser.status} {...register('status')} />
+                <input type="text" autoComplete='off' placeholder='Ej. Password' defaultValue={NewUser.status} {...register('status')} />
             </div>
             <div className='createGrid'>
                 <div>Verificado:</div>
-                <input type="text" placeholder='default: no' defaultValue={NewUser.verified} {...register('verified')} />
+                <input type="text" autoComplete='off' placeholder='default: no' defaultValue={NewUser.verified} {...register('verified')} />
             </div>
             <div className='createGrid'>
                 <div>* Rol:</div>
-                <input type="text" required onClick={() => setRoleListVisible(!RoleListVisible)} placeholder='Ej. admin' value={RoleName} /*defaultValue={User.role?.name}*/{...register('roleName')} />
+                <input type="text" autoComplete='off' required onClick={() => setRoleListVisible(!RoleListVisible)} placeholder='Ej. admin' value={RoleName} /*defaultValue={User.role?.name}*/{...register('roleName')} />
             </div>
 
 

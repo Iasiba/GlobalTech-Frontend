@@ -23,12 +23,13 @@ const activities = ({ taskId, myhome, home }) => {
                     if (res.data?.activities) {
                         if (home) {
                             const date = new Date()
-                            const day = date.getDate() < 10 ? "-0" + date.getDate() : date.getDate()
-                            const month = date.getMonth() < 10 ? "-0" + (1 + date.getMonth()) : (1 + date.getMonth())
-                            const today = date.getFullYear() + month + day
+                            const day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate()
+                            const month = date.getMonth() < 10 ? "0" + (1 + date.getMonth()) : (1 + date.getMonth())
+                            const today = date.getFullYear() + '-' + month + '-' + day
                             const aux = []
                             res.data.activities.map(activity => { if (activity.createdAt === today) { aux.push(activity) } })
                             setAllActivity(aux)
+
                         } else {
                             setAllActivity(res.data.activities)
                         }
@@ -47,12 +48,12 @@ const activities = ({ taskId, myhome, home }) => {
     }
     return (
         <div className='contentDeploy'>
-            <div className={`${!myhome && "activitiesHeader"} tableHeader ${myhome && "myHomeActivityHeader"}`}>
+            {/*<div className={`${!myhome && "activitiesHeader"} tableHeader ${myhome && "myHomeActivityHeader"}`}>
                 <p>fecha</p>
                 <p>Proyecto</p>
-                <p>Description</p>
                 {!myhome && <p>Tecnico</p>}
-            </div>
+                <p>Description</p>
+    </div>*/}
             {
                 AllActivity && AllActivity?.map(activity => {
                     return (

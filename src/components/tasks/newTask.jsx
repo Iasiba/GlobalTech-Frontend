@@ -73,11 +73,11 @@ const newTask = () => {
             <h2>{Task.id ? 'Editar Tarea' : 'Nueva Tarea'}</h2>
             <div className='createGrid'>
                 <div>* Fecha de ejecucion:</div>
-                <input type="date" required defaultValue={Task.id && Task.executionDate} placeholder='2022/05/31' {...register('executionDate')} />
+                <input type="date" autoComplete='off' required defaultValue={Task.id && Task.executionDate} placeholder='2022/05/31' {...register('executionDate')} />
             </div>
             <div className='createGrid'>
                 <div>* Proyecto:</div>
-                <input type="text" required onClick={() => setProjectListVisible(!ProjectListVisible)} placeholder='--Selecciona un Proyecto--' value={projectName} {...register('projectName')} />
+                <input type="text" autoComplete='off' required onClick={() => setProjectListVisible(!ProjectListVisible)} placeholder='--Selecciona un Proyecto--' value={projectName} {...register('projectName')} />
             </div>
             <div className='createGrid'>
                 <div></div>
@@ -91,7 +91,7 @@ const newTask = () => {
             </div>
             <div className='createGrid'>
                 <div>* Habitacion:</div>
-                <input type="text" required onClick={() => { setRoomListVisible(!RoomListVisible) }} placeholder='--Selecciona una Habitacion--' value={RoomName} {...register('roomName')} />
+                <input type="text" autoComplete='off' required onClick={() => { setRoomListVisible(!RoomListVisible) }} placeholder='--Selecciona una Habitacion--' value={RoomName} {...register('roomName')} />
             </div>
             <div className='createGrid'>
                 <div></div>
@@ -106,15 +106,15 @@ const newTask = () => {
             </div>
             <div className='createGrid'>
                 <div>* Descripcion:</div>
-                <input type="text" required defaultValue={Task.id ? Task.description : ''} placeholder='Ej.Montar Tv Terraza ' {...register('description')} />
+                <input type="text" autoComplete='off' required defaultValue={Task.id ? Task.description : ''} placeholder='Ej.Montar Tv Terraza ' {...register('description')} />
             </div>
             <div className='createGrid'>
                 <div>Observacion:</div>
-                <input type="text" defaultValue={Task.id ? Task.observation : ''} placeholder='Ej. se entrego a cliente' {...register('observation')} />
+                <input type="text" autoComplete='off' defaultValue={Task.id ? Task.observation : ''} placeholder='Ej. se entrego a cliente' {...register('observation')} />
             </div>
             <div className='createGrid'>
-                <div>Material:</div>
-                <input type="text" defaultValue={Task.id ? Task.material : ''} placeholder='Ej. cables, conectores' {...register('material')} />
+                <div>Material Necesario:</div>
+                <input type="text" autoComplete='off' defaultValue={Task.id ? Task.material : ''} placeholder='Ej. cables, conectores' {...register('material')} />
             </div>
 
             <div className='checks'>

@@ -50,27 +50,27 @@ const newAccount = () => {
             <h2>{Account.id ? 'Editar Cuenta' : 'Nueva Cuenta'}</h2>
             <div className='createGrid'>
                 <div>* Software:</div>
-                <input type="text" required defaultValue={Account.id && Account.software} placeholder='Ej. Sonos' {...register('software')} />
+                <input type="text" autoComplete='off' required defaultValue={Account.id && Account.software} placeholder='Ej. Sonos' {...register('software')} />
             </div>
             <div className='createGrid'>
                 <div>Direccion Ip:</div>
-                <input type="text" defaultValue={Account.id ? Account.directionIp : '0.0.0.0'} placeholder='Ej. 0.0.0.0' {...register('directionIp')} />
+                <input type="text" autoComplete='off' defaultValue={Account.id ? Account.directionIp : '0.0.0.0'} placeholder='Ej. 0.0.0.0' {...register('directionIp')} />
             </div>
             <div className='createGrid'>
                 <div>Propietario:</div>
-                <input type="text" defaultValue={Account.id && Account.owner} placeholder='Ej. Juan' {...register('owner')} />
+                <input type="text" autoComplete='off' defaultValue={Account.id && Account.owner} placeholder='Ej. Juan' {...register('owner')} />
             </div>
             <div className='createGrid'>
                 <div>* Usuario:</div>
-                <input type="text" required defaultValue={Account.id && Account.user} placeholder='Ej. admin' {...register('user')} />
+                <input type="text" autoComplete='off' required defaultValue={Account.id && Account.user} placeholder='Ej. admin' {...register('user')} />
             </div>
             <div className='createGrid'>
                 <div>* Contraseña:</div>
-                <input type="text" required defaultValue={Account.id && Account.password} placeholder='Ej. Password' {...register('password')} />
+                <input type="text" autoComplete='off' required defaultValue={Account.id && Account.password} placeholder='Ej. Password' {...register('password')} />
             </div>
             <div className='createGrid'>
                 <div>* Proyecto:</div>
-                <input type="text" required onClick={() => setProjectListVisible(!ProjectListVisible)} placeholder='-Selecciona un Proyecto-' value={/*projectName*/ Project && Project.name} {...register('projectName')} />
+                <input type="text" autoComplete='off' required onClick={() => setProjectListVisible(!ProjectListVisible)} placeholder='-Selecciona un Proyecto-' value={/*projectName*/ Project && Project.name} {...register('projectName')} />
             </div>
             <div className='createGrid'>
                 <br />

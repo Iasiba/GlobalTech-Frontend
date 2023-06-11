@@ -14,12 +14,14 @@ const newActivity = ({ /*task,*/ setVisibleReport }) => {
     let aux
     const [task, settask] = useState('')//let task = {}
     const dispatch = useDispatch()
-    let Activity = useSelector(state => state.Item)
+
+    const [Activity, setActivity] = useState(useSelector(state=>state.Item))
+    const [ActivityDescription, setActivityDescription] = useState('')
     const NewActivityVisible = useSelector(state => state.NewsVisible)[3]
 
     const Tasks = AxiosGetHook('http://192.168.0.253:8000/api/v1/tasks')
     const AllTasks = Tasks.data.data?.tasks
-
+    
     const [Task, setTask] = useState('')
     const [TaskId, setTaskId] = useState('')
     const [TaskListVisible, setTaskListVisible] = useState(false)
@@ -37,13 +39,13 @@ const newActivity = ({ /*task,*/ setVisibleReport }) => {
     const navigate = useNavigate()
     useEffect(
         () => {
-            Task.id && setTaskId(Task.id),
-                Task.id && setRooms(Task.room.project.rooms),
-                axios.get('http://192.168.0.253:8000/api/v1/users/me/materials', getConfig())
-                    .then(res => setMaterialsAsignatesToMe(res.data))
-        }, [Task]
-    )
-    useEffect(() => { task && setTask(task) }, [task])
+            task.id && setTask(task)
+            task.id && setTaskId(task.id)
+            task.id && setRooms(task.room.project.rooms)
+            axios.get('http://192.168.0.253:8000/api/v1/users/me/materials', getConfig())
+                .then(res => setMaterialsAsignatesToMe(res.data))
+            }, [task/*Task*/]
+            )//useEffect(() => { task && setTask(task) }, [task])
     //Activity.roomId && (task = Activity, Activity = undefined, console.log('entro a borrar activity'))
     useEffect(() => CreateOrEditActivity(), [Activity])
 
@@ -51,10 +53,10 @@ const newActivity = ({ /*task,*/ setVisibleReport }) => {
         useEffect(() =>(  settask(Activity), Activity = {} ), [Activity])
     } else {
         if (Activity.id) useEffect(() => setTask(Activity.task), [Activity])//en caso de editar actividades
+        
     }*/
-
     function CreateOrEditActivity() {
-        Activity.roomId && (settask(Activity), Activity = {}) //en caso de crear actividades en una tarea especifica
+        Activity.roomId && (settask(Activity), setActivity({})) //en caso de crear actividades en una tarea especifica
         Activity.task && setTask(Activity.task) //en caso de editar actividades
     }
     function installMaterial(material) {
@@ -76,8 +78,9 @@ const newActivity = ({ /*task,*/ setVisibleReport }) => {
         }
     }
     const submit = data => {
+        data.description = ActivityDescription
         data.taskId = Task.id
-        const URL = Activity.task ? `http://192.168.0.253:8000/api/v1/activities/${Activity.id}` : `http://192.168.0.253:8000/api/v1/tasks/${TaskId}/activities`
+        const URL = Activity.task ? `http://192.168.0.253:8000/api/v1/activities/${Activity.id}` : `http://192.168.0.253:8000/api/v1/tasks/${data.taskId/*TaskId*/}/activities`
         Activity.task ?
             axios.put(URL, data, getConfig())
                 .then(res => {
@@ -152,12 +155,25 @@ const newActivity = ({ /*task,*/ setVisibleReport }) => {
             <i className='bx bx-x-circle close' onClick={() => exit() /*(task ? setVisibleReport(false) : dispatch(setVisibleActivity(!NewActivityVisible)), dispatch(setItem(false)), navigate(-1))*/}></i>
             <h2>{Activity.task ? 'Editar Actividad' : 'Nueva Actividad'}</h2>
             <div className='createGrid'>
-                <div>* Descripcion:</div>
-                <input type="text" required defaultValue={Activity.task && Activity.description} placeholder='Ej. cablee 5 nodos en cocina' {...register('description')} />
-            </div>
+                <label>* Descripcion:</label>
+                {<textarea
+                    id='ActivityDescription'
+                    /*contentEditable*/
+                    className='textarea'
+                    required
+                    onChange={e => setActivityDescription(e.target.value)}
+                    defaultValue={Activity.description}
+                    maxLength="255"
+                >
+                    {/*Activity.task ? Activity.description : ''*/}
+                </textarea>}
+            </div> {/*defaultValue={Activity.task && Activity.description} placeholder='Ej. cablee 5 nodos en cocina' {...register('description')}  */}
             <div className='createGrid'>
                 <div>* Tarea:</div>
-                <input type="text" required
+                <input
+                    type="text"
+                    autoComplete='off'
+                    required
                     onClick={() => !task && setTaskListVisible(!TaskListVisible)}
                     placeholder='--selecciona una tarea--'
                     value={Task.description ? Task.description : ''}

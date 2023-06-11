@@ -82,7 +82,15 @@ const newMaterial = () => {
 
             <div className='createGrid'>
                 <div>* Inventario:</div>
-                <input type="text" required onClick={() => setInventoryListVisible(!InventoryListVisible)} placeholder='--Selecciona un inventario--' value={InventoryName} {...register('inventoryName')} />
+                <input
+                    type="text"
+                    autoComplete='off'
+                    required
+                    onClick={() => setInventoryListVisible(!InventoryListVisible)}
+                    placeholder='--Selecciona un inventario--'
+                    value={InventoryName}
+                    {...register('inventoryName')}
+                />
             </div>
             <div className='createGrid'>
                 <div></div>
@@ -98,21 +106,44 @@ const newMaterial = () => {
 
             <div className='createGrid'>
                 <div>* Material:</div>
-                <input type="text" required defaultValue={Material.id && Material.name} placeholder='Ej. Conectores, Bocinas' {...register('name')} />
+                <input
+                    type="text"
+                    autoComplete='off'
+                    required
+                    defaultValue={Material.id && Material.name}
+                    placeholder='Ej. Conectores, Bocinas'
+                    {...register('name')}
+                />
             </div>
             <div className='createGrid'>
                 <div>* Modelo:</div>
-                <input type="text" required defaultValue={Material.id && Material.model} placeholder='modelo' {...register('model')} />
+                <input
+                    type="text"
+                    autoComplete='off'
+                    required
+                    defaultValue={Material.id && Material.model}
+                    placeholder='modelo'
+                    {...register('model')}
+                />
             </div>
             <div className='createGrid'>
                 <div>* Cantidad:</div>
-                <input type="number" required defaultValue={Material.id && Material.amount} placeholder='0-1000'  {...register('amount')} />
+                <input
+                    type="number"
+                    autoComplete='off'
+                    required
+                    defaultValue={Material.id && Material.amount}
+                    placeholder='0-1000'
+                    {...register('amount')}
+                />
             </div>
 
 
             <div className='createGrid'>
                 <div>Proyecto:</div>
-                <input type="text"
+                <input
+                    type="text"
+                    autoComplete='off'
                     onClick={() => setProjectListVisible(!ProjectListVisible)}
                     placeholder='--Selecciona un Proyecto--'
                     /*defaultValue={Material.id && Material.project.name}*/

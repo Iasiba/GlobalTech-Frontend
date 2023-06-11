@@ -6,23 +6,23 @@ const SingUp = () => {
       <h2>Sing Up</h2>
       <div>
         <div>Email</div>
-        <input type="text" />
+        <input type="text" autoComplete='off'/>
       </div>
       <div>
         <div>First Name</div>
-        <input type="text" />
+        <input type="text" autoComplete='off'/>
       </div>
       <div>
         <div>Last Name</div>
-        <input type="text" />
+        <input type="text" autoComplete='off'/>
       </div>
       <div>
         <div>Password</div>
-        <input type="text" />
+        <input type="text" autoComplete='off'/>
       </div>
       <div>
         <div>{"Phone (10 characters)"}</div>
-        <input type="text" />
+        <input type="text" autoComplete='off'/>
       </div>
       <br />
       <button>Sing Up</button>

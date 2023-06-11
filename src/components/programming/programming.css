@@ -1,3 +1,4 @@
+
 .programmingGrid{
     width: 96%;
     display: grid;
@@ -5,7 +6,7 @@
     text-align: center;
     align-content: center;
     
-    border-bottom: solid 1px  var(--primary-color) ;
+    /*border-bottom: solid 1px  var(--primary-color) ;
     
     
     /*

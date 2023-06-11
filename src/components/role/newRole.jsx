@@ -27,7 +27,7 @@ const newRole = () => {
             <h2>Nuevo Rol</h2>
             <div className='createGrid'>
                 <p>Nombre:</p>
-                <input type="text" placeholder='Nombre de Rol' {...register('name')} />
+                <input type="text" autoComplete='off' placeholder='Nombre de Rol' {...register('name')} />
             </div>
             <br />
             <button>Crear</button>

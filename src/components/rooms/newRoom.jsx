@@ -53,11 +53,11 @@ const newRoom = () => {
             <h2>{Room.id ? 'Editar Area' : 'Nueva Area'}</h2>
             <div className='createGrid'>
                 <div>* Nombre:</div>
-                <input type="text" required defaultValue={Room.id && Room.name} placeholder='Ej. Cocina' {...register('name')} />
+                <input type="text" autoComplete='off' required defaultValue={Room.id && Room.name} placeholder='Ej. Cocina' {...register('name')} />
             </div>
             <div className='createGrid'>
                 <div>* Proyecto:</div>
-                <input type="text" required value={Project && Project.name} onClick={() => setProjectListVisible(!ProjectListVisible)} placeholder='--Selecciona un Proyecto--'  {...register('projectName')} />
+                <input type="text" autoComplete='off' required value={Project && Project.name} onClick={() => setProjectListVisible(!ProjectListVisible)} placeholder='--Selecciona un Proyecto--'  {...register('projectName')} />
             </div>
             <div className='createGrid'>
                 <div></div>

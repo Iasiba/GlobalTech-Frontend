@@ -17,11 +17,16 @@ const deployUser = ({ user }) => {
   const RefreshMenu = useSelector(state => state.RefreshMenu)
   const [Click, setClick] = useState(false)
 
+  const [TaskList, setTaskList] = useState('')
   const [Task, setTask] = useState('')
-  function tasks(){
-    let task=""
-    for(let i=0;i<user.tasks.length;i++){
-      task+=" "+user.tasks[i].description+","
+  function tasks() {
+    axios.get(`http://192.168.0.253:8000/api/v1/taskList/me/${user.id}`, getConfig())
+      .then(res => setTaskList(res.data))
+  }
+  function auxTask() {
+    let task = ""
+    for (let i = 0; i < TaskList.length; i++) {
+      task += " " + TaskList[i].task.description + ","
     }
     setTask(task)
   }
@@ -35,13 +40,15 @@ const deployUser = ({ user }) => {
       }
     }, [RefreshMenu]
   )
-  useEffect(() => tasks(), [/*Refresh*/])
+  useEffect(() => tasks(), [/*Refresh*/]
+  )
+  useEffect(() => auxTask(), [TaskList])
   return (
     <>
       <div className='deploy'>
         <div onClick={() => setVisible(!Visible)} className='userHeader tableHover'>
           <p>{user.firstName} {user.lastName}</p>
-          {user.tasks[0] && <p>{/*user.tasks && user.tasks[0].description*/ Task}</p>}
+          {<p>{/*user.tasks && user.tasks[0].description*/ Task}</p>}
         </div>
         <aside className='threePoints'
           onClick={

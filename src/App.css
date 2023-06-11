@@ -34,7 +34,10 @@ body {
   margin: 0;
   font-family: var(--font-family);
 }
-
+a{
+  text-decoration-line: none;
+  color:var(--secondary-color)
+}
 h1,
 h2,
 h3,
@@ -67,9 +70,38 @@ img {
   width: 100%;
 }
 
+textarea{
+  width: 80%;
+  height: 30vh;
+
+  background-color: white;
+  outline: none;
+  /*overflow:hidden*/
+  border-radius: 5px;
+  border:none;
+  resize: none;
+  box-shadow: 0 0 1px black;
+}
+
+input {
+  width: 90%;
+  /*min-height: 30px;
+  height: 100%;*/
+  margin: 10px auto;
+  border: none;
+  border: 1px solid var(--borderInput-color);
+  border-radius: 5px;
+  text-align: center;
+  outline: none;
+}
+
+input:hover {
+  cursor: pointer;
+}
+
 .App {
   width: 100%;
-  height: 100vh;
+  /*height: 100vh;*/
   display: flex;
   /*justify-content: center;*/
   flex-direction: column;
@@ -90,14 +122,14 @@ img {
 
   border-bottom: 1px solid var(--border-color);
 }
-
+/*
 .table {
   border-bottom: 1px solid var(--borderInput-color);
 }
 
 .tableHover {
   border-bottom: 1px solid var(--borderInput-color);
-}
+}*/
 
 .tableHover:hover {
   color: var(--primary-color);
@@ -134,34 +166,41 @@ img {
   scroll-behavior: smooth;
   /***************************/
   text-align: center;
-  padding-left: 10px;
-  padding-bottom: 10px;
+  padding: 10px;
   flex-wrap: wrap;
-  background-color: var(--borderInput-color);
+  /*background-color: var(--borderInput-color);*/
 }
 
 .createGrid {
   width: 100%;
-  display: grid;
+  /*display: grid;
   grid-template-columns: 40% 60%;
   justify-content: center;
   align-items: center;
-  text-align: start;
+  text-align: start;*/
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .createGrid>div {
-  margin: 0 50%;
+  width: 140px;
+  text-align: start;
 }
+
 
 .createGrid>input {
-  /*margin-left: 45px;*/
+  display: inline-block;
+  /*margin-right: 2%;
+  margin-left: 45px;
   height: auto;
-  /********/
+
   width: auto;
   border: none;
-  border-radius: 5px;
+  border-radius: 5px;*/
 }
 
+/**/
 
 
 h2 {
@@ -184,7 +223,9 @@ h2 {
 /* menu de cada item (asignar, eliminar, editar, devolver, etc)*/
 .deploy {
   display: flex;
+  align-items: center;
   justify-content: space-between;
+  border-bottom: 1px solid var(--borderInput-color);
 }
 
 .threePoints {
@@ -234,13 +275,8 @@ h2 {
 
 
 /*lista de seleccion de proyectos, habitaciones, tareas*/
-input {
-  border: none;
-}
 
-input:hover {
-  cursor: pointer;
-}
+
 
 .list {
   display: flex;

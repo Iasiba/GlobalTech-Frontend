@@ -50,12 +50,3 @@
     color:blue;
 } 
 
-input {
-    width: 70%;
-    margin: 10px auto;
-    border: none;
-    border: 1px solid var(--borderInput-color);
-    border-radius: 5px;
-    height: 30px;
-    text-align: center;
-}

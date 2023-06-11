@@ -35,11 +35,11 @@ const Login = () => {
       <h2>Login</h2>
       <div>
         <div>Email:</div>
-        <input type="text"  {...register('email')} />
+        <input type="text" autoComplete='off' {...register('email')} />
       </div>
       <div>
         <div>Password:</div>
-        <input type="text"  {...register('password')} />
+        <input type="text" autoComplete='off' {...register('password')} />
       </div>
       <br />
       {

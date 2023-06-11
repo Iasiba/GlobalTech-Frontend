@@ -23,6 +23,7 @@ const deployTask = ({ task }) => {
 
     const RefreshMenu = useSelector(state => state.RefreshMenu)
     const [Click, setClick] = useState(false)
+
     useEffect(
         () => {
             if (Click) {
@@ -44,19 +45,19 @@ const deployTask = ({ task }) => {
     return (
         <>
             <div className='deploy'>
-                <div onClick={() => setVisible(!Visible)} className={`task tableHover ${task.iscanceled ? "canceled" : task.isfinished ? "finished" : task.taskLists.length ? "assigned" : ""} `}>
-                    <aside>
-                        <p>{task.executionDate}</p>
+                <div onClick={() => setVisible(!Visible)} className={`${/*task*/''} tableHover createGrid ${task.iscanceled ? "canceled" : task.isfinished ? "finished" : task.taskLists.length ? "assigned" : ""} `}>
+                    <p className='activities1'>{task.executionDate + '-' + task.room.project.name + '-' + task.room.name + ':'}</p>
+                    <p className='activities'>{task.description}</p>
+                    {/*<aside>
                     </aside>
                     <aside>
-                        <p>{task.room.project.name}</p>
+                        <p>{/*task.room.project.name}</p>
                     </aside>
                     <aside>
-                        <p>{task.room.name}</p>
+                        <p>{/*task.room.name}</p>
                     </aside>
                     <aside>
-                        <p>{task.description}</p>
-                    </aside>
+                    </aside>*/}
                 </div>
                 <aside className='threePoints' onClick={() => (dispatch(updateRefreshMenu()), setClick(true))}><p>...</p></aside>
                 {

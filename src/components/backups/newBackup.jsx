@@ -81,7 +81,10 @@ const newBackup = () => {
             {Backup.id ? <h2>Editar Respaldo</h2> : <h2>Nuevo Respaldo</h2>}
             <div className='createGrid'>
                 <div>* Proyecto:</div>
-                <input type="text" required
+                <input
+                    type="text"
+                    required
+                    autoComplete='off'
                     onClick={() => setProjectListVisible(!ProjectListVisible)}
                     placeholder='--Selecciona un Proyecto--'
                     value={projectName}
@@ -112,15 +115,15 @@ const newBackup = () => {
             </div>
             <div className='createGrid'>
                 <div>* Software:</div>
-                <input type="text" required defaultValue={Backup.id && Backup.software} placeholder='Ej. Lutron Homeworks'{...register('software')} />
+                <input type="text" autoComplete='off' required defaultValue={Backup.id && Backup.software} placeholder='Ej. Lutron Homeworks'{...register('software')} />
             </div>
             <div className='createGrid'>
                 <div>* Version:</div>
-                <input type="number" required /*min="0" max="100" step="0.01"*/ defaultValue={Backup.id && Backup.version} placeholder='Ej. 3.5->35' {...register('version')} />
+                <input type="number" autoComplete='off' required /*min="0" max="100" step="0.01"*/ defaultValue={Backup.id && Backup.version} placeholder='Ej. 3.5->35' {...register('version')} />
             </div>
             <div className='createGrid'>
                 <div>Respaldo:</div>
-                <input type="file" onChange={event => setFile(event.target.files[0])} />
+                <input type="file" autoComplete='off' onChange={event => setFile(event.target.files[0])} />
             </div>
             <br />
             <button>{Backup.id ? 'Actualizar' : 'Crear'}</button>

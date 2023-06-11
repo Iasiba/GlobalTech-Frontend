@@ -31,14 +31,14 @@ const HomeScreen = () => {
  
   return (
     <div className='home'>
+      {/*<p>Notas</p>
+      <Notes />*/}
       <p>Pendientes</p>
       <Tasks home={"home"} />
       <p>Actividades</p>
       <Activities home={"home"} />
       <p>Materiales Faltantes</p>
       <Materials home={"home"} />
-      <p>Notas</p>
-      <Notes />
     </div>
   )
 }
