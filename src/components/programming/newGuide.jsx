@@ -60,31 +60,51 @@ const newGuide = () => {
             <i className='bx bx-x-circle close' onClick={() => (dispatch(setVisibleGuide(!NewGuideVisible)), dispatch(setItem(false)), navigate(-1))}></i>
             <h2>Nueva Guia</h2>
             <div className='createGrid'>
-                <div>* Sistema, Equipo o Software:</div>
-                <input type="text" autoComplete='off' required
-                    placeholder='Sistema' defaultValue={Guide.id && Guide.name}
+                <label className='necessary'>Sistema, Equipo o Software:</label>
+                <input
+                    type="text"
+                    autoComplete='off'
+                    required
+                    placeholder='Sistema'
+                    defaultValue={Guide.id && Guide.name}
                     {...register('name')}
                 />
             </div>
 
             <div className='checks'>
                 <aside className='check'>
-                    <input type="checkbox" autoComplete='off' defaultChecked={false}{...register('tutorials')} />
-                    <div>Tutorial</div>
+                    <input
+                        type="checkbox"
+                        defaultChecked={false}
+                        {...register('tutorials')}
+                    />
+                    <label>Tutorial</label>
                 </aside>
                 <aside className='check'>
-                    <input type="checkbox" autoComplete='off' defaultChecked={false}{...register('datasheets')} />
-                    <div>Manual</div>
+                    <input
+                        type="checkbox"
+                        defaultChecked={false}
+                        {...register('datasheets')}
+                    />
+                    <label>Manual</label>
                 </aside>
                 <aside className='check'>
-                    <input type="checkbox" autoComplete='off' defaultChecked={false}{...register('guides')} />
-                    <div>Guia</div>
+                    <input
+                        type="checkbox"
+                        defaultChecked={false}
+                        {...register('guides')}
+                    />
+                    <label>Guia</label>
                 </aside>
             </div>
 
             <div className='createGrid'>
-                <div>Respaldo:</div>
-                <input type="file" autoComplete='off' required onChange={event => setFile(event.target.files[0])} />
+                <label className='necessary'>Respaldo:</label>
+                <input
+                    type="file"
+                    required
+                    onChange={event => setFile(event.target.files[0])}
+                />
             </div>
             <br />
             <button>{Guide.id ? 'Actualizar' : 'Crear'}</button>

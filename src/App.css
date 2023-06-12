@@ -53,6 +53,9 @@ ul {
   padding-left: 0;
 }
 
+.necessary{
+  font-weight: bold;
+}
 /*
 a {
   text-decoration: none;
@@ -73,7 +76,7 @@ img {
 textarea{
   width: 80%;
   height: 30vh;
-
+  margin: 5px 0;
   background-color: white;
   outline: none;
   /*overflow:hidden*/
@@ -84,7 +87,7 @@ textarea{
 }
 
 input {
-  width: 90%;
+  width: 80%;
   /*min-height: 30px;
   height: 100%;*/
   margin: 10px auto;
@@ -183,7 +186,7 @@ input:hover {
   align-items: center;
 }
 
-.createGrid>div {
+.createGrid>label {
   width: 140px;
   text-align: start;
 }

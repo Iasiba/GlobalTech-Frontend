@@ -5,7 +5,7 @@ const SingUp = () => {
     <form action="" className='Login'>
       <h2>Sing Up</h2>
       <div>
-        <div>Email</div>
+        <label className='necessary'>Email</label>
         <input type="text" autoComplete='off'/>
       </div>
       <div>

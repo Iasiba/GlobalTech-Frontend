@@ -52,12 +52,27 @@ const newRoom = () => {
             <i className='bx bx-x-circle close' onClick={() => (/*dispatch(setVisibleRoom(!NewRoomVisible)), */dispatch(setItem(false)), navigate(-1))}></i>
             <h2>{Room.id ? 'Editar Area' : 'Nueva Area'}</h2>
             <div className='createGrid'>
-                <div>* Nombre:</div>
-                <input type="text" autoComplete='off' required defaultValue={Room.id && Room.name} placeholder='Ej. Cocina' {...register('name')} />
+                <label className='necessary'>Nombre:</label>
+                <input
+                    type="text"
+                    autoComplete='off'
+                    required
+                    defaultValue={Room.id && Room.name}
+                    placeholder='Ej. Cocina'
+                    {...register('name')}
+                />
             </div>
             <div className='createGrid'>
-                <div>* Proyecto:</div>
-                <input type="text" autoComplete='off' required value={Project && Project.name} onClick={() => setProjectListVisible(!ProjectListVisible)} placeholder='--Selecciona un Proyecto--'  {...register('projectName')} />
+                <label className='necessary'>Proyecto:</label>
+                <input
+                    type="text"
+                    autoComplete='off'
+                    required
+                    value={Project && Project.name}
+                    onClick={() => setProjectListVisible(!ProjectListVisible)}
+                    placeholder='--Selecciona un Proyecto--'
+                    {...register('projectName')}
+                />
             </div>
             <div className='createGrid'>
                 <div></div>

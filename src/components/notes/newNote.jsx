@@ -41,12 +41,25 @@ const newNote = () => {
             <i className='bx bx-x-circle close' onClick={() => (dispatch(setVisibleNote(!NewNoteVisible)), dispatch(setItem(false)), navigate(-1))}></i>
             <h2>{Note.id ? 'Editar Nota' : 'Nueva Nota'}</h2>
             <div className='createGrid'>
-                <div>* Titulo:</div>
-                <input type="text" autoComplete='off' required defaultValue={Note.id ? Note.tittle : 'Recordatorio'} placeholder='Titulo' {...register('tittle')} />
+                <label className='necessary'>Titulo:</label>
+                <input
+                    type="text"
+                    autoComplete='off'
+                    required defaultValue={Note.id ? Note.tittle : 'Recordatorio'}
+                    placeholder='Titulo'
+                    {...register('tittle')}
+                />
             </div>
             <div className='createGrid'>
-                <div>* Nota:</div>
-                <input type="text" autoComplete='off' required defaultValue={Note.id && Note.note} placeholder='Ej. Recoger material' {...register('note')} />
+                <label className='necessary'>Nota:</label>
+                <textarea
+                    autoComplete='off'
+                    required
+                    defaultValue={Note.id && Note.note}
+                    placeholder='Ej. Recoger material'
+                    {...register('note')}
+                    maxLength="255"
+                />
             </div>
             <br />
             <button>{Note.id ? 'Actualizar' : 'Crear'}</button>

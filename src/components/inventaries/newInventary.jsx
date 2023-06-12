@@ -44,7 +44,7 @@ const newInventary = () => {
             <i className='bx bx-x-circle close' onClick={() => (/*dispatch(setVisibleInventary(!NewInventaryVisible)),*/dispatch(setItem(false)), navigate(-1))}></i>
             <h2>{Inventary.id ? 'Editar Inventario' : 'Nuevo Inventario'}</h2>
             <div className='createGrid'>
-                <div>* Nombre:</div>
+                <label className='necessary'>Nombre:</label>
                 <input type="text" autoComplete='off' required defaultValue={Inventary.id && Inventary.name} placeholder='Ej. Herramientas' {...register('name')} />
             </div>
             <br />

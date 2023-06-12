@@ -34,11 +34,11 @@ const Login = () => {
     <form onSubmit={handleSubmit(submit)} className='login'>
       <h2>Login</h2>
       <div>
-        <div>Email:</div>
+        <label className='necessary'>Email:</label>
         <input type="text" autoComplete='off' {...register('email')} />
       </div>
       <div>
-        <div>Password:</div>
+        <label className='necessary'>Password:</label>
         <input type="text" autoComplete='off' {...register('password')} />
       </div>
       <br />
@@ -46,7 +46,6 @@ const Login = () => {
         isErrorLogin && 'Invalid credentials, try again...'
       }
       <button className='boton'>Login</button>
-
       <div className='singUp'>
         <div>Already have an account?</div>
         <div className='SingUp'><Link to='/singup'>Sing  Up</Link></div>

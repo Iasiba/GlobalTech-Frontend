@@ -49,27 +49,27 @@ const newAccount = () => {
             <i className='bx bx-x-circle close' onClick={() => (/*dispatch(setVisibleAccount(!NewAccountVisible)), */dispatch(setItem(false)), navigate(-1))}></i>
             <h2>{Account.id ? 'Editar Cuenta' : 'Nueva Cuenta'}</h2>
             <div className='createGrid'>
-                <div>* Software:</div>
+                <label className='necessary'>Software:</label>
                 <input type="text" autoComplete='off' required defaultValue={Account.id && Account.software} placeholder='Ej. Sonos' {...register('software')} />
             </div>
             <div className='createGrid'>
-                <div>Direccion Ip:</div>
+                <label>Direccion Ip:</label>
                 <input type="text" autoComplete='off' defaultValue={Account.id ? Account.directionIp : '0.0.0.0'} placeholder='Ej. 0.0.0.0' {...register('directionIp')} />
             </div>
             <div className='createGrid'>
-                <div>Propietario:</div>
+                <label>Propietario:</label>
                 <input type="text" autoComplete='off' defaultValue={Account.id && Account.owner} placeholder='Ej. Juan' {...register('owner')} />
             </div>
             <div className='createGrid'>
-                <div>* Usuario:</div>
+                <label className='necessary'>Usuario:</label>
                 <input type="text" autoComplete='off' required defaultValue={Account.id && Account.user} placeholder='Ej. admin' {...register('user')} />
             </div>
             <div className='createGrid'>
-                <div>* Contraseña:</div>
+                <label className='necessary'>Contraseña:</label>
                 <input type="text" autoComplete='off' required defaultValue={Account.id && Account.password} placeholder='Ej. Password' {...register('password')} />
             </div>
             <div className='createGrid'>
-                <div>* Proyecto:</div>
+                <label className='necessary'>Proyecto:</label>
                 <input type="text" autoComplete='off' required onClick={() => setProjectListVisible(!ProjectListVisible)} placeholder='-Selecciona un Proyecto-' value={/*projectName*/ Project && Project.name} {...register('projectName')} />
             </div>
             <div className='createGrid'>

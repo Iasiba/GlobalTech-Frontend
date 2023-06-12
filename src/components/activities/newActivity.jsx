@@ -15,13 +15,13 @@ const newActivity = ({ /*task,*/ setVisibleReport }) => {
     const [task, settask] = useState('')//let task = {}
     const dispatch = useDispatch()
 
-    const [Activity, setActivity] = useState(useSelector(state=>state.Item))
+    const [Activity, setActivity] = useState(useSelector(state => state.Item))
     const [ActivityDescription, setActivityDescription] = useState('')
     const NewActivityVisible = useSelector(state => state.NewsVisible)[3]
 
     const Tasks = AxiosGetHook('http://192.168.0.253:8000/api/v1/tasks')
     const AllTasks = Tasks.data.data?.tasks
-    
+
     const [Task, setTask] = useState('')
     const [TaskId, setTaskId] = useState('')
     const [TaskListVisible, setTaskListVisible] = useState(false)
@@ -44,8 +44,8 @@ const newActivity = ({ /*task,*/ setVisibleReport }) => {
             task.id && setRooms(task.room.project.rooms)
             axios.get('http://192.168.0.253:8000/api/v1/users/me/materials', getConfig())
                 .then(res => setMaterialsAsignatesToMe(res.data))
-            }, [task/*Task*/]
-            )//useEffect(() => { task && setTask(task) }, [task])
+        }, [task/*Task*/]
+    )//useEffect(() => { task && setTask(task) }, [task])
     //Activity.roomId && (task = Activity, Activity = undefined, console.log('entro a borrar activity'))
     useEffect(() => CreateOrEditActivity(), [Activity])
 
@@ -155,21 +155,17 @@ const newActivity = ({ /*task,*/ setVisibleReport }) => {
             <i className='bx bx-x-circle close' onClick={() => exit() /*(task ? setVisibleReport(false) : dispatch(setVisibleActivity(!NewActivityVisible)), dispatch(setItem(false)), navigate(-1))*/}></i>
             <h2>{Activity.task ? 'Editar Actividad' : 'Nueva Actividad'}</h2>
             <div className='createGrid'>
-                <label>* Descripcion:</label>
-                {<textarea
+                <label className='necessary'>Descripcion:</label>
+                <textarea
                     id='ActivityDescription'
-                    /*contentEditable*/
-                    className='textarea'
                     required
                     onChange={e => setActivityDescription(e.target.value)}
                     defaultValue={Activity.description}
                     maxLength="255"
-                >
-                    {/*Activity.task ? Activity.description : ''*/}
-                </textarea>}
+                />
             </div> {/*defaultValue={Activity.task && Activity.description} placeholder='Ej. cablee 5 nodos en cocina' {...register('description')}  */}
             <div className='createGrid'>
-                <div>* Tarea:</div>
+                <label className='necessary'>Tarea:</label>
                 <input
                     type="text"
                     autoComplete='off'
@@ -193,7 +189,7 @@ const newActivity = ({ /*task,*/ setVisibleReport }) => {
             </div>
 
             <div className='createGrid'>
-                <div>Materials:</div>
+                <label>Materials:</label>
                 <input type="checkbox" onClick={() => setMaterials(!Materials)} />
             </div>
             {

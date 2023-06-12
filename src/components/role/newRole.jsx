@@ -11,7 +11,7 @@ const newRole = () => {
     const navigate = useNavigate()
 
     const submit = data => {
-        const URL =  `http://localhost:8000/api/v1/roles`
+        const URL = `http://localhost:8000/api/v1/roles`
         axios.post(URL, data, getConfig())
             .then(res => {
                 console.log(res, "Rol creado")
@@ -26,8 +26,13 @@ const newRole = () => {
         <form onSubmit={handleSubmit(submit)} className='createCenter' >
             <h2>Nuevo Rol</h2>
             <div className='createGrid'>
-                <p>Nombre:</p>
-                <input type="text" autoComplete='off' placeholder='Nombre de Rol' {...register('name')} />
+                <label className='necessary'>Nombre:</label>
+                <input
+                    type="text"
+                    autoComplete='off'
+                    placeholder='Nombre de Rol'
+                    {...register('name')}
+                />
             </div>
             <br />
             <button>Crear</button>

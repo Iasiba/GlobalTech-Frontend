@@ -38,39 +38,96 @@ const newProject = () => {
     }
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter newProject new' >
-            <i className='bx bx-x-circle close' onClick={() => (dispatch(setVisibleProject(!NewProjectVisible)), dispatch(setItem(false)), navigate(-1))}></i>
+            <i
+                className='bx bx-x-circle close'
+                onClick={() => (
+                    dispatch(setVisibleProject(!NewProjectVisible)),
+                    dispatch(setItem(false)), navigate(-1)
+                )}
+            ></i>
             <h2>{Project.id ? 'Editar Proyecto' : 'Nuevo Proyecto'}</h2>
             <div className='createGrid'>
-                <div>* Nombre:</div>
-                <input type="text" autoComplete='off' required defaultValue={Project.id && Project.name} placeholder='Ej. Global' {...register('name')} />
+                <label className='necessary'>Nombre:</label>
+                <input
+                    type="text"
+                    autoComplete='off'
+                    required
+                    defaultValue={Project.id && Project.name}
+                    placeholder='Ej. Global'
+                    {...register('name')}
+                />
             </div>
             <div className='createGrid'>
-                <div>* Direccion:</div>
-                <input type="text" autoComplete='off' required defaultValue={Project.id && Project.address} placeholder='Ej. calle matamorros # 503' {...register('address')} />
+                <label className='necessary'>Direccion:</label>
+                <input
+                    type="text"
+                    autoComplete='off'
+                    required
+                    defaultValue={Project.id && Project.address}
+                    placeholder='Ej. calle matamorros # 503'
+                    {...register('address')}
+                />
             </div>
             <div className='createGrid'>
-                <div>Plano:</div>
-                <input type="text" autoComplete='off' defaultValue={Project.id && Project.plane} placeholder='Link' {...register('plane')} />
+                <label>Plano:</label>
+                <input
+                    type="text"
+                    autoComplete='off'
+                    defaultValue={Project.id && Project.plane}
+                    placeholder='Link'
+                    {...register('plane')}
+                />
             </div>
             <div className='createGrid'>
-                <div>* Coordenadas:</div>
-                <input type="text" autoComplete='off' required defaultValue={Project.id && Project.coordinates} placeholder='Ej. 25.653315,-100.382917' {...register('coordinates')} />
+                <label className='necessary'>Coordenadas:</label>
+                <textarea
+                    autoComplete='off'
+                    required
+                    defaultValue={Project.id && Project.coordinates}
+                    placeholder='Ej. 25.653315,-100.382917'
+                    {...register('coordinates')}
+                    maxLength="255"
+                />
             </div>
             <div className='createGrid'>
-                <div>Referencias:</div>
-                <input type="text" autoComplete='off' defaultValue={Project.id && Project.reference} placeholder='Ej. frente a un parque' {...register('reference')} />
+                <label>Referencias:</label>
+                <textarea
+                    autoComplete='off'
+                    defaultValue={Project.id && Project.reference}
+                    placeholder='Ej. frente a un parque'
+                    {...register('reference')}
+                    maxLength="255"
+                />
             </div>
             <div className='createGrid'>
-                <div>Ciudad:</div>
-                <input type="text" autoComplete='off' defaultValue={Project.id && Project.city} placeholder='Ej. Monterrey' {...register('city')} />
+                <label>Ciudad:</label>
+                <input
+                    type="text"
+                    autoComplete='off'
+                    defaultValue={Project.id && Project.city}
+                    placeholder='Ej. Monterrey'
+                    {...register('city')}
+                />
             </div>
             <div className='createGrid'>
-                <div>Estado:</div>
-                <input type="text" autoComplete='off' defaultValue={Project.id && Project.state} placeholder='Ej. Nuevo Leon' {...register('state')} />
+                <label>Estado:</label>
+                <input
+                    type="text"
+                    autoComplete='off'
+                    defaultValue={Project.id && Project.state}
+                    placeholder='Ej. Nuevo Leon'
+                    {...register('state')}
+                />
             </div>
             <div className='createGrid'>
-                <div>Pais:</div>
-                <input type="country" autoComplete='off' defaultValue={Project.id && Project.country} placeholder='Ej. Mexico' {...register('country')} />
+                <label>Pais:</label>
+                <input
+                    type='country'
+                    autoComplete='off'
+                    defaultValue={Project.id && Project.country}
+                    placeholder='Ej. Mexico'
+                    {...register('country')}
+                />
             </div>
             <br />
             <button>{Project.id ? 'Actualizar' : 'Crear'}</button>

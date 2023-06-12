@@ -81,7 +81,7 @@ const newMaterial = () => {
             {Material.id ? <h2>Editar Material</h2> : <h2>Nuevo Material</h2>}
 
             <div className='createGrid'>
-                <div>* Inventario:</div>
+                <label className='necessary'>Inventario:</label>
                 <input
                     type="text"
                     autoComplete='off'
@@ -105,7 +105,7 @@ const newMaterial = () => {
             </div>
 
             <div className='createGrid'>
-                <div>* Material:</div>
+                <label className='necessary'>Material:</label>
                 <input
                     type="text"
                     autoComplete='off'
@@ -116,7 +116,17 @@ const newMaterial = () => {
                 />
             </div>
             <div className='createGrid'>
-                <div>* Modelo:</div>
+                <label>Color:</label>
+                <input
+                    type="text"
+                    autoComplete='off'
+                    defaultValue={Material.id && Material.color}
+                    placeholder='Ej. Blanco'
+                    {...register('color')}
+                />
+            </div>
+            <div className='createGrid'>
+                <label className='necessary'>Modelo:</label>
                 <input
                     type="text"
                     autoComplete='off'
@@ -127,7 +137,7 @@ const newMaterial = () => {
                 />
             </div>
             <div className='createGrid'>
-                <div>* Cantidad:</div>
+                <label className='necessary'>Cantidad:</label>
                 <input
                     type="number"
                     autoComplete='off'
@@ -138,9 +148,8 @@ const newMaterial = () => {
                 />
             </div>
 
-
             <div className='createGrid'>
-                <div>Proyecto:</div>
+                <label>Proyecto:</label>
                 <input
                     type="text"
                     autoComplete='off'
@@ -173,13 +182,6 @@ const newMaterial = () => {
                 </div>
             </div>
 
-
-
-
-
-
-
-
             <div className='checks'>
                 <aside className='check'>
                     <input type="checkbox" defaultChecked={Material.id ? Material.onHold : false}{...register('onHold')} />
@@ -202,9 +204,6 @@ const newMaterial = () => {
                     <div>Entregado</div>
                 </aside>
             </div>
-            {Material.id && <div>
-                {`${'Recibido por:'}`}
-            </div>}
             <br />
             <button>{Material.id ? 'Actualizar' : 'Crear'}</button>
         </form>

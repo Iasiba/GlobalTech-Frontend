@@ -80,7 +80,7 @@ const newBackup = () => {
             <i className='bx bx-x-circle close' onClick={() => (dispatch(setVisibleBackup(!NewBackupVisible)), dispatch(setItem(false)), navigate(-1))}></i>
             {Backup.id ? <h2>Editar Respaldo</h2> : <h2>Nuevo Respaldo</h2>}
             <div className='createGrid'>
-                <div>* Proyecto:</div>
+                <label className='necessary'>Proyecto:</label>
                 <input
                     type="text"
                     required
@@ -114,15 +114,15 @@ const newBackup = () => {
                 </div>
             </div>
             <div className='createGrid'>
-                <div>* Software:</div>
+                <label className='necessary'>Software:</label>
                 <input type="text" autoComplete='off' required defaultValue={Backup.id && Backup.software} placeholder='Ej. Lutron Homeworks'{...register('software')} />
             </div>
             <div className='createGrid'>
-                <div>* Version:</div>
+                <label className='necessary'>Version:</label>
                 <input type="number" autoComplete='off' required /*min="0" max="100" step="0.01"*/ defaultValue={Backup.id && Backup.version} placeholder='Ej. 3.5->35' {...register('version')} />
             </div>
             <div className='createGrid'>
-                <div>Respaldo:</div>
+                <label className='necessary'>Respaldo:</label>
                 <input type="file" autoComplete='off' onChange={event => setFile(event.target.files[0])} />
             </div>
             <br />

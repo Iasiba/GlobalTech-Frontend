@@ -72,12 +72,27 @@ const newTask = () => {
             <i className='bx bx-x-circle close' onClick={() => (/*dispatch(setVisibleTask(!NewTaskVisible)), */dispatch(setItem(false)), navigate(-1))}></i>
             <h2>{Task.id ? 'Editar Tarea' : 'Nueva Tarea'}</h2>
             <div className='createGrid'>
-                <div>* Fecha de ejecucion:</div>
-                <input type="date" autoComplete='off' required defaultValue={Task.id && Task.executionDate} placeholder='2022/05/31' {...register('executionDate')} />
+                <label className='necessary'>Fecha de ejecucion:</label>
+                <input
+                    type="date"
+                    autoComplete='off'
+                    required
+                    defaultValue={Task.id && Task.executionDate}
+                    placeholder='2022/05/31'
+                    {...register('executionDate')}
+                />
             </div>
             <div className='createGrid'>
-                <div>* Proyecto:</div>
-                <input type="text" autoComplete='off' required onClick={() => setProjectListVisible(!ProjectListVisible)} placeholder='--Selecciona un Proyecto--' value={projectName} {...register('projectName')} />
+                <label className='necessary'>Proyecto:</label>
+                <input
+                    type="text"
+                    autoComplete='off'
+                    required
+                    onClick={() => setProjectListVisible(!ProjectListVisible)}
+                    placeholder='--Selecciona un Proyecto--'
+                    value={projectName}
+                    {...register('projectName')}
+                />
             </div>
             <div className='createGrid'>
                 <div></div>
@@ -90,8 +105,16 @@ const newTask = () => {
                 </div>
             </div>
             <div className='createGrid'>
-                <div>* Habitacion:</div>
-                <input type="text" autoComplete='off' required onClick={() => { setRoomListVisible(!RoomListVisible) }} placeholder='--Selecciona una Habitacion--' value={RoomName} {...register('roomName')} />
+                <label className='necessary'>Habitacion:</label>
+                <input
+                    type="text"
+                    autoComplete='off'
+                    required
+                    onClick={() => { setRoomListVisible(!RoomListVisible) }}
+                    placeholder='--Selecciona una Habitacion--'
+                    value={RoomName}
+                    {...register('roomName')}
+                />
             </div>
             <div className='createGrid'>
                 <div></div>
@@ -105,26 +128,45 @@ const newTask = () => {
                 </div>
             </div>
             <div className='createGrid'>
-                <div>* Descripcion:</div>
-                <input type="text" autoComplete='off' required defaultValue={Task.id ? Task.description : ''} placeholder='Ej.Montar Tv Terraza ' {...register('description')} />
+                <label className='necessary'>Descripcion:</label>
+                <textarea
+                    autoComplete='off'
+                    required
+                    defaultValue={Task.id ? Task.description : ''}
+                    placeholder='Ej.Montar Tv Terraza '
+                    {...register('description')}
+                    maxLength="255"
+                />
             </div>
             <div className='createGrid'>
-                <div>Observacion:</div>
-                <input type="text" autoComplete='off' defaultValue={Task.id ? Task.observation : ''} placeholder='Ej. se entrego a cliente' {...register('observation')} />
+                <label>Observacion:</label>
+                <textarea
+                    autoComplete='off'
+                    defaultValue={Task.id ? Task.observation : ''}
+                    placeholder='Ej. se entrego material a cliente'
+                    {...register('observation')}
+                    maxLength="255"
+                />
             </div>
             <div className='createGrid'>
-                <div>Material Necesario:</div>
-                <input type="text" autoComplete='off' defaultValue={Task.id ? Task.material : ''} placeholder='Ej. cables, conectores' {...register('material')} />
+                <label>Material Necesario:</label>
+                <textarea
+                    autoComplete='off'
+                    defaultValue={Task.id ? Task.material : ''}
+                    placeholder='Ej. cables, conectores'
+                    {...register('material')}
+                    maxLength="255"
+                />
             </div>
 
             <div className='checks'>
                 <aside className='check'>
                     <input type="checkbox" defaultChecked={Task.id && Task.isfinished} {...register('isfinished')} />
-                    <div>Finalizado:</div>
+                    <label>Finalizado:</label>
                 </aside>
                 <aside className='check'>
                     <input type="checkbox" defaultChecked={Task.id && Task.iscanceled}  {...register('iscanceled')} />
-                    <div>Cancelado:</div>
+                    <label>Cancelado:</label>
                 </aside>
             </div>
 
