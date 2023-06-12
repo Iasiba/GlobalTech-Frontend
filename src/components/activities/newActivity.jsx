@@ -166,8 +166,7 @@ const newActivity = ({ /*task,*/ setVisibleReport }) => {
             </div> {/*defaultValue={Activity.task && Activity.description} placeholder='Ej. cablee 5 nodos en cocina' {...register('description')}  */}
             <div className='createGrid'>
                 <label className='necessary'>Tarea:</label>
-                <input
-                    type="text"
+                <textarea
                     autoComplete='off'
                     required
                     onClick={() => !task && setTaskListVisible(!TaskListVisible)}
@@ -177,11 +176,11 @@ const newActivity = ({ /*task,*/ setVisibleReport }) => {
             </div>
 
             <div className='createGrid'>
-                <div></div>
-                <div>
+                <label></label>
+                <div className='listNews'>
                     {
                         TaskListVisible && AllTasks && AllTasks?.map(task => {
-                            return (<p className='tableHeader tableHover list' onClick={() => { setTask(task), setTaskListVisible(!TaskListVisible) }} key={task.id}>{task.description}</p>)
+                            return (<p className=' list ' onClick={() => { setTask(task), setTaskListVisible(!TaskListVisible) }} key={task.id}>{task.description}</p>)
                         }
                         )
                     }
