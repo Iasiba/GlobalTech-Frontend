@@ -167,6 +167,7 @@ const newActivity = ({ /*task,*/ setVisibleReport }) => {
             <div className='createGrid'>
                 <label className='necessary'>Tarea:</label>
                 <textarea
+                    className='textArea'
                     autoComplete='off'
                     required
                     onClick={() => !task && setTaskListVisible(!TaskListVisible)}

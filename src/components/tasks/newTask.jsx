@@ -141,6 +141,7 @@ const newTask = () => {
             <div className='createGrid'>
                 <label>Observacion:</label>
                 <textarea
+                    className='textArea'
                     autoComplete='off'
                     defaultValue={Task.id ? Task.observation : ''}
                     placeholder='Ej. se entrego material a cliente'
@@ -151,6 +152,7 @@ const newTask = () => {
             <div className='createGrid'>
                 <label>Material Necesario:</label>
                 <textarea
+                    className='textArea'
                     autoComplete='off'
                     defaultValue={Task.id ? Task.material : ''}
                     placeholder='Ej. cables, conectores'

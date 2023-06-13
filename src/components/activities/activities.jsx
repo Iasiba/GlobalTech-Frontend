@@ -3,12 +3,15 @@ import './activities.css'
 import DeployAtivity from './deployActivities'
 import axios from 'axios'
 import getConfig from '../../utils/getConfig'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { setArea } from '../../store/slices/AreaSlice'
 const activities = ({ taskId, myhome, home }) => {
+    const dispatch = useDispatch()
     const Refresh = useSelector(state => state.Refresh)
     const [AllActivity, setAllActivity] = useState('')
     useEffect(() => searcActivities(), [Refresh, taskId, myhome, home])
     function searcActivities() {
+        dispatch(setArea("Actividades"))
         let url = 'http://192.168.0.253:8000/api/v1/activities'//!home && !myhome && !taskId
         if (home) url = 'http://192.168.0.253:8000/api/v1/activities'
         if (myhome) url = `http://192.168.0.253:8000/api/v1/users/me/activities`

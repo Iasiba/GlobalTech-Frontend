@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 export const Area = createSlice({
     name: 'Area',
-    initialState: "Home",
+    initialState: "",
     reducers: {
         setArea: (state, action) => { // Recibimos la accion por parámetros
             return action.payload // Colocamos la propiedad payload

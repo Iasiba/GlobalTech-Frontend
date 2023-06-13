@@ -15,7 +15,7 @@ const NavBar = () => {
     < >
       <div className='navBar'>
         {/*<img src={logo} alt="" className='logo' />*/}
-        <p className='title'> {Area} </p>
+        <h3 className='title'> {Area} </h3>
         <div className={`menu-btn ${UserMenuVisible && 'open'} `} onClick={() => {dispatch(setVisibleUserMenu(!UserMenuVisible)), dispatch(setVisiblePlusMenu(false)) }}>
           <div className={`menu-btn__burger`}></div>
         </div>
