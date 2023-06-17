@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import getConfig from '../../utils/getConfig'
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
@@ -9,13 +9,16 @@ import { setItem } from '../../store/slices/ItemSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { setVisibleProject } from './../../store/slices/NewsVisibleSlice'
 import { updateRefresh } from '../../store/slices/RefreshSlice'
+import { setArea } from '../../store/slices/AreaSlice'
 const newProject = () => {
     const NewProjectVisible = useSelector(state => state.NewsVisible)[0]
     const Project = useSelector(state => state.Item)
     const { handleSubmit, reset, register } = useForm()
     const dispatch = useDispatch()
     const navigate = useNavigate()
-
+    useEffect(() => {
+        dispatch(setArea(Project.id ? 'Editar Proyecto' : 'Nuevo Proyecto'))
+    }, [])
     const submit = data => {
         Project.id ?
             axios.put(`http://192.168.0.253:8000/api/v1/projects/${Project.id}`, data, getConfig())
@@ -45,7 +48,7 @@ const newProject = () => {
                     dispatch(setItem(false)), navigate(-1)
                 )}
             ></i>
-            <h2>{Project.id ? 'Editar Proyecto' : 'Nuevo Proyecto'}</h2>
+            <br />
             <div className='createGrid'>
                 <label className='necessary'>Nombre:</label>
                 <input

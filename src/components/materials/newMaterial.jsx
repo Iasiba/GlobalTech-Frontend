@@ -11,6 +11,7 @@ import { setItem } from '../../store/slices/ItemSlice'
 import { setVisibleMaterial } from './../../store/slices/NewsVisibleSlice'
 
 import { setRefresh, updateRefresh } from '../../store/slices/RefreshSlice'
+import { setArea } from '../../store/slices/AreaSlice'
 const newMaterial = () => {
     const dispatch = useDispatch()
     const Material = useSelector(state => state.Item)
@@ -33,6 +34,7 @@ const newMaterial = () => {
     const { handleSubmit, reset, register } = useForm()
 
     const navigate = useNavigate()
+    useEffect(() => { dispatch(setArea(Material.id ? 'Editar Material' : 'Nuevo Material')) }, [])
 
     useEffect(() => { setProjectId(Project.id) }, [Project])
     useEffect(() => { setInventoryId(Inventory.id) }, [Inventory])
@@ -78,8 +80,7 @@ const newMaterial = () => {
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
             <i className='bx bx-x-circle close' onClick={() => (/*dispatch(setVisibleMaterial(!NewMaterialVisible)), */dispatch(setItem(false)), navigate(-1))}></i>
-            {Material.id ? <h2>Editar Material</h2> : <h2>Nuevo Material</h2>}
-
+            <br />
             <div className='createGrid'>
                 <label className='necessary'>Inventario:</label>
                 <input

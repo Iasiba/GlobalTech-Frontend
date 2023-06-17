@@ -37,11 +37,11 @@ const HomeScreen = () => {
     <div className='home'>
       {/*<p>Notas</p>
       <Notes />*/}
-      <p>Pendientes</p>
+      <h4>Pendientes</h4>
       <Tasks home={"home"} />
-      <p>Actividades</p>
+      <h4>Actividades</h4>
       <Activities home={"home"} />
-      <p>Materiales Faltantes</p>
+      <h4>Materiales Faltantes</h4>
       <Materials home={"home"} />
     </div>
   )

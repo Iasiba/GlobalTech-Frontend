@@ -14,13 +14,13 @@ const technicalHome = () => {
   }
   return (
     <div className='home'>
-      <p>Mis Notas </p>
+      <h4>Mis Notas </h4>
       <Notes />
-      <p>Tareas Asignadas</p>
+      <h4>Tareas Asignadas</h4>
       <Tasks myhome={"myhome"} />
-      <p>Mis Actividades</p>
+      <h4>Mis Actividades</h4>
       <Activities myhome={"myhome"} />
-      <p>Materiales Asignados</p>
+      <h4>Materiales Asignados</h4>
       <Materials myhome={"myhome"} />
     </div>
   )

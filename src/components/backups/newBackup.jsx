@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setItem } from '../../store/slices/ItemSlice'
 import { setVisibleBackup } from './../../store/slices/NewsVisibleSlice'
 import { updateRefresh } from '../../store/slices/RefreshSlice'
+import { setArea } from '../../store/slices/AreaSlice'
 const newBackup = () => {
     const dispatch = useDispatch()
     const Backup = useSelector(state => state.Item)
@@ -26,7 +27,10 @@ const newBackup = () => {
     const { handleSubmit, reset, register } = useForm()
     const navigate = useNavigate()
 
-    useEffect(() => assignBackup(), [])
+    useEffect(() => {
+        dispatch(setArea(Backup.id ? 'Editar Respaldo' : 'Nuevo Respaldo'))
+        assignBackup()
+    }, [])
     const tiempoTranscurrido = Date.now()
     const hoy = new Date(tiempoTranscurrido)
     const today = hoy.toLocaleDateString()
@@ -78,7 +82,7 @@ const newBackup = () => {
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
             <i className='bx bx-x-circle close' onClick={() => (dispatch(setVisibleBackup(!NewBackupVisible)), dispatch(setItem(false)), navigate(-1))}></i>
-            {Backup.id ? <h2>Editar Respaldo</h2> : <h2>Nuevo Respaldo</h2>}
+            <br />
             <div className='createGrid'>
                 <label className='necessary'>Proyecto:</label>
                 <input

@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setItem } from '../../store/slices/ItemSlice'
 import { setVisibleGuide } from '../../store/slices/NewsVisibleSlice'
 import { updateRefresh } from '../../store/slices/RefreshSlice'
+import { setArea } from '../../store/slices/AreaSlice'
 const newGuide = () => {
     const dispatch = useDispatch()
     const Guide = useSelector(state => state.Item)
@@ -26,6 +27,7 @@ const newGuide = () => {
     const year = date[2]
     const month = date[1]
     const day = date[0]
+    useEffect(() => { dispatch(setArea(Guide.id ? 'Editar Guia' : 'Nueva Guia')) }, [])
 
     const submit = data => {
         const Data = new FormData()
@@ -58,7 +60,7 @@ const newGuide = () => {
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
             <i className='bx bx-x-circle close' onClick={() => (dispatch(setVisibleGuide(!NewGuideVisible)), dispatch(setItem(false)), navigate(-1))}></i>
-            <h2>Nueva Guia</h2>
+            <br />
             <div className='createGrid'>
                 <label className='necessary'>Sistema, Equipo o Software:</label>
                 <input

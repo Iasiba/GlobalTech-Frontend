@@ -10,6 +10,7 @@ import { setItem } from '../../store/slices/ItemSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { setVisibleRoom } from './../../store/slices/NewsVisibleSlice'
 import { updateRefresh } from '../../store/slices/RefreshSlice'
+import { setArea } from '../../store/slices/AreaSlice'
 const newRoom = () => {
     const NewRoomVisible = useSelector(state => state.NewsVisible)[1]
     const dispatch = useDispatch()
@@ -24,7 +25,10 @@ const newRoom = () => {
     const { handleSubmit, reset, register } = useForm()
 
     const navigate = useNavigate()
-    useEffect(() => Room.id && setProject(Room.project), [])
+    useEffect(() => {
+        dispatch(setArea(Room.id ? 'Editar Area' : 'Nueva Area'))
+        Room.id && setProject(Room.project)
+    }, [])
 
     const submit = data => {
         data.projectId = Project.id
@@ -50,7 +54,7 @@ const newRoom = () => {
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
             <i className='bx bx-x-circle close' onClick={() => (/*dispatch(setVisibleRoom(!NewRoomVisible)), */dispatch(setItem(false)), navigate(-1))}></i>
-            <h2>{Room.id ? 'Editar Area' : 'Nueva Area'}</h2>
+            <br />
             <div className='createGrid'>
                 <label className='necessary'>Nombre:</label>
                 <input

@@ -50,6 +50,10 @@ ul {
   margin-bottom: 0;
 }
 
+h4{
+  width: 100%;
+  text-align: center;
+}
 ul {
   list-style: none;
   padding-left: 0;
@@ -80,7 +84,7 @@ img {
 textarea {
   width: 80%;
   height: 30vh;
-  margin: 5px 0;
+  margin: 25px 0;
   background-color: white;
   outline: none;
   /*overflow:hidden*/
@@ -109,10 +113,10 @@ input:hover {
 .App {
   width: 100%;
   /*height: 100vh;*/
-  display: flex;
   /*justify-content: center;*/
+  /*display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center;*/
 }
 
 .main {
@@ -166,14 +170,14 @@ input:hover {
 }
 
 .createCenter {
-  width: 100vw;
+  width: 100%;
   height: 100%;
   /********************/
   overflow-y: auto;
   scroll-behavior: smooth;
   /***************************/
   text-align: center;
-  padding: 10px;
+  padding: 0 20px;
   flex-wrap: wrap;
   /*background-color: var(--borderInput-color);*/
 }
@@ -188,6 +192,7 @@ input:hover {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  /*margin: 10px 0px;*/
 }
 
 .textArea{
@@ -346,9 +351,8 @@ h2 {
 
 .close {
   position: absolute;
-  top: 20px;
   right: 20px;
-  font-size: 30px;
+  font-size: 25px;
 }
 
 .close:hover {

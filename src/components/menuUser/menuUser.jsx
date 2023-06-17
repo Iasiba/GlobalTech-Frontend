@@ -29,8 +29,8 @@ const menuUser = () => {
       {Me.watchMyAccount && <div className='menuPlusOptions' onClick={() => (navigate('/myAccount'), dispatch(setVisibleUserMenu(!UserMenuVisible)))}>Mi Cuenta</div>}
       {Me.watchMyHome && <div className='menuPlusOptions' onClick={() => (navigate('/myHome'), dispatch(setVisibleUserMenu(!UserMenuVisible)))}>MyHome</div>}
       {Me.watchProjects && <div className='menuPlusOptions' onClick={() => (navigate('/projects'), dispatch(setVisibleUserMenu(!UserMenuVisible)))}>Proyectos</div>}
-      {Me.watchTasks && <div className='menuPlusOptions' onClick={() => (navigate('/tasks'), dispatch(setArea("Tareas")), dispatch(setVisibleUserMenu(!UserMenuVisible)))}>Tareas</div>}
-      {Me.watchUsers && <div className='menuPlusOptions' onClick={() => (navigate('/users'), dispatch(setArea("Usuarios")), dispatch(setVisibleUserMenu(!UserMenuVisible)))}>Usuarios</div>}
+      {Me.watchTasks && <div className='menuPlusOptions' onClick={() => (navigate('/tasks'), dispatch(setVisibleUserMenu(!UserMenuVisible)))}>Tareas</div>}
+      {Me.watchUsers && <div className='menuPlusOptions' onClick={() => (navigate('/users'), dispatch(setVisibleUserMenu(!UserMenuVisible)))}>Usuarios</div>}
       {/*  
     <div><Link to={'/userList'} onClick={() => (dispatch(setArea("Lista de Usuarios")), dispatch(setVisibleUserMenu(!UserMenuVisible)))}>Lista de Usuarios</Link></div>
   */}

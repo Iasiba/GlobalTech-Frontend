@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setItem } from '../../store/slices/ItemSlice'
 import { setVisibleTask } from './../../store/slices/NewsVisibleSlice'
 import { updateRefresh } from '../../store/slices/RefreshSlice'
+import { setArea } from '../../store/slices/AreaSlice'
 const newTask = () => {
     //const NewTaskVisible = useSelector(state => state.NewsVisible)[2]
     const dispatch = useDispatch()
@@ -34,7 +35,10 @@ const newTask = () => {
             .catch(err => console.log(err))
     }, [Project])
 
-    useEffect(() => setTaskValues(), [Task])//en caso de editar tareas
+    useEffect(() => {
+        dispatch(setArea(Task.id ? 'Editar Tarea' : 'Nueva Tarea'))
+        setTaskValues()
+    }, [Task])//en caso de editar tareas
 
 
     const { handleSubmit, reset, register } = useForm()
@@ -70,7 +74,7 @@ const newTask = () => {
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
             <i className='bx bx-x-circle close' onClick={() => (/*dispatch(setVisibleTask(!NewTaskVisible)), */dispatch(setItem(false)), navigate(-1))}></i>
-            <h2>{Task.id ? 'Editar Tarea' : 'Nueva Tarea'}</h2>
+            <br />
             <div className='createGrid'>
                 <label className='necessary'>Fecha de ejecucion:</label>
                 <input

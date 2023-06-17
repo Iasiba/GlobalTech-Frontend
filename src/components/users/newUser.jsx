@@ -10,6 +10,7 @@ import { setVisibleUser } from './../../store/slices/NewsVisibleSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { setItem } from '../../store/slices/ItemSlice'
 import { updateRefresh } from '../../store/slices/RefreshSlice'
+import { setArea } from '../../store/slices/AreaSlice'
 const newUser = () => {
     const dispatch = useDispatch()
     const Roles = AxiosGetHook('http://192.168.0.253:8000/api/v1/roles')
@@ -25,7 +26,10 @@ const newUser = () => {
     const { handleSubmit, reset, register } = useForm()
 
     const navigate = useNavigate()
-    useEffect(() => assignUser(), [])
+    useEffect(() => {
+        dispatch(setArea(NewUser.id ? 'Editar Usuario' : 'Nuevo Usuario'))
+        assignUser()
+    }, [])
     useEffect(() => { setRoleId(Role.id) }, [Role])
     console.log(NewUser)
     console.log(User)
@@ -54,7 +58,7 @@ const newUser = () => {
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
             <i className='bx bx-x-circle close' onClick={() => (dispatch(setVisibleUser(false)), dispatch(setItem(false)), navigate(-1))}></i>
-            <h2>{User.id ? 'Editar Usuario' : 'Nuevo Usuario'}</h2>
+            <br />
             <div className='createGrid'>
                 <label className='necessary'>Nombre:</label>
                 <input

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import getConfig from '../../utils/getConfig'
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
@@ -10,6 +10,7 @@ import { setItem } from '../../store/slices/ItemSlice'
 import { useDispatch } from 'react-redux'
 import { setVisibleInventary } from './../../store/slices/NewsVisibleSlice'
 import { updateRefresh } from '../../store/slices/RefreshSlice'
+import { setArea } from '../../store/slices/AreaSlice'
 const newInventary = () => {
     const dispatch = useDispatch()
     const Inventary = useSelector(state => state.Item)
@@ -17,6 +18,9 @@ const newInventary = () => {
 
     const navigate = useNavigate()
     const { handleSubmit, reset, register } = useForm()
+    useEffect(() => {
+        dispatch(setArea(Inventary.id ? 'Editar Inventario' : 'Nuevo Inventario'))
+    }, [])
 
     const submit = data => {
 
@@ -42,7 +46,7 @@ const newInventary = () => {
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
             <i className='bx bx-x-circle close' onClick={() => (/*dispatch(setVisibleInventary(!NewInventaryVisible)),*/dispatch(setItem(false)), navigate(-1))}></i>
-            <h2>{Inventary.id ? 'Editar Inventario' : 'Nuevo Inventario'}</h2>
+            <br />
             <div className='createGrid'>
                 <label className='necessary'>Nombre:</label>
                 <input type="text" autoComplete='off' required defaultValue={Inventary.id && Inventary.name} placeholder='Ej. Herramientas' {...register('name')} />

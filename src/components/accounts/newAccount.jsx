@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setItem } from '../../store/slices/ItemSlice'
 import { setVisibleAccount } from './../../store/slices/NewsVisibleSlice'
 import { updateRefresh } from '../../store/slices/RefreshSlice'
+import { setArea } from '../../store/slices/AreaSlice'
 const newAccount = () => {
     const dispatch = useDispatch()
     const Account = useSelector(state => state.Item)
@@ -23,7 +24,11 @@ const newAccount = () => {
     const { handleSubmit, reset, register } = useForm()
 
     const navigate = useNavigate()
-    useEffect(() => Account.id && setProject(Account.project), [])
+
+    useEffect(() => {
+        Account.id && setProject(Account.project)
+        dispatch(setArea(Account.id ? 'Editar Cuenta' : 'Nueva Cuenta'))
+    }, [])
 
     const submit = data => {
         data.projectId = Project.id
@@ -47,7 +52,7 @@ const newAccount = () => {
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
             <i className='bx bx-x-circle close' onClick={() => (/*dispatch(setVisibleAccount(!NewAccountVisible)), */dispatch(setItem(false)), navigate(-1))}></i>
-            <h2>{Account.id ? 'Editar Cuenta' : 'Nueva Cuenta'}</h2>
+            <br />
             <div className='createGrid'>
                 <label className='necessary'>Software:</label>
                 <input type="text" autoComplete='off' required defaultValue={Account.id && Account.software} placeholder='Ej. Sonos' {...register('software')} />

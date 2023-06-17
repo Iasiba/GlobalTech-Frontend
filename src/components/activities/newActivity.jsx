@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setItem } from '../../store/slices/ItemSlice'
 import { setVisibleActivity } from './../../store/slices/NewsVisibleSlice'
 import { updateRefresh } from '../../store/slices/RefreshSlice'
+import { setArea } from '../../store/slices/AreaSlice'
 const newActivity = ({ /*task,*/ setVisibleReport }) => {
     let aux
     const [task, settask] = useState('')//let task = {}
@@ -47,7 +48,7 @@ const newActivity = ({ /*task,*/ setVisibleReport }) => {
         }, [task/*Task*/]
     )//useEffect(() => { task && setTask(task) }, [task])
     //Activity.roomId && (task = Activity, Activity = undefined, console.log('entro a borrar activity'))
-    useEffect(() => CreateOrEditActivity(), [Activity])
+    useEffect(() => InitialValuesCreateOrEditActivity(), [Activity])
 
     /*if (Activity.roomId) {
         useEffect(() =>(  settask(Activity), Activity = {} ), [Activity])
@@ -55,7 +56,8 @@ const newActivity = ({ /*task,*/ setVisibleReport }) => {
         if (Activity.id) useEffect(() => setTask(Activity.task), [Activity])//en caso de editar actividades
         
     }*/
-    function CreateOrEditActivity() {
+    function InitialValuesCreateOrEditActivity() {
+        dispatch(setArea(Activity.task ? 'Editar Actividad' : 'Nueva Actividad'))
         Activity.roomId && (settask(Activity), setActivity({})) //en caso de crear actividades en una tarea especifica
         Activity.task && setTask(Activity.task) //en caso de editar actividades
     }
@@ -153,7 +155,7 @@ const newActivity = ({ /*task,*/ setVisibleReport }) => {
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
             <i className='bx bx-x-circle close' onClick={() => exit() /*(task ? setVisibleReport(false) : dispatch(setVisibleActivity(!NewActivityVisible)), dispatch(setItem(false)), navigate(-1))*/}></i>
-            <h2>{Activity.task ? 'Editar Actividad' : 'Nueva Actividad'}</h2>
+     
             <div className='createGrid'>
                 <label className='necessary'>Descripcion:</label>
                 <textarea
