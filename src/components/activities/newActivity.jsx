@@ -23,15 +23,15 @@ const newActivity = ({ /*task,*/ setVisibleReport }) => {
     const Tasks = AxiosGetHook('http://192.168.0.253:8000/api/v1/tasks')
     const AllTasks = Tasks.data.data?.tasks
 
-    const [Task, setTask] = useState('--Selecciona la Tarea--')
+    const [Task, setTask] = useState({ description: '--Selecciona la Tarea--' })
     const [TaskId, setTaskId] = useState('')
     const [TaskListVisible, setTaskListVisible] = useState(false)
     const [Materials, setMaterials] = useState(false)
     const [VisibleMaterialAsignedToMe, setVisibleMaterialAsignedToMe] = useState(false)
-    const [MaterialSelected, setMaterialSelected] = useState('')
+    const [MaterialSelected, setMaterialSelected] = useState({ name: "--Selecciona Material--" })
     const [Rooms, setRooms] = useState('')
     const [VisibleRooms, setVisibleRooms] = useState(false)
-    const [RoomSelected, setRoomSelected] = useState('')
+    const [RoomSelected, setRoomSelected] = useState({ name: "--Selecciona Area--" })
     const [MaterialsInstalleds, setMaterialsInstalleds] = useState([])
     const [MaterialsAsignatesToMe, setMaterialsAsignatesToMe] = useState([])
     const [RefreshMaterialsAsignatesToMe, setRefreshMaterialsAsignatesToMe] = useState(false)
@@ -45,7 +45,7 @@ const newActivity = ({ /*task,*/ setVisibleReport }) => {
             task.id && setRooms(task.room.project.rooms)
             axios.get('http://192.168.0.253:8000/api/v1/users/me/materials', getConfig())
                 .then(res => setMaterialsAsignatesToMe(res.data))
-        }, [task/*Task*/]
+        }, [task, Task]
     )//useEffect(() => { task && setTask(task) }, [task])
     //Activity.roomId && (task = Activity, Activity = undefined, console.log('entro a borrar activity'))
     useEffect(() => InitialValuesCreateOrEditActivity(), [Activity])
@@ -80,7 +80,7 @@ const newActivity = ({ /*task,*/ setVisibleReport }) => {
         }
     }
     const submit = data => {
-        data.description = ActivityDescription
+        //data.description = ActivityDescription
         data.taskId = Task.id
         const URL = Activity.task ? `http://192.168.0.253:8000/api/v1/activities/${Activity.id}` : `http://192.168.0.253:8000/api/v1/tasks/${data.taskId/*TaskId*/}/activities`
         Activity.task ?
@@ -144,7 +144,6 @@ const newActivity = ({ /*task,*/ setVisibleReport }) => {
                     })
             )
         //!task && dispatch(setVisibleActivity(!NewActivityVisible))//ocultar ventana de creacion de actividades
-
         //dispatch(updateRefresh())
         navigate(-1)
     }
@@ -152,28 +151,34 @@ const newActivity = ({ /*task,*/ setVisibleReport }) => {
         dispatch(setItem(false))
         navigate(-1)
     }
+
+
+
     return (
-        <form onSubmit={handleSubmit(submit)} className='createCenter new' >
+        <form onSubmit={Task.id && handleSubmit(submit)} className='createCenter new' >
             <i className='bx bx-x-circle close' onClick={() => exit() /*(task ? setVisibleReport(false) : dispatch(setVisibleActivity(!NewActivityVisible)), dispatch(setItem(false)), navigate(-1))*/}></i>
 
             <div className='createGrid'>
                 <label className='necessary'>Descripcion:</label>
                 <textarea
-                    id='ActivityDescription'
+                    autoComplete='off'
                     required
-                    onChange={e => setActivityDescription(e.target.value)}
+                    id='ActivityDescription'
                     defaultValue={Activity.description}
+                    placeholder='Ej: Se cablearon nodos de red'
+                    {...register('description')}
                     maxLength="255"
+                /*onChange={e => setActivityDescription(e.target.value)}*/
                 />
             </div> {/*defaultValue={Activity.task && Activity.description} placeholder='Ej. cablee 5 nodos en cocina' {...register('description')}  */}
 
             <div className='createGrid'>
                 <label className='necessary'>Tarea:</label>
                 <div className="selectableMenu">
-                    <span className="selectableMenu__label">{Task.description ? Task.description : '--Selecciona la Tarea--'}</span>
+                    <span className="selectableMenu__label" onClick={() => setTaskListVisible(!TaskListVisible)}>{Task.description}</span>
                     <ul className="selectableMenu__list">
                         {
-                            AllTasks && AllTasks?.map(
+                            TaskListVisible && AllTasks && AllTasks?.map(
                                 task => {
                                     return (
                                         <li
@@ -181,6 +186,7 @@ const newActivity = ({ /*task,*/ setVisibleReport }) => {
                                             onClick={
                                                 () => {
                                                     setTask(task)
+                                                    setTaskListVisible(false)
                                                 }
                                             }
                                             key={task.id}
@@ -193,17 +199,125 @@ const newActivity = ({ /*task,*/ setVisibleReport }) => {
                 </div>
             </div>
 
+            <div className='createGrid'>
+                <label >Materiales:</label>
+                <input type="checkbox" disabled={!Task.id} onClick={() => setMaterials(!Materials)} />
+            </div>
+            {
+                Task && Materials &&
+                <div>
+                    <div >
+                        <div>Proyecto</div>
+                        <div>{Task.room.project.name}</div>
+                    </div>
+                    <div className='createGrid zindex2'>
+                        <label className='necessary'>Habitacion:</label>
+                        <div className="selectableMenu">
+                            <span className="selectableMenu__label" onClick={() => setVisibleRooms(!VisibleRooms)} >{RoomSelected.name}</span>
+                            <ul className="selectableMenu__list">
+                                {
+                                    VisibleRooms && Task.room.project.rooms.map(
+                                        Room => {
+                                            return (
+                                                <li
+                                                    className='selectableMenu__item'
+                                                    onClick={
+                                                        () => {
+                                                            setRoomSelected(Room)
+                                                            setVisibleRooms(false)
+                                                        }
+                                                    }
+                                                    key={Room.id}
+                                                >{Room.name}</li>
+                                            )
+                                        }
+                                    )
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                    {/*
+                        <input type="text" onClick={() => setVisibleRooms(!VisibleRooms)} defaultValue={RoomSelected ? RoomSelected.name : ''} placeholder='--Selecciona Un Area--' />
+                        VisibleRooms &&
+                        <div>
+                            {Task.room.project.rooms.map(Room => <div className='MaterialAsignatedToMe' onClick={() => { setRoomSelected(Room), setVisibleRooms(false) }} key={Room.id}>{Room.name}</div>)}
+                        </div>
 
+                        */
+                    }
+                    <div className='createGrid'>
+                        <label className='necessary'>Material:</label>
+                        <div className="selectableMenu">
+                            <span className="selectableMenu__label" onClick={() => setVisibleMaterialAsignedToMe(!VisibleMaterialAsignedToMe)} >{MaterialSelected.name}</span>
+                            <ul className="selectableMenu__list">
+                                {
+                                    VisibleMaterialAsignedToMe && MaterialsAsignatesToMe.map(
+                                        MaterialAsignatedToMe => {
+                                            return (
+                                                !MaterialAsignatedToMe.installed && <li
+                                                    className='selectableMenu__item'
+                                                    onClick={
+                                                        () => {
+                                                            setMaterialSelected(MaterialAsignatedToMe)
+                                                            setVisibleMaterialAsignedToMe(false)
+                                                        }
+                                                    }
+                                                    key={MaterialAsignatedToMe.id}
+                                                >{MaterialAsignatedToMe.name}</li>
+                                            )
+                                        }
+                                    )
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                    {/*
+                        <input type="text" onClick={() => setVisibleMaterialAsignedToMe(!VisibleMaterialAsignedToMe)} defaultValue={MaterialSelected ? MaterialSelected.name : ''} placeholder='--Selecciona Un Material--' />
+                        VisibleMaterialAsignedToMe &&
+                        <div>
+                            {MaterialsAsignatesToMe.map(
+                                MaterialAsignatedToMe => !MaterialAsignatedToMe.installed && (<div className='MaterialAsignatedToMe' onClick={() => { setMaterialSelected(MaterialAsignatedToMe), setVisibleMaterialAsignedToMe(false) }} key={MaterialAsignatedToMe.id}>{MaterialAsignatedToMe.name}</div>))}
+                        </div>
+                        */
+                    }
+                    <div onClick={() => {
+                        if (MaterialSelected.id && RoomSelected.id) {
+                            MaterialsInstalleds.push({ MaterialSelected, RoomSelected }), installMaterial(MaterialSelected)
+                                , setMaterialSelected({ name: "--Selecciona Material--" }), setRoomSelected({ name: "--Selecciona Area--" }), setRefreshMaterialsAsignatesToMe(!RefreshMaterialsAsignatesToMe)
+                        }
+                    }} className='add'>agregar</div>
+                    <div>{'Materiales instalados: ' + MaterialsInstalleds.length}</div>
+                    <section className='MaterialsInstalleds'>
+                        {
+                            MaterialsInstalleds.length ?
+                                MaterialsInstalleds.map(
+                                    (materialInstalled) =>
+                                        <div className='MaterialInstalled' key={materialInstalled.MaterialSelected.id + materialInstalled.RoomSelected.id}>
+                                            <div className='DeleteMaterialInstalled' onClick={() => { MaterialsAsignatesToMe.push(materialInstalled.MaterialSelected), returnMaterial(materialInstalled.MaterialSelected) }}>x</div>
+                                            <aside>
+                                                {materialInstalled.MaterialSelected.name}
+                                            </aside>
+                                            <aside>
+                                                {materialInstalled.RoomSelected.name}
+                                            </aside>
+                                        </div>
+                                )
+                                :
+                                <div></div>
+                        }
+                    </section>
+                </div>
+            }
+            <div>
+            </div>
+            <br />
+            <button>{Activity.task ? 'Actualizar' : 'Crear'}</button>
+        </form>
+    )
+}
 
-
-
-
-
-
-
-
-
-            {/*
+export default newActivity
+{/*
                 <div className='createGrid'>
                 <label className='necessary'>Tarea:</label>
                 <textarea
@@ -241,76 +355,3 @@ const newActivity = ({ /*task,*/ setVisibleReport }) => {
                 </div>
             </div>
             */}
-
-            <div className='createGrid'>
-                <label>Materials:</label>
-                <input type="checkbox" onClick={() => setMaterials(!Materials)} />
-            </div>
-            {
-                Task && Materials &&
-                <div>
-                    <div >
-                        <div>Proyecto</div>
-                        <div>{Task.room.project.name}</div>
-                    </div>
-                    <div className='createGrid'>
-                        <div>Habitacion:</div>
-                        <input type="text" onClick={() => setVisibleRooms(!VisibleRooms)} defaultValue={RoomSelected ? RoomSelected.name : ''} placeholder='--Selecciona Un Area--' />
-                    </div>
-                    {
-                        VisibleRooms &&
-                        <div>
-                            {Rooms.map(Room => <div className='MaterialAsignatedToMe' onClick={() => { setRoomSelected(Room), setVisibleRooms(false) }} key={Room.id}>{Room.name}</div>)}
-                        </div>
-                    }
-                    <div className='createGrid'>
-                        <div>Material:</div>
-                        <input type="text" onClick={() => setVisibleMaterialAsignedToMe(!VisibleMaterialAsignedToMe)} defaultValue={MaterialSelected ? MaterialSelected.name : ''} placeholder='--Selecciona Un Material--' />
-                    </div>
-                    {
-                        VisibleMaterialAsignedToMe &&
-                        <div>
-                            {MaterialsAsignatesToMe.map(MaterialAsignatedToMe => !MaterialAsignatedToMe.installed && (<div className='MaterialAsignatedToMe' onClick={() => { setMaterialSelected(MaterialAsignatedToMe), setVisibleMaterialAsignedToMe(false) }} key={MaterialAsignatedToMe.id}>{MaterialAsignatedToMe.name}</div>))}
-                        </div>
-                    }
-                    <div onClick={() => {
-                        if (MaterialSelected && RoomSelected) {
-                            MaterialsInstalleds.push({ MaterialSelected, RoomSelected }), installMaterial(MaterialSelected)
-                                , setMaterialSelected(''), setRoomSelected(''), setRefreshMaterialsAsignatesToMe(!RefreshMaterialsAsignatesToMe)
-                        }
-                    }} className='add'>agregar</div>
-                    <div>{'Materiales instalados: ' + MaterialsInstalleds.length}</div>
-                    <section className='MaterialsInstalleds'>
-                        {
-                            MaterialsInstalleds.length ?
-                                MaterialsInstalleds.map(
-                                    (materialInstalled) =>
-                                        <div className='MaterialInstalled' key={materialInstalled.MaterialSelected.id + materialInstalled.RoomSelected.id}>
-                                            <div className='DeleteMaterialInstalled' onClick={() => { MaterialsAsignatesToMe.push(materialInstalled.MaterialSelected), returnMaterial(materialInstalled.MaterialSelected) }}>x</div>
-                                            <aside>
-                                                {materialInstalled.MaterialSelected.name}
-                                            </aside>
-                                            <aside>
-                                                {materialInstalled.RoomSelected.name}
-                                            </aside>
-                                        </div>
-                                )
-                                :
-                                <div></div>
-                        }
-                    </section>
-                </div>
-            }
-            <div>
-            </div>
-            <br />
-            <button>{Activity.task ? 'Actualizar' : 'Crear'}</button>
-
-
-
-
-        </form>
-    )
-}
-
-export default newActivity

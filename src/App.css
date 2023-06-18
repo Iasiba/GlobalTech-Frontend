@@ -193,7 +193,8 @@ input:hover {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  /*margin: 10px 0px;*/
+  margin: 10px 0px;
+  position: relative;
 }
 
 .textArea{
@@ -378,7 +379,6 @@ button:hover {
 /*Lista para seleccionar una 
 opcion como proyectos como
 habitaciones*/
-
 .selectableMenu {
   width: 80%;
   border-radius: 5px;
@@ -405,12 +405,16 @@ habitaciones*/
   margin: 0; 
   padding: 0; 
   list-style: none; 
+  display: block;/**/
 } 
 
+/*
 .selectableMenu:hover .selectableMenu__list, 
 .selectableMenu__list:hover { 
+  transition-duration: 2s;
   display: block; 
-} 
+  
+} */
 
 .selectableMenu__item {
   margin: 5px 0px;
@@ -422,3 +426,8 @@ habitaciones*/
   cursor: pointer;
   color: var(--primary-color); 
 } 
+
+
+.zindex2{
+  z-index: 2;
+}

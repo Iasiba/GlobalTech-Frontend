@@ -19,7 +19,7 @@ const newRoom = () => {
     const Projects = AxiosGetHook('http://192.168.0.253:8000/api/v1/projects')
     const AllProjects = Projects.data.data?.projects
 
-    const [Project, setProject] = useState('')
+    const [Project, setProject] = useState({ name: "--Selecciona un Proyecto--" })
     const [ProjectListVisible, setProjectListVisible] = useState(false)
 
     const { handleSubmit, reset, register } = useForm()
@@ -52,7 +52,7 @@ const newRoom = () => {
         navigate(-1)
     }
     return (
-        <form onSubmit={handleSubmit(submit)} className='createCenter new' >
+        <form onSubmit={Project.id && handleSubmit(submit)} className='createCenter new' >
             <i className='bx bx-x-circle close' onClick={() => (/*dispatch(setVisibleRoom(!NewRoomVisible)), */dispatch(setItem(false)), navigate(-1))}></i>
             <br />
             <div className='createGrid'>
@@ -66,7 +66,38 @@ const newRoom = () => {
                     {...register('name')}
                 />
             </div>
+
             <div className='createGrid'>
+                <label className='necessary'>Proyecto:</label>
+                <div className="selectableMenu">
+                    <span className="selectableMenu__label" onClick={() => setProjectListVisible(!ProjectListVisible)}>{Project.name}</span>
+                    <ul className="selectableMenu__list">
+                        {
+                            ProjectListVisible && AllProjects && AllProjects?.map(
+                                project => {
+                                    return (
+                                        <li
+                                            className='selectableMenu__item'
+                                            onClick={
+                                                () => {
+                                                    setProject(project)
+                                                    setProjectListVisible(false)
+                                                }
+                                            }
+                                            key={project.id}
+                                        >{project.name}</li>
+                                    )
+                                }
+                            )
+                        }
+                    </ul>
+                </div>
+            </div>
+
+
+
+            {/* 
+           <div className='createGrid'>
                 <label className='necessary'>Proyecto:</label>
                 <input
                     type="text"
@@ -88,7 +119,7 @@ const newRoom = () => {
                         )
                     }
                 </div>
-            </div>
+            </div>*/}
             <br />
             <button>{Room.id ? 'Actualizar' : 'Crear'}</button>
         </form>
