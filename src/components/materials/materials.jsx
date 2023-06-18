@@ -43,10 +43,13 @@ const materials = ({ projectId, myhome, home, materials }) => {
   return (
     <div >
       <div>
-        <div className="materialsHeader taskHeader tableHeader">
-          <p>Material</p>
-          <p>Cantidad</p>
-          <p>Proyecto</p>
+        <div className="materialsHeader taskHeader tableHeader flex">
+          <aside className='space'></aside>
+          <div className={`tableHead`}>
+            <p>Material</p>
+            <p>Cantidad</p>
+            <p>Proyecto</p>
+          </div>
           <div className='userSelect' onClick={() => MaterialList.length && setviewUserList(!viewUserList)}><i className='bx bxs-user SelectUser'></i></div>
         </div>
       </div>

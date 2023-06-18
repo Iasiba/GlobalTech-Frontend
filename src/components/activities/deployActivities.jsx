@@ -39,8 +39,10 @@ const deployActivities = ({ activity, myhome }) => {
           <p>{activity.description}</p>
           {!myhome && <p>{activity.user.firstName}</p>}
         </div>*/}
-        <p className='activities1'>{activity.createdAt + ' - ' + activity.task.room.project.name + ' - ' + activity.user.firstName + ': ' /*+ activity.description*/}</p>
-        <p className='activities'>{activity.description}</p>
+        <div className={"createGrid"}>
+          <p className='activities1'>{activity.createdAt + ' - ' + activity.task.room.project.name + ' - ' + activity.user.firstName + ': ' /*+ activity.description*/}</p>
+          <p className='activities'>{activity.description}</p>
+        </div>
         <aside className='threePoints'
           onClick={
             () => (

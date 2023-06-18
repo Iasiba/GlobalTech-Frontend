@@ -23,7 +23,7 @@ const newActivity = ({ /*task,*/ setVisibleReport }) => {
     const Tasks = AxiosGetHook('http://192.168.0.253:8000/api/v1/tasks')
     const AllTasks = Tasks.data.data?.tasks
 
-    const [Task, setTask] = useState('')
+    const [Task, setTask] = useState('--Selecciona la Tarea--')
     const [TaskId, setTaskId] = useState('')
     const [TaskListVisible, setTaskListVisible] = useState(false)
     const [Materials, setMaterials] = useState(false)
@@ -155,7 +155,7 @@ const newActivity = ({ /*task,*/ setVisibleReport }) => {
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
             <i className='bx bx-x-circle close' onClick={() => exit() /*(task ? setVisibleReport(false) : dispatch(setVisibleActivity(!NewActivityVisible)), dispatch(setItem(false)), navigate(-1))*/}></i>
-     
+
             <div className='createGrid'>
                 <label className='necessary'>Descripcion:</label>
                 <textarea
@@ -166,7 +166,45 @@ const newActivity = ({ /*task,*/ setVisibleReport }) => {
                     maxLength="255"
                 />
             </div> {/*defaultValue={Activity.task && Activity.description} placeholder='Ej. cablee 5 nodos en cocina' {...register('description')}  */}
+
             <div className='createGrid'>
+                <label className='necessary'>Tarea:</label>
+                <div className="selectableMenu">
+                    <span className="selectableMenu__label">{Task.description ? Task.description : '--Selecciona la Tarea--'}</span>
+                    <ul className="selectableMenu__list">
+                        {
+                            AllTasks && AllTasks?.map(
+                                task => {
+                                    return (
+                                        <li
+                                            className='selectableMenu__item'
+                                            onClick={
+                                                () => {
+                                                    setTask(task)
+                                                }
+                                            }
+                                            key={task.id}
+                                        >{task.description}</li>
+                                    )
+                                }
+                            )
+                        }
+                    </ul>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+            {/*
+                <div className='createGrid'>
                 <label className='necessary'>Tarea:</label>
                 <textarea
                     className='textArea'
@@ -175,20 +213,34 @@ const newActivity = ({ /*task,*/ setVisibleReport }) => {
                     onClick={() => !task && setTaskListVisible(!TaskListVisible)}
                     placeholder='--selecciona una tarea--'
                     value={Task.description ? Task.description : ''}
-                    {...register('taskDescription')} />
-            </div>
+                    {...register('taskDescription')}
+                />
 
+            </div>
             <div className='createGrid'>
                 <label></label>
                 <div className='listNews'>
                     {
-                        TaskListVisible && AllTasks && AllTasks?.map(task => {
-                            return (<p className=' list ' onClick={() => { setTask(task), setTaskListVisible(!TaskListVisible) }} key={task.id}>{task.description}</p>)
-                        }
+                        TaskListVisible && AllTasks && AllTasks?.map(
+                            task => {
+                                return (
+                                    <p
+                                        className=' list '
+                                        onClick={
+                                            () => {
+                                                setTask(task)
+                                                setTaskListVisible(!TaskListVisible)
+                                            }
+                                        }
+                                        key={task.id}
+                                    >{task.description}</p>
+                                )
+                            }
                         )
                     }
                 </div>
             </div>
+            */}
 
             <div className='createGrid'>
                 <label>Materials:</label>
@@ -253,6 +305,10 @@ const newActivity = ({ /*task,*/ setVisibleReport }) => {
             </div>
             <br />
             <button>{Activity.task ? 'Actualizar' : 'Crear'}</button>
+
+
+
+
         </form>
     )
 }
