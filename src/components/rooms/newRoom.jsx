@@ -54,7 +54,7 @@ const newRoom = () => {
     return (
         <form onSubmit={Project.id && handleSubmit(submit)} className='createCenter new' >
             <i className='bx bx-x-circle close' onClick={() => (/*dispatch(setVisibleRoom(!NewRoomVisible)), */dispatch(setItem(false)), navigate(-1))}></i>
-            <br />
+
             <div className='createGrid'>
                 <label className='necessary'>Nombre:</label>
                 <input

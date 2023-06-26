@@ -19,7 +19,7 @@ const newAccount = () => {
     const Projects = AxiosGetHook('http://192.168.0.253:8000/api/v1/projects')
     const AllProjects = Projects.data.data?.projects
 
-    const [Project, setProject] = useState('')
+    const [Project, setProject] = useState({ name: '--Selecciona Proyecto--' })
     const [ProjectListVisible, setProjectListVisible] = useState(false)
     const { handleSubmit, reset, register } = useForm()
 
@@ -31,6 +31,7 @@ const newAccount = () => {
     }, [])
 
     const submit = data => {
+        //data projectname
         data.projectId = Project.id
         Account.id ?
             axios.put(`http://192.168.0.253:8000/api/v1/accounts/${Account.id}`, data, getConfig())
@@ -52,7 +53,6 @@ const newAccount = () => {
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
             <i className='bx bx-x-circle close' onClick={() => (/*dispatch(setVisibleAccount(!NewAccountVisible)), */dispatch(setItem(false)), navigate(-1))}></i>
-            <br />
             <div className='createGrid'>
                 <label className='necessary'>Software:</label>
                 <input type="text" autoComplete='off' required defaultValue={Account.id && Account.software} placeholder='Ej. Sonos' {...register('software')} />
@@ -75,19 +75,60 @@ const newAccount = () => {
             </div>
             <div className='createGrid'>
                 <label className='necessary'>Proyecto:</label>
-                <input type="text" autoComplete='off' required onClick={() => setProjectListVisible(!ProjectListVisible)} placeholder='-Selecciona un Proyecto-' value={/*projectName*/ Project && Project.name} {...register('projectName')} />
-            </div>
-            <div className='createGrid'>
-                <br />
-                <div>
-                    {
-                        ProjectListVisible && AllProjects && AllProjects?.map(project => {
-                            return (<p className='tableHeader tableHover list' onClick={() => { /*setProjectName(project.name),*/ setProject(project), setProjectListVisible(!ProjectListVisible) }} key={project.id}>{project.name}</p>)
+                <div className="selectableMenu">
+                    <span className="selectableMenu__label" onClick={() => setProjectListVisible(!ProjectListVisible)}>{Project.name}</span>
+                    <ul className="selectableMenu__list">
+                        {
+                            ProjectListVisible && AllProjects && AllProjects?.map(
+                                project => {
+                                    return (
+                                        <li
+                                            className='selectableMenu__item'
+                                            onClick={
+                                                () => {
+                                                    setProject(project)
+                                                    setProjectListVisible(false)
+                                                }
+                                            }
+                                            key={project.id}
+                                        >{project.name}</li>
+                                    )
+                                }
+                            )
                         }
-                        )
-                    }
+                    </ul>
                 </div>
+                {
+                    /*
+                    <input 
+                    type="text" 
+                    autoComplete='off' 
+                    required 
+                    onClick={
+                        () => setProjectListVisible(!ProjectListVisible)
+                    } 
+                    placeholder='-Selecciona un Proyecto-' 
+                    value={/*projectName* Project && Project.name} 
+                    {...register('projectName')} 
+                    />
+                    */
+                }
             </div>
+            {
+                /*
+                <div className='createGrid'>
+                    <br />
+                    <div>
+                        {
+                            ProjectListVisible && AllProjects && AllProjects?.map(project => {
+                                return (<p className='tableHeader tableHover list' onClick={() => { /*setProjectName(project.name),* setProject(project), setProjectListVisible(!ProjectListVisible) }} key={project.id}>{project.name}</p>)
+                            }
+                            )
+                        }
+                    </div>
+                </div>
+                */
+            }
             <br />
             <button>{Account.id ? 'Actualizar' : 'Crear'}</button>
         </form>

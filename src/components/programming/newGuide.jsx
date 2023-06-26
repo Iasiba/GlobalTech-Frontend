@@ -60,7 +60,7 @@ const newGuide = () => {
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
             <i className='bx bx-x-circle close' onClick={() => (dispatch(setVisibleGuide(!NewGuideVisible)), dispatch(setItem(false)), navigate(-1))}></i>
-            <br />
+
             <div className='createGrid'>
                 <label className='necessary'>Sistema, Equipo o Software:</label>
                 <input

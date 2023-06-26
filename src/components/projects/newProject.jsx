@@ -48,7 +48,7 @@ const newProject = () => {
                     dispatch(setItem(false)), navigate(-1)
                 )}
             ></i>
-            <br />
+
             <div className='createGrid'>
                 <label className='necessary'>Nombre:</label>
                 <input

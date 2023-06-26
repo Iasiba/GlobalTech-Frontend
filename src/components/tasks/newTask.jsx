@@ -19,18 +19,18 @@ const newTask = () => {
     const Projects = AxiosGetHook('http://192.168.0.253:8000/api/v1/projects')
     const AllProjects = Projects.data.data?.projects
     const [projectName, setProjectName] = useState('')
-    const [Project, setProject] = useState('')
+    const [Project, setProject] = useState({ name: '--Seleccione Proyecto--' })
     const [ProjectListVisible, setProjectListVisible] = useState(false)
 
     const [Rooms, setRooms] = useState('')
-    const [Room, setRoom] = useState('')
+    const [Room, setRoom] = useState({ name: '--Selecciona Habitacion--' })
     const [RoomName, setRoomName] = useState('')
     const [RoomListVisible, setRoomListVisible] = useState(false)
     useEffect(() => {
         AllProjects && setProject(AllProjects.filter(project => project.name === projectName)[0])
     }, [projectName])
     useEffect(() => {
-        Project && axios.get(`http://192.168.0.253:8000/api/v1/projects/${Project.id}/rooms`, getConfig())
+        Project.id && axios.get(`http://192.168.0.253:8000/api/v1/projects/${Project.id}/rooms`, getConfig())
             .then(res => setRooms(res.data))
             .catch(err => console.log(err))
     }, [Project])
@@ -46,6 +46,7 @@ const newTask = () => {
 
     const submit = data => {
         data.roomId = Room.id
+        data.roomName = Room.name
         Task.id ?
             axios.put(`http://192.168.0.253:8000/api/v1/tasks/${Task.id}`, data, getConfig())
                 .then(res => {
@@ -74,7 +75,7 @@ const newTask = () => {
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
             <i className='bx bx-x-circle close' onClick={() => (/*dispatch(setVisibleTask(!NewTaskVisible)), */dispatch(setItem(false)), navigate(-1))}></i>
-            <br />
+
             <div className='createGrid'>
                 <label className='necessary'>Fecha de ejecucion:</label>
                 <input
@@ -86,7 +87,35 @@ const newTask = () => {
                     {...register('executionDate')}
                 />
             </div>
+
             <div className='createGrid'>
+                <label className='necessary'>Proyecto:</label>
+                <div className="selectableMenu">
+                    <span className="selectableMenu__label" onClick={() => setProjectListVisible(!ProjectListVisible)}>{Project.name}</span>
+                    <ul className="selectableMenu__list zindex1">
+                        {
+                            ProjectListVisible && AllProjects && AllProjects?.map(
+                                project => {
+                                    return (
+                                        <li
+                                            className='selectableMenu__item'
+                                            onClick={
+                                                () => {
+                                                    setProject(project)
+                                                    setProjectListVisible(false)
+                                                }
+                                            }
+                                            key={project.id}
+                                        >{project.name}</li>
+                                    )
+                                }
+                            )
+                        }
+                    </ul>
+                </div>
+            </div>
+
+            {/*<div className='createGrid'>
                 <label className='necessary'>Proyecto:</label>
                 <input
                     type="text"
@@ -107,30 +136,64 @@ const newTask = () => {
                         })
                     }
                 </div>
-            </div>
+            </div>*/}
+
+
+
+
             <div className='createGrid'>
                 <label className='necessary'>Habitacion:</label>
-                <input
-                    type="text"
-                    autoComplete='off'
-                    required
-                    onClick={() => { setRoomListVisible(!RoomListVisible) }}
-                    placeholder='--Selecciona una Habitacion--'
-                    value={RoomName}
-                    {...register('roomName')}
-                />
-            </div>
-            <div className='createGrid'>
-                <div></div>
-                <div>
-                    {
-                        RoomListVisible && Rooms && Rooms?.map(room => {
-                            return (<p className='tableHeader tableHover list' onClick={() => { setRoomName(room.name), setRoom(room), setRoomListVisible(!RoomListVisible) }} key={room.id} >{room.name}</p>)
+                <div className="selectableMenu">
+                    <span className="selectableMenu__label" onClick={() => setRoomListVisible(!RoomListVisible)}>{Room.name}</span>
+                    <ul className="selectableMenu__list">
+                        {
+                            RoomListVisible && Rooms && Rooms?.map(
+                                room => {
+                                    return (
+                                        <li
+                                            className='selectableMenu__item'
+                                            onClick={
+                                                () => {
+                                                    setRoom(room)
+                                                    setRoomListVisible(false)
+                                                }
+                                            }
+                                            key={room.id}
+                                        >{room.name}</li>
+                                    )
+                                }
+                            )
                         }
-                        )
-                    }
+                    </ul>
                 </div>
             </div>
+            {
+                /* 
+               <div className='createGrid'>
+                    <label className='necessary'>Habitacion:</label>
+                    <input
+                        type="text"
+                        autoComplete='off'
+                        required
+                        onClick={() => { setRoomListVisible(!RoomListVisible) }}
+                        placeholder='--Selecciona una Habitacion--'
+                        value={RoomName}
+                        {...register('roomName')}
+                    />
+                </div>
+                <div className='createGrid'>
+                    <div></div>
+                    <div>
+                        {
+                            RoomListVisible && Rooms && Rooms?.map(room => {
+                                return (<p className='tableHeader tableHover list' onClick={() => { setRoomName(room.name), setRoom(room), setRoomListVisible(!RoomListVisible) }} key={room.id} >{room.name}</p>)
+                            }
+                            )
+                        }
+                    </div>
+                </div>
+                */
+            }
             <div className='createGrid'>
                 <label className='necessary'>Descripcion:</label>
                 <textarea

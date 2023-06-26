@@ -96,7 +96,7 @@
     padding-right: 5%;*/
     align-items: center;
     box-shadow: 1px 1px 10px var(--primary-color);
-    z-index: 1;
+    z-index: 3;
 }
 
 .logo {

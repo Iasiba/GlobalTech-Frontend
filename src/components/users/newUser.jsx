@@ -19,7 +19,7 @@ const newUser = () => {
     const NewUser = useSelector(state => state.Item)
     const [User, setUser] = useState('')
     const [RoleName, setRoleName] = useState('')
-    const [Role, setRole] = useState('')
+    const [Role, setRole] = useState({ name: '--Selecciona Rol--' })
     const [RoleId, setRoleId] = useState('')
     const [RoleListVisible, setRoleListVisible] = useState(false)
 
@@ -57,8 +57,14 @@ const newUser = () => {
     }
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
-            <i className='bx bx-x-circle close' onClick={() => (dispatch(setVisibleUser(false)), dispatch(setItem(false)), navigate(-1))}></i>
-            <br />
+            <i className='bx bx-x-circle close'
+                onClick={
+                    () => (
+                        dispatch(setVisibleUser(false)),
+                        dispatch(setItem(false)), navigate(-1)
+                    )
+                }
+            ></i>
             <div className='createGrid'>
                 <label className='necessary'>Nombre:</label>
                 <input
@@ -189,6 +195,39 @@ const newUser = () => {
                     {...register('verified')}
                 />
             </div>
+
+            <div className='createGrid'>
+                <label className='necessary'>Rol:</label>
+                <div className="selectableMenu">
+                    <span
+                        className="selectableMenu__label"
+                        onClick={
+                            () => setRoleListVisible(!RoleListVisible)
+                        }
+                    >{Role.name}</span>
+                    <ul className="selectableMenu__list">
+                        {
+                            RoleListVisible && AllRoles && AllRoles?.map(
+                                role => {
+                                    return (
+                                        <li
+                                            className='selectableMenu__item'
+                                            onClick={
+                                                () => {
+                                                    setRole(role)
+                                                    setRoleListVisible(false)
+                                                }
+                                            }
+                                            key={role.id}
+                                        >{role.name}</li>
+                                    )
+                                }
+                            )
+                        }
+                    </ul>
+                </div>
+            </div>
+            {/*
             <div className='createGrid'>
                 <label className='necessary'>Rol:</label>
                 <input
@@ -197,7 +236,7 @@ const newUser = () => {
                     required
                     onClick={() => setRoleListVisible(!RoleListVisible)}
                     placeholder='Ej. admin'
-                    value={RoleName} /*defaultValue={User.role?.name}*/
+                    value={RoleName} /*defaultValue={User.role?.name}/
                     {...register('roleName')}
                 />
             </div>
@@ -212,6 +251,7 @@ const newUser = () => {
                     }
                 </div>
             </div>
+            */}
 
             <div>
                 <h3>Permisos</h3>

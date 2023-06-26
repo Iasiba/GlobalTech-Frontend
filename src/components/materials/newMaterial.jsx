@@ -19,14 +19,14 @@ const newMaterial = () => {
     const Projects = AxiosGetHook('http://192.168.0.253:8000/api/v1/projects')
     const AllProjects = Projects.data.data?.projects
     const [projectName, setProjectName] = useState('')
-    const [Project, setProject] = useState('')
+    const [Project, setProject] = useState({ name: "--Selecciona Proyecto--" })
     const [ProjectId, setProjectId] = useState('')
     const [ProjectListVisible, setProjectListVisible] = useState(false)
 
     const Inventories = AxiosGetHook('http://192.168.0.253:8000/api/v1/inventories')
     const AllInventories = Inventories.data.data?.inventory
     const [InventoryName, setInventoryName] = useState('')
-    const [Inventory, setInventory] = useState('')
+    const [Inventory, setInventory] = useState({ name: "--Selecciona Inventario--" })
     const [InventoryId, setInventoryId] = useState('')
     const [InventoryListVisible, setInventoryListVisible] = useState('')
 
@@ -41,8 +41,9 @@ const newMaterial = () => {
 
     useEffect(() => assignInventory(), [Material])//en caso de editar materiales
     const submit = data => {
-        data.projectId = ProjectId
-        data.inventoryId = InventoryId
+        data.projectId = Project.id
+        data.inventoryId = Inventory.id
+        data.inventoryName = Inventory.name
         const URL = Material.id ? `http://192.168.0.253:8000/api/v1/materials/${Material.id}` : `http://192.168.0.253:8000/api/v1/inventories/${InventoryId}/materials`
 
         Material.id ?
@@ -80,8 +81,34 @@ const newMaterial = () => {
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
             <i className='bx bx-x-circle close' onClick={() => (/*dispatch(setVisibleMaterial(!NewMaterialVisible)), */dispatch(setItem(false)), navigate(-1))}></i>
-            <br />
+
             <div className='createGrid'>
+                <label className='necessary'>Inventario:</label>
+                <div className="selectableMenu">
+                    <span className="selectableMenu__label" onClick={() => setInventoryListVisible(!InventoryListVisible)}>{Inventory.name}</span>
+                    <ul className="selectableMenu__list zindex1">
+                        {
+                            InventoryListVisible && AllInventories && AllInventories?.map(
+                                inventory => {
+                                    return (
+                                        <li
+                                            className='selectableMenu__item'
+                                            onClick={
+                                                () => {
+                                                    setInventory(inventory)
+                                                    setInventoryListVisible(false)
+                                                }
+                                            }
+                                            key={inventory.id}
+                                        >{inventory.name}</li>
+                                    )
+                                }
+                            )
+                        }
+                    </ul>
+                </div>
+            </div>
+            { /*   <div className='createGrid'>
                 <label className='necessary'>Inventario:</label>
                 <input
                     type="text"
@@ -103,7 +130,7 @@ const newMaterial = () => {
                         )
                     }
                 </div>
-            </div>
+            </div>*/}
 
             <div className='createGrid'>
                 <label className='necessary'>Material:</label>
@@ -148,7 +175,33 @@ const newMaterial = () => {
                     {...register('amount')}
                 />
             </div>
-
+            <div className='createGrid'>
+                <label className='necessary'>Proyecto:</label>
+                <div className="selectableMenu">
+                    <span className="selectableMenu__label" onClick={() => setProjectListVisible(!ProjectListVisible)}>{Project.name}</span>
+                    <ul className="selectableMenu__list">
+                        {
+                            ProjectListVisible && AllProjects && AllProjects?.map(
+                                project => {
+                                    return (
+                                        <li
+                                            className='selectableMenu__item'
+                                            onClick={
+                                                () => {
+                                                    setProject(project)
+                                                    setProjectListVisible(false)
+                                                }
+                                            }
+                                            key={project.id}
+                                        >{project.name}</li>
+                                    )
+                                }
+                            )
+                        }
+                    </ul>
+                </div>
+            </div>
+            {/*
             <div className='createGrid'>
                 <label>Proyecto:</label>
                 <input
@@ -156,7 +209,7 @@ const newMaterial = () => {
                     autoComplete='off'
                     onClick={() => setProjectListVisible(!ProjectListVisible)}
                     placeholder='--Selecciona un Proyecto--'
-                    /*defaultValue={Material.id && Material.project.name}*/
+                    /*defaultValue={Material.id && Material.project.name}*
                     value={projectName}
                     {...register('projectName')}
                 />
@@ -182,7 +235,7 @@ const newMaterial = () => {
                     }
                 </div>
             </div>
-
+*/}
             <div className='checks'>
                 <aside className='check'>
                     <input type="checkbox" defaultChecked={Material.id ? Material.onHold : false}{...register('onHold')} />

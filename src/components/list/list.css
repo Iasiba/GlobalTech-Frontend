@@ -13,10 +13,13 @@
 
 .itemListPrimary {
     right: 36px;
+    top: 0px;
+    z-index: 1;
 }
 
 .itemListSecondary {
     right: 36px;
+
 }
 
 @media (max-width: 600px) {

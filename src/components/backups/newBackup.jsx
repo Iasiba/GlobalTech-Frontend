@@ -19,7 +19,7 @@ const newBackup = () => {
 
     const AllProjects = Projects.data.data?.projects
     const [projectName, setProjectName] = useState('')
-    const [Project, setProject] = useState('')
+    const [Project, setProject] = useState({ name: "--Selecciona Proyecto--" })/*'' */
     const [ProjectListVisible, setProjectListVisible] = useState(false)
 
     const [File, setFile] = useState('')
@@ -42,7 +42,6 @@ const newBackup = () => {
     const submit = data => {
         const Data = new FormData()
         Data.append('backups', File)
-
         data.projectId = Project.id
         data.date = year + '/' + month + '/' + day//Today // "2020/06/12"//
         data.name = Project.name + year + month + day + 'V' + data.version
@@ -82,7 +81,34 @@ const newBackup = () => {
     return (
         <form onSubmit={handleSubmit(submit)} className='createCenter new' >
             <i className='bx bx-x-circle close' onClick={() => (dispatch(setVisibleBackup(!NewBackupVisible)), dispatch(setItem(false)), navigate(-1))}></i>
-            <br />
+
+            <div className='createGrid'>
+                <label className='necessary'>Proyecto:</label>
+                <div className="selectableMenu">
+                    <span className="selectableMenu__label" onClick={() => setProjectListVisible(!ProjectListVisible)}>{Project.name}</span>
+                    <ul className="selectableMenu__list">
+                        {
+                            ProjectListVisible && AllProjects && AllProjects?.map(
+                                project => {
+                                    return (
+                                        <li
+                                            className='selectableMenu__item'
+                                            onClick={
+                                                () => {
+                                                    setProject(project)
+                                                    setProjectListVisible(false)
+                                                }
+                                            }
+                                            key={project.id}
+                                        >{project.name}</li>
+                                    )
+                                }
+                            )
+                        }
+                    </ul>
+                </div>
+            </div>
+            {/*
             <div className='createGrid'>
                 <label className='necessary'>Proyecto:</label>
                 <input
@@ -117,6 +143,7 @@ const newBackup = () => {
                     }
                 </div>
             </div>
+            */}
             <div className='createGrid'>
                 <label className='necessary'>Software:</label>
                 <input type="text" autoComplete='off' required defaultValue={Backup.id && Backup.software} placeholder='Ej. Lutron Homeworks'{...register('software')} />

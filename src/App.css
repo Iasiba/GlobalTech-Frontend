@@ -84,7 +84,6 @@ img {
 textarea {
   width: 80%;
   height: 30vh;
-  margin: 25px 0;
   background-color: white;
   outline: none;
   /*overflow:hidden*/
@@ -98,7 +97,6 @@ input {
   width: 80%;
   /*min-height: 30px;
   height: 100%;*/
-  margin: 10px auto;
   border: none;
   border: 1px solid var(--borderInput-color);
   border-radius: 5px;
@@ -123,9 +121,6 @@ input:hover {
 .main {
   flex: 1;
 }
-
-
-
 
 .tableHeader {
   margin-top: 5px;
@@ -192,9 +187,9 @@ input:hover {
   text-align: start;*/
   display: flex;
   justify-content: space-around;
-  align-items: center;
+  /*align-items: center;*/
   margin: 10px 0px;
-  position: relative;
+  /*position: relative;*/
 }
 
 .textArea{
@@ -241,16 +236,18 @@ h2 {
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid var(--borderInput-color);
+  position: relative;
 }
 
 .threePoints {
-  width: 4%;
+  width: 5%;
   color: var(--secondary-color);
   z-index: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
+  height: 100%;
 }
 
 .threePoints:hover {
@@ -263,11 +260,9 @@ h2 {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 1px;
-  height: 1px;
-  /*
+  width: 100%;
+  height: 100%;
   font-size: 22px;
-  */
   font-weight: bold;
   margin: 0px;
   transform: rotate(90deg);
@@ -352,8 +347,8 @@ h2 {
 }
 
 .close {
-  position: absolute;
-  right: 20px;
+  position: relative;
+  left: 48%;
   font-size: 25px;
 }
 
@@ -366,12 +361,6 @@ button:hover {
   color: var(--primary-color);
   cursor: pointer;
 }
-
-
-
-
-
-
 
 
 
@@ -390,11 +379,11 @@ habitaciones*/
 
 .selectableMenu__label { 
   cursor: pointer; 
+  width: 100%;
 } 
 
 .selectableMenu__list { 
   width: 100%;
-  border-top: 1px solid rgb(177, 177, 177);
   box-shadow: 0px 0px 2px var(--primary-color);
   border-radius: 5px;
   background-color: white;
@@ -427,7 +416,15 @@ habitaciones*/
   color: var(--primary-color); 
 } 
 
-
+.zindex4{
+  z-index: 4;
+}
+.zindex3{
+  z-index: 3;
+}
 .zindex2{
   z-index: 2;
+}
+.zindex1{
+  z-index: 1;
 }

@@ -10,8 +10,9 @@ import { updateRefreshMenu } from '../../store/slices/RefreshMenuSlice'
 import { updateRefresh } from '../../store/slices/RefreshSlice'
 import { useNavigate } from 'react-router-dom'
 const deployRooms = ({ room }) => {
+
     const dispatch = useDispatch()
-    const navigate =useNavigate()
+    const navigate = useNavigate()
     const NewRoomVisible = useSelector(state => state.NewsVisible)[1]
     const [Visible, setVisible] = useState(false)
     const [MenuVisible, setMenuVisible] = useState(false)
@@ -66,13 +67,13 @@ const deployRooms = ({ room }) => {
                     MenuVisible
                     &&
                     <div className='itemList itemListPrimary '>
-                        <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(room)), navigate('/NewLocation') /*dispatch(setVisibleRoom(!NewRoomVisible)), setMenuVisible(!MenuVisible) */}}>Editar</p>
-                        <p className='items materialItemsWidth' onClick={() => (
+                        <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(room)), navigate('/NewLocation') /*dispatch(setVisibleRoom(!NewRoomVisible)), setMenuVisible(!MenuVisible) */ }}>Editar</p>
+                        {!room.materials.length && !room.tasks.length && <p className='items materialItemsWidth' onClick={() => (
                             deleteRoom(),
                             dispatch(updateRefresh()),
                             setMenuVisible(!MenuVisible),
                             dispatch(updateRefresh())
-                        )}>Eliminar</p>
+                        )}>Eliminar</p>}
                     </div>
                 }
             </div>

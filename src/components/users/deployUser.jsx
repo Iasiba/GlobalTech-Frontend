@@ -6,7 +6,19 @@ import axios from 'axios'
 import getConfig from '../../utils/getConfig'
 import { updateRefresh } from '../../store/slices/RefreshSlice'
 import { updateRefreshMenu } from '../../store/slices/RefreshMenuSlice'
+/*
+backups
+materials
+programmings
 
+userImages
+projects
+notes
+
+taskLists
+activities
+tasks
+*/
 
 const deployUser = ({ user }) => {
   const dispatch = useDispatch()
@@ -43,6 +55,7 @@ const deployUser = ({ user }) => {
   useEffect(() => tasks(), [/*Refresh*/]
   )
   useEffect(() => auxTask(), [TaskList])
+
   return (
     <>
       <div className='deploy'>
@@ -59,8 +72,16 @@ const deployUser = ({ user }) => {
           }
         ><p>...</p></aside>
         {
-          MenuVisible
-          &&
+          MenuVisible &&
+          !user.activities.length &&
+          !user.backups.length &&
+          !user.materials.length &&
+          !user.notes.length &&
+          !user.programmings.length &&
+          !user.projects.length &&
+          !user.taskLists.length &&
+          !user.tasks.length &&
+          !user.userImages.length &&
           <div className='itemList itemListPrimary '>
             <p className='items materialItemsWidth' onClick={() => ((
               axios.delete(`http://192.168.0.253:8000/api/v1/users/${user.id}`, getConfig())

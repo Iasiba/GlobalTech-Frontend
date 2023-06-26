@@ -38,6 +38,7 @@ const newActivity = ({ /*task,*/ setVisibleReport }) => {
     const { handleSubmit, reset, register } = useForm()
 
     const navigate = useNavigate()
+    
     useEffect(
         () => {
             task.id && setTask(task)
@@ -145,19 +146,16 @@ const newActivity = ({ /*task,*/ setVisibleReport }) => {
             )
         //!task && dispatch(setVisibleActivity(!NewActivityVisible))//ocultar ventana de creacion de actividades
         //dispatch(updateRefresh())
-        navigate(-1)
-    }
-    function exit() {
         dispatch(setItem(false))
         navigate(-1)
     }
 
 
 
+
     return (
         <form onSubmit={Task.id && handleSubmit(submit)} className='createCenter new' >
-            <i className='bx bx-x-circle close' onClick={() => exit() /*(task ? setVisibleReport(false) : dispatch(setVisibleActivity(!NewActivityVisible)), dispatch(setItem(false)), navigate(-1))*/}></i>
-
+            <i className='bx bx-x-circle close' onClick={() => { dispatch(setItem(false)), navigate(-1) } /*(task ? setVisibleReport(false) : dispatch(setVisibleActivity(!NewActivityVisible)), dispatch(setItem(false)), navigate(-1))*/}></i>
             <div className='createGrid'>
                 <label className='necessary'>Descripcion:</label>
                 <textarea
@@ -176,7 +174,7 @@ const newActivity = ({ /*task,*/ setVisibleReport }) => {
                 <label className='necessary'>Tarea:</label>
                 <div className="selectableMenu">
                     <span className="selectableMenu__label" onClick={() => setTaskListVisible(!TaskListVisible)}>{Task.description}</span>
-                    <ul className="selectableMenu__list">
+                    <ul className="selectableMenu__list zindex2">
                         {
                             TaskListVisible && AllTasks && AllTasks?.map(
                                 task => {
@@ -210,11 +208,11 @@ const newActivity = ({ /*task,*/ setVisibleReport }) => {
                         <div>Proyecto</div>
                         <div>{Task.room.project.name}</div>
                     </div>
-                    <div className='createGrid zindex2'>
+                    <div className='createGrid'>
                         <label className='necessary'>Habitacion:</label>
                         <div className="selectableMenu">
                             <span className="selectableMenu__label" onClick={() => setVisibleRooms(!VisibleRooms)} >{RoomSelected.name}</span>
-                            <ul className="selectableMenu__list">
+                            <ul className="selectableMenu__list zindex1">
                                 {
                                     VisibleRooms && Task.room.project.rooms.map(
                                         Room => {
@@ -254,7 +252,7 @@ const newActivity = ({ /*task,*/ setVisibleReport }) => {
                                     VisibleMaterialAsignedToMe && MaterialsAsignatesToMe.map(
                                         MaterialAsignatedToMe => {
                                             return (
-                                                !MaterialAsignatedToMe.installed && <li
+                                                (Task.room?.project?.id==MaterialAsignatedToMe.project?.id||!MaterialAsignatedToMe.project?.id)&&!MaterialAsignatedToMe.installed && <li
                                                     className='selectableMenu__item'
                                                     onClick={
                                                         () => {

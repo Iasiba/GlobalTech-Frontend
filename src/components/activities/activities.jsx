@@ -11,7 +11,7 @@ const activities = ({ taskId, myhome, home }) => {
     const [AllActivity, setAllActivity] = useState('')
     useEffect(() => searcActivities(), [Refresh, taskId, myhome, home])
     function searcActivities() {
-        dispatch(setArea("Actividades"))
+        if (!taskId && !myhome && !home) dispatch(setArea("Actividades"))
         let url = 'http://192.168.0.253:8000/api/v1/activities'//!home && !myhome && !taskId
         if (home) url = 'http://192.168.0.253:8000/api/v1/activities'
         if (myhome) url = `http://192.168.0.253:8000/api/v1/users/me/activities`

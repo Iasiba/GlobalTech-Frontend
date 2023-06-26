@@ -13,7 +13,7 @@ const tasks = ({ roomId, home, myhome }) => {
   useEffect(() => searchTasks(), [Refresh, roomId, home, myhome])
 
   function searchTasks() {
-    dispatch(setArea("Tareas"))
+    if (!roomId && !home && !myhome) dispatch(setArea("Tareas"))
     let url = 'http://192.168.0.253:8000/api/v1/tasks'// home y otras opciones
     if (roomId) url = `http://192.168.0.253:8000/api/v1/rooms/${roomId}/tasks`
     if (myhome) url = 'http://192.168.0.253:8000/api/v1/users/me/taskList'

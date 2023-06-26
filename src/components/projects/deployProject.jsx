@@ -15,6 +15,7 @@ import { setVisibleProject } from './../../store/slices/NewsVisibleSlice'
 import { updateRefresh } from '../../store/slices/RefreshSlice'
 import { updateRefreshMenu } from '../../store/slices/RefreshMenuSlice'
 const deployProject = ({ project }) => {
+
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const NewProjectVisible = useSelector(state => state.NewsVisible)[0]
@@ -98,16 +99,21 @@ const deployProject = ({ project }) => {
           &&
           <div className='itemList itemListPrimary '>
             <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(project)), navigate('/NewProject')/*dispatch(setVisibleProject(true)), setMenuVisible(!MenuVisible)*/ }}>Editar</p>
-            <p className='items materialItemsWidth' onClick={() => ((
-              axios.delete(`http://192.168.0.253:8000/api/v1/projects/${project.id}`, getConfig())
-                .then(/*,
+            {
+              !project.accounts.length &&
+              !project.backups.length &&
+              !project.rooms.length &&
+              !project.materials.length &&
+              <p className='items materialItemsWidth' onClick={() => ((
+                axios.delete(`http://192.168.0.253:8000/api/v1/projects/${project.id}`, getConfig())
+                  .then(/*,
                   console.log('eliminado con exito falta eliminar todo el contenido de el proyecto para que funcione sin roblemas')
                   axios.get('http://localhost:8000/api/v1/users/me/notes', getConfig())
                     .then(res => { console.log(res), setAllNotes(res.data) })*/
-              ),
-              dispatch(updateRefresh()),
-              setMenuVisible(!MenuVisible)))
-            }>Eliminar</p>
+                ),
+                dispatch(updateRefresh()),
+                setMenuVisible(!MenuVisible)))
+              }>Eliminar</p>}
           </div>
         }
       </div>
