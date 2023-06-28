@@ -120,6 +120,8 @@ const deployMaterials = ({ material, MaterialList, setviewUserList }) => {
       {
         Visible && <div className='content'>
           <p>Inventario: {material.inventory.name}</p>
+          {<p>Modelo: {material.model}</p>}
+          {material.color && <p>Color: {material.color}</p>}
           <p>Cantidad: {material.amount}</p>
           {material.project?.name && <p>Proyecto: {material.project.name}</p>}
           {material.room?.name && <p>Lugar de Instalacion: {material.room.name}</p>}

@@ -31,8 +31,7 @@ const newUser = () => {
         assignUser()
     }, [])
     useEffect(() => { setRoleId(Role.id) }, [Role])
-    console.log(NewUser)
-    console.log(User)
+
     const submit = data => {
         data.roleId = RoleId
         console.log(data)

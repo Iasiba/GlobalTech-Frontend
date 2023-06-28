@@ -98,7 +98,7 @@ const deployUser = ({ user }) => {
         <p>Telefono: {user.phone}</p>
         <p>Material: { }</p>
         <p>Proyectos: { }</p>
-        <p>Tareas: { }</p>
+        <p>Tareas: {Task}</p>
         <p>Tarea Actual: { }</p>
         <p>Actividades: { }</p>
       </div>}

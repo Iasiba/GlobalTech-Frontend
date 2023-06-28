@@ -88,10 +88,10 @@ const deployTask = ({ task }) => {
                 }
             </div>
             {Visible && <div className='taskcontent'>
-                <div className={`tasksubcontent`}>
-                    <p onClick={() => watchInformation()} className={`tasksub ${InformationVisible && 'selected'}`}>Informacion</p>
-                    <p onClick={() => watchActivities()} className={`tasksub ${ActivityVisible && 'selected'}`}>Actividades</p>
-                </div>
+                <ul className={`tasksubcontent`}>
+                    <li onClick={() => watchInformation()} className={`tasksub ${InformationVisible && 'selected'}`}>Informacion</li>
+                    <li onClick={() => watchActivities()} className={`tasksub ${ActivityVisible && 'selected'}`}>Actividades</li>
+                </ul>
                 {InformationVisible && <div>
                     <p>Tarea: {task.description}</p>
                     <p>Observaciones: {task.observation}</p>

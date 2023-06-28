@@ -37,7 +37,7 @@ body {
 
 a {
   text-decoration-line: none;
-  color: var(--secondary-color)
+  color: var(--secondary-color);
 }
 
 h1,
@@ -49,7 +49,9 @@ ul {
   margin-top: 0;
   margin-bottom: 0;
 }
-
+p{
+  width: 100%;
+}
 h4{
   width: 100%;
   text-align: center;

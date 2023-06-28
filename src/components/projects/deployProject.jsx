@@ -118,13 +118,13 @@ const deployProject = ({ project }) => {
         }
       </div>
       {Visible && <div className='projectcontent'>
-        <div className='projectsubcontent'>
-          <p onClick={() => watchInfo()/*setInfoVisible(!InfoVisible)*/} className={`projectsub ${InfoVisible && 'selected'}`}>Informacion</p>
-          <p onClick={() => watchRooms() /*setRoomsVisible(!RoomsVisible)*/} className={`projectsub ${RoomsVisible && 'selected'}`}>Habitaciones</p>
-          <p onClick={() => watchAccounts() /*setAccountsVisible(!AccountsVisible)*/} className={`projectsub ${AccountsVisible && 'selected'}`}>Cuentas</p>
-          <p onClick={() => watchMaterials() /*setMaterialsVisible(!MaterialsVisible)*/} className={`projectsub ${MaterialsVisible && 'selected'}`}>Materials</p>
-          <p onClick={() => watchBackups() /*setBackupsVisible(!BackupsVisible)*/} className={`projectsub ${BackupsVisible && 'selected'}`}>Respaldos</p>
-        </div>
+        <ul className='projectsubcontent'>
+          <li onClick={() => watchInfo()/*setInfoVisible(!InfoVisible)*/} className={`projectsub ${InfoVisible && 'selected'}`}>Informacion</li>
+          <li onClick={() => watchRooms() /*setRoomsVisible(!RoomsVisible)*/} className={`projectsub ${RoomsVisible && 'selected'}`}>Habitaciones</li>
+          <li onClick={() => watchAccounts() /*setAccountsVisible(!AccountsVisible)*/} className={`projectsub ${AccountsVisible && 'selected'}`}>Cuentas</li>
+          <li onClick={() => watchMaterials() /*setMaterialsVisible(!MaterialsVisible)*/} className={`projectsub ${MaterialsVisible && 'selected'}`}>Materials</li>
+          <li onClick={() => watchBackups() /*setBackupsVisible(!BackupsVisible)*/} className={`projectsub ${BackupsVisible && 'selected'}`}>Respaldos</li>
+        </ul>
         <aside>
           {InfoVisible && <div className='info'>
             <p><b>Pais:</b>  {project.country}</p>

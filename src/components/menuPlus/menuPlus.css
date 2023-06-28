@@ -1,21 +1,23 @@
-.menuPlusOpen{
+.menuPlusOpen {
     transform: translate(-195px);
-    transition: all .5s ease-in-out;  
+    transition: all .5s ease-in-out;
 }
+
 .menuPlus {
     width: 170px;
     position: fixed;
     right: -180px;
-    top:12px;
+    top: 12px;
     font-size: 18px;
     background-color: white;
     z-index: 4;
     /*transform: translate(180px);*/
     transition: all .5s ease-in-out;
 }
+
 .menuPlus>div {
     box-shadow: 1px 1px 5px var(--primary-color);
-    display:flex; 
+    display: flex;
     justify-content: center;
     align-items: center;
     padding: 10px;
@@ -24,7 +26,7 @@
     border-radius: 5px;
 }
 
-.menuPlusOptions:hover{
+.menuPlusOptions:hover {
     color: var(--primary-color);
     cursor: pointer;
 }
