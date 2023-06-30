@@ -38,7 +38,7 @@ const newActivity = ({ /*task,*/ setVisibleReport }) => {
     const { handleSubmit, reset, register } = useForm()
 
     const navigate = useNavigate()
-    
+
     useEffect(
         () => {
             task.id && setTask(task)
@@ -252,7 +252,7 @@ const newActivity = ({ /*task,*/ setVisibleReport }) => {
                                     VisibleMaterialAsignedToMe && MaterialsAsignatesToMe.map(
                                         MaterialAsignatedToMe => {
                                             return (
-                                                (Task.room?.project?.id==MaterialAsignatedToMe.project?.id||!MaterialAsignatedToMe.project?.id)&&!MaterialAsignatedToMe.installed && <li
+                                                (Task.room?.project?.id == MaterialAsignatedToMe.project?.id || !MaterialAsignatedToMe.project?.id) && !MaterialAsignatedToMe.installed && <li
                                                     className='selectableMenu__item'
                                                     onClick={
                                                         () => {
@@ -278,20 +278,44 @@ const newActivity = ({ /*task,*/ setVisibleReport }) => {
                         </div>
                         */
                     }
-                    <div onClick={() => {
-                        if (MaterialSelected.id && RoomSelected.id) {
-                            MaterialsInstalleds.push({ MaterialSelected, RoomSelected }), installMaterial(MaterialSelected)
-                                , setMaterialSelected({ name: "--Selecciona Material--" }), setRoomSelected({ name: "--Selecciona Area--" }), setRefreshMaterialsAsignatesToMe(!RefreshMaterialsAsignatesToMe)
+                    <div
+                        className='add'
+                        onClick={
+                            () => {
+                                if (MaterialSelected.id && RoomSelected.id) {
+                                    MaterialsInstalleds.push({ MaterialSelected, RoomSelected })
+                                    installMaterial(MaterialSelected)
+                                    setMaterialSelected({ name: "--Selecciona Material--" })
+                                    setRoomSelected({ name: "--Selecciona Area--" })
+                                    setRefreshMaterialsAsignatesToMe(!RefreshMaterialsAsignatesToMe)
+                                }
+                            }
                         }
-                    }} className='add'>agregar</div>
-                    <div>{'Materiales instalados: ' + MaterialsInstalleds.length}</div>
+                    >agregar</div>
+                    <div>{'Materiales por instalar: ' + MaterialsInstalleds.length}</div>
                     <section className='MaterialsInstalleds'>
                         {
                             MaterialsInstalleds.length ?
                                 MaterialsInstalleds.map(
-                                    (materialInstalled) =>
-                                        <div className='MaterialInstalled' key={materialInstalled.MaterialSelected.id + materialInstalled.RoomSelected.id}>
-                                            <div className='DeleteMaterialInstalled' onClick={() => { MaterialsAsignatesToMe.push(materialInstalled.MaterialSelected), returnMaterial(materialInstalled.MaterialSelected) }}>x</div>
+                                    (materialInstalled) => (
+                                        <div
+                                            className='MaterialInstalled'
+                                            key={
+                                                materialInstalled.MaterialSelected.id +
+                                                materialInstalled.RoomSelected.id
+                                            }
+                                        >
+                                            <div
+                                                className='DeleteMaterialInstalled'
+                                                onClick={
+                                                    () => {
+                                                        MaterialsAsignatesToMe.push(
+                                                            materialInstalled.MaterialSelected
+                                                        )
+                                                        returnMaterial(materialInstalled.MaterialSelected)
+                                                    }
+                                                }
+                                            >x</div>
                                             <aside>
                                                 {materialInstalled.MaterialSelected.name}
                                             </aside>
@@ -299,6 +323,7 @@ const newActivity = ({ /*task,*/ setVisibleReport }) => {
                                                 {materialInstalled.RoomSelected.name}
                                             </aside>
                                         </div>
+                                    )
                                 )
                                 :
                                 <div></div>
@@ -306,9 +331,6 @@ const newActivity = ({ /*task,*/ setVisibleReport }) => {
                     </section>
                 </div>
             }
-            <div>
-            </div>
-            <br />
             <button>{Activity.task ? 'Actualizar' : 'Crear'}</button>
         </form>
     )

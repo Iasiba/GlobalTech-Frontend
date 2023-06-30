@@ -1,22 +1,58 @@
-
-.profileImage{
-    width: 30%;
-    max-height: max-content;
+.profileImage {
+    aspect-ratio: 1/1;
+    max-width: 200px;
     border-radius: 50%;
-    box-shadow: 1px 1px 10px var(--secondary-color);
+    box-shadow: 0px 0px 2px var(--secondary-color);
+    background-color: aliceblue;
+    position: relative;
+    object-fit: cover
 }
-.image{
-    margin: 20px 0;
+
+.profileImage:hover {
+    cursor: pointer;
+    color: var(--primary-color);
 }
-img{
-    z-index: 0;
+
+.editMyImageProfile {
+    position: relative;
+    right: 20px;
+    bottom: 20px;
+
 }
-.editMyAccount{
+
+.editMyImageProfile:hover {
+    cursor: pointer;
+    color: var(--primary-color);
+}
+
+.image {
+    margin: 10px 0;
+}
+
+   
+
+.editMyAccount {
     position: fixed;
-    right:30px;
+    right: 30px;
     top: 90px;
 }
-.editMyAccount:hover{
+
+.editMyAccount:hover {
     color: var(--primary-color);
     cursor: pointer;
+}
+
+.UploadImageProgile{
+    height: 40%;
+    width: 80%;
+    background-color: white;
+}
+.ScreenFull{
+    height: 100vh;
+    width: 100vw;
+    z-index: 1;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

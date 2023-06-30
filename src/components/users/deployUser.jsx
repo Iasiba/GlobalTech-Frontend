@@ -94,7 +94,6 @@ const deployUser = ({ user }) => {
       </div>
       {Visible && <div className='deployTask'>
         <p>Email: {user.email}</p>
-        <p>Imagen de Perfil: {user.profileImage}</p>
         <p>Telefono: {user.phone}</p>
         <p>Material: { }</p>
         <p>Proyectos: { }</p>

@@ -45,7 +45,6 @@ const newBackup = () => {
         data.projectId = Project.id
         data.date = year + '/' + month + '/' + day//Today // "2020/06/12"//
         data.name = Project.name + year + month + day + 'V' + data.version
-        console.log(File, data, Data, "datos con archivo")
         const URL = Backup.id ?
             `http://192.168.0.253:8000/api/v1/backups/${Backup.id}`
             :

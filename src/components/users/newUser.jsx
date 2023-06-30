@@ -164,7 +164,7 @@ const newUser = () => {
                     {...register('country')}
                 />
             </div>
-            <div className='createGrid'>
+            {/*<div className='createGrid'>
                 <label>Imagen de Perfil:</label>
                 <input
                     type="url"
@@ -173,7 +173,7 @@ const newUser = () => {
                     defaultValue={NewUser.profileImage}
                     {...register('profileImage')}
                 />
-            </div>
+            </div>*/}
             <div className='createGrid'>
                 <label>Estado:</label>
                 <input

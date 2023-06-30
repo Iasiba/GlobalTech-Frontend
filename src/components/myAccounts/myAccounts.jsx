@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './myAccounts.css'
 import AxiosGetHook from '../../hooks/axiosGetHook'
 import { useNavigate } from 'react-router-dom'
@@ -7,29 +7,106 @@ import { useDispatch } from 'react-redux'
 import { setItem } from '../../store/slices/ItemSlice'
 import { setArea } from '../../store/slices/AreaSlice'
 import { useEffect } from 'react'
+import FileUploader from '../fileUploader/fileUploader'
+import getConfig from '../../utils/getConfig'
+import axios from 'axios'
 const myAccounts = () => {
   const dispatch = useDispatch()
 
   const navigate = useNavigate()
-  const Users = AxiosGetHook('http://192.168.0.253:8000/api/v1/users/me')
-  const me = Users.data.data
-  useEffect(() => initial(), [])
-  function initial(){
+  const [VisibleInputImageProfile, setVisibleInputImageProfile] = useState(false)
+  const [Me, setMe] = useState('')
+  //const Me = Me.data?.data
+  useEffect(() => initial(), [VisibleInputImageProfile])
+  function initial() {
+    axios.get('http://192.168.0.253:8000/api/v1/users/me', getConfig())
+      .then((res) => setMe(res.data))
     dispatch(setArea("Mi Cuenta"))
   }
+  const handleImageUpload = () => {
+    setVisibleInputImageProfile(false);
+  };
   return (
     <>
-      {me && <div className='content myAccount'>
-        <i className='bx bx-edit-alt editMyAccount' onClick={() => { dispatch(setItem(me)), navigate('/NewUser')/*,dispatch(setVisibleUser(true))*/ }}></i>
+      {Me && <div className='content myAccount'>
+        <i
+          className='bx bxs-pencil editMyAccount'
+          onClick={
+            () => {
+              dispatch(setItem(Me))
+              navigate('/NewUser')
+              /*,dispatch(setVisibleUser(true))*/
+            }
+          }
+        ></i>
         <aside className='image'>
-          <img src={me.profileImage ? "https://scontent.fmty4-1.fna.fbcdn.net/v/t1.6435-9/70394714_2241979079244013_2226972630676668416_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=8bfeb9&_nc_eui2=AeHFiT0RslXyQRQppMmKI1G7MRjnJWyCALcxGOclbIIAt7xlmk3Dxg36oGtDOPKSRHS5kZzPpvo52unwERE4MjXD&_nc_ohc=2DSl9NWtESkAX9-65i3&_nc_ht=scontent.fmty4-1.fna&oh=00_AT8biZr6CPY7ZxZpnClZ-LSehde0LS0CKH8SHGdUS2ENkQ&oe=637BB5C9" : me.profileImage} alt="" className='profileImage' />
+          <img
+            className='profileImage'
+            src={
+              Me.profileImage ?
+                Me.profileImage : "https://www.w3schools.com/css/paris.jpg"
+            }
+            alt=""
+          />
+          <i
+            className='bx bxs-pencil editMyImageProfile'
+            onClick={
+              () => {
+                setVisibleInputImageProfile(!VisibleInputImageProfile)
+              }
+            }
+          ></i>
         </aside>
+        {/*
+          <div
+            className='ScreenFull'
+          >
+            <section
+              className='UploadImageProgile'
+            >
+              <i
+                className='bx bx-x-circle close'
+                onClick={
+                  () => {
+                    setVisibleInputImageProfile(false)
+                  }
+                }
+              ></i>
+              <aside className='createGrid'>
+                <label className='necessary'>Cargar Imagen:</label>
+                <input
+                  type="file"
+                />
 
-        <p>{me.firstName}  {me.lastName}</p>
-        <p>Email: {me.email}</p>
-        <p>Celular: {me.phone}</p>
-        <p>Fecha de nacimiento: {me.birthdayDate}</p>
-        <p>Direccion: {me.address}</p>
+              </aside>
+              <button
+                onClick={
+                  () => {
+                    setVisibleInputImageProfile(false)
+                    uploadProfileImage()
+                  }
+                }
+              >
+                {'Cargar'}
+              </button>
+            </section>
+          </div>*/
+        }
+
+        {
+          VisibleInputImageProfile &&
+          <FileUploader
+            onImageUpload={handleImageUpload}
+            url={"http://192.168.0.253:8000/api/v1/users/me/profile-img"}
+            uploadKey={"profile_img"}
+          />
+        }
+
+        <p>{Me.id && Me.firstName}  {Me.id && Me.lastName}</p>
+        <p>Email: {Me.id && Me.email}</p>
+        <p>Celular: {Me.id && Me.phone}</p>
+        <p>Fecha de nacimiento: {Me.id && Me.birthdayDate}</p>
+        <p>Direccion: {Me.id && Me.address}</p>
       </div>}
     </>
   )
