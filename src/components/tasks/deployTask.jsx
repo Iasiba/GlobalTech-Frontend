@@ -42,6 +42,7 @@ const deployTask = ({ task }) => {
         setActivityVisible(false)
         setInformationVisible(!InformationVisible)
     }
+
     return (
         <>
             <div className='deploy'>
@@ -60,7 +61,7 @@ const deployTask = ({ task }) => {
                     </aside>*/}
                 </div>
                 <aside className='threePoints' onClick={() => (dispatch(updateRefreshMenu()), setClick(true))}><p>...</p></aside>
-                {
+                {// menu de cada tarea
                     MenuVisible
                     &&
                     <div className='itemList itemListPrimary '>
@@ -75,7 +76,7 @@ const deployTask = ({ task }) => {
                         }>Eliminar</p>}
                     </div>
                 }
-                {
+                {//lista de usuarios a los cuales se puede asignar tareas
                     UserListVisible
                     &&
                     <div className='backgroundUserList'>
@@ -90,22 +91,24 @@ const deployTask = ({ task }) => {
             {Visible && <div className='taskcontent'>
                 <ul className={`tasksubcontent`}>
                     <li onClick={() => watchInformation()} className={`tasksub ${InformationVisible && 'selected'}`}>Informacion</li>
-                    <li onClick={() => watchActivities()} className={`tasksub ${ActivityVisible && 'selected'}`}>Actividades</li>
+                    {(task.activities.length > 0) && <li onClick={() => watchActivities()} className={`tasksub ${ActivityVisible && 'selected'}`}>Actividades</li>}
                 </ul>
                 {InformationVisible && <div>
-                    <p>Tarea: {task.description}</p>
-                    <p>Observaciones: {task.observation}</p>
-                    <p>Proyecto: {task.room.project.name}</p>
-                    <p>Area: {task.room.name}</p>
-                    <p>Fecha de Ejecucion: {task.executionDate}</p>
-                    <p>Direccion: {task.room.project.address}</p>
-                    <p>Coordenadas: {task.room.project.coordinates}</p>
-                    <p>Material: {task.material}</p>
+                    <p><b>Tarea:</b>  {task.description}</p>
+                    {task.observation && <p><b>Observaciones:</b>  {task.observation}</p>}
+                    <p><b>Proyecto:</b>  {task.room.project.name}</p>
+                    <p><b>Area:</b>  {task.room.name}</p>
+                    <p><b>Fecha de Ejecucion:</b> {task.executionDate}</p>
+                    <p>
+                        <b>Direccion:</b> {task.room.project.address}
+                        <a href={`https://maps.google.com/?q=${task.room.project.coordinates}`} className='projectsub'>¿Como llegar?</a>
+                    </p>
+                    <p><b>Coordenadas:</b>  {task.room.project.coordinates}</p>
+                    <p><b>Material:</b>  {task.material}</p>
                 </div>}
                 <section className="taskActivity" >
                     {ActivityVisible && <Activities taskId={task.id} />}
                 </section>
-
             </div>}
             {
                 VisibleReport

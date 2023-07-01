@@ -31,6 +31,9 @@ const deployUser = ({ user }) => {
 
   const [TaskList, setTaskList] = useState('')
   const [Task, setTask] = useState('')
+  const [Materials, setMaterials] = useState('')
+  const [Projects, setProjects] = useState('')
+  const [Activities, setActivities] = useState('')
   function tasks() {
     axios.get(`http://192.168.0.253:8000/api/v1/taskList/me/${user.id}`, getConfig())
       .then(res => setTaskList(res.data))
@@ -41,6 +44,9 @@ const deployUser = ({ user }) => {
       task += " " + TaskList[i].task.description + ","
     }
     setTask(task)
+    user.materials.map(material => { if (material.userId == user.id) { setMaterials(Materials + material.name + ', ') } })
+    user.projects.map(project => { if (project.userId == user.id) { setProjects(Projects + project.name + ', ') } })
+    user.activities.map(activity => { if (activity.userId == user.id) { setActivities(Activities + activity.description + ', ') } })
   }
   useEffect(
     () => {
@@ -94,12 +100,11 @@ const deployUser = ({ user }) => {
       </div>
       {Visible && <div className='deployTask'>
         <p>Email: {user.email}</p>
-        <p>Telefono: {user.phone}</p>
-        <p>Material: { }</p>
-        <p>Proyectos: { }</p>
-        <p>Tareas: {Task}</p>
-        <p>Tarea Actual: { }</p>
-        <p>Actividades: { }</p>
+        {user.phone && <p>Telefono: {user.phone}</p>}
+        {Materials && <p>Material: {Materials}</p>}
+        {Projects && <p>Proyectos: {Projects}</p>}
+        {Task && <p>Tareas: {Task}</p>}
+        {Activities && <p>Actividades: {Activities}</p>}
       </div>}
     </>
   )

@@ -1,4 +1,4 @@
-.profileImage {
+/*.profileImage {
     aspect-ratio: 1/1;
     max-width: 200px;
     border-radius: 50%;
@@ -55,4 +55,67 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+*/
+
+
+
+.profileImage {
+    aspect-ratio: 1/1;
+    max-width: 200px;
+    border-radius: 50%;
+    box-shadow: 0px 0px 2px var(--secondary-color);
+    background-color: aliceblue;
+    position: relative;
+    object-fit: cover;
+}
+
+.profileImage:hover {
+    cursor: pointer;
+    color: var(--primary-color);
+}
+
+.editMyImageProfile {
+    position: relative;
+    right: 20px;
+    bottom: 20px;
+}
+
+.editMyImageProfile:hover {
+    cursor: pointer;
+    color: var(--primary-color);
+}
+
+.image {
+    margin: 10px 0;
+}
+
+.editMyAccount {
+    position: fixed;
+    right: 30px;
+    top: 90px;
+}
+
+.editMyAccount:hover {
+    color: var(--primary-color);
+    cursor: pointer;
+}
+
+:root {
+    --sub-color: rgb(250, 249, 255);
+    --padding-mobile: 20 --padding-mobile: 20px;
+}
+
+.content {
+    padding: var(--padding-mobile);
+}
+
+.myAccount {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.myAccount p {
+    margin: 10px 0;
 }

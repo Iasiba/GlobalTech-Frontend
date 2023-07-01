@@ -4,21 +4,18 @@ import { useState } from 'react'
 import Rooms from '../rooms/rooms'
 import Accounts from '../accounts/accounts'
 import Materials from '../materials/materials'
-import Tasks from '../tasks/tasks'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { setItem } from '../../store/slices/ItemSlice'
 import axios from 'axios'
 import getConfig from '../../utils/getConfig'
 import Backups from '../backups/backups'
-import { setVisibleProject } from './../../store/slices/NewsVisibleSlice'
 import { updateRefresh } from '../../store/slices/RefreshSlice'
 import { updateRefreshMenu } from '../../store/slices/RefreshMenuSlice'
 const deployProject = ({ project }) => {
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const NewProjectVisible = useSelector(state => state.NewsVisible)[0]
 
   const [Visible, setVisible] = useState(false)
   const [InfoVisible, setInfoVisible] = useState(true)
@@ -32,6 +29,7 @@ const deployProject = ({ project }) => {
   const Refresh = useSelector(state => state.Refresh)
   const RefreshMenu = useSelector(state => state.RefreshMenu)
   const [Click, setClick] = useState(false)
+
   useEffect(
     () => {
       if (Click) {
@@ -94,7 +92,7 @@ const deployProject = ({ project }) => {
             )
           }
         ><p>...</p></aside>
-        {
+        {//menu de tareas
           MenuVisible
           &&
           <div className='itemList itemListPrimary '>
@@ -120,10 +118,10 @@ const deployProject = ({ project }) => {
       {Visible && <div className='projectcontent'>
         <ul className='projectsubcontent'>
           <li onClick={() => watchInfo()/*setInfoVisible(!InfoVisible)*/} className={`projectsub ${InfoVisible && 'selected'}`}>Informacion</li>
-          <li onClick={() => watchRooms() /*setRoomsVisible(!RoomsVisible)*/} className={`projectsub ${RoomsVisible && 'selected'}`}>Habitaciones</li>
-          <li onClick={() => watchAccounts() /*setAccountsVisible(!AccountsVisible)*/} className={`projectsub ${AccountsVisible && 'selected'}`}>Cuentas</li>
-          <li onClick={() => watchMaterials() /*setMaterialsVisible(!MaterialsVisible)*/} className={`projectsub ${MaterialsVisible && 'selected'}`}>Materials</li>
-          <li onClick={() => watchBackups() /*setBackupsVisible(!BackupsVisible)*/} className={`projectsub ${BackupsVisible && 'selected'}`}>Respaldos</li>
+          {(project.rooms.length > 0) && <li onClick={() => watchRooms() /*setRoomsVisible(!RoomsVisible)*/} className={`projectsub ${RoomsVisible && 'selected'}`}>Habitaciones</li>}
+          {(project.accounts.length > 0) && <li onClick={() => watchAccounts() /*setAccountsVisible(!AccountsVisible)*/} className={`projectsub ${AccountsVisible && 'selected'}`}>Cuentas</li>}
+          {(project.materials.length > 0) && <li onClick={() => watchMaterials() /*setMaterialsVisible(!MaterialsVisible)*/} className={`projectsub ${MaterialsVisible && 'selected'}`}>Materials</li>}
+          {(project.backups.length > 0) && <li onClick={() => watchBackups() /*setBackupsVisible(!BackupsVisible)*/} className={`projectsub ${BackupsVisible && 'selected'}`}>Respaldos</li>}
         </ul>
         <aside>
           {InfoVisible && <div className='info'>
@@ -131,8 +129,8 @@ const deployProject = ({ project }) => {
             <p><b>Ciudad:</b> {project.city}</p>
             <p><b>Direccion:</b> {project.address}</p>
             <p><b>Referencias:</b> {project.reference}</p>
-            <p><b>Coordenadas:</b> {'25.653315, -100.382917'} <a href={`https://maps.google.com/?q=${project.coordinates}`} className='projectsub'>¿Como llegar?</a></p>
-            <p><b>Planos:</b> <a href={`${project.plane}`} className='projectsub'>Ver planos</a></p>
+            <p><b>Coordenadas:</b> {/*'25.653315, -100.382917'*/project.coordinates} <a href={`https://maps.google.com/?q=${project.coordinates}`} className='projectsub'>¿Como llegar?</a></p>
+            {/*<p><b>Planos:</b> <a href={`${project.plane}`} className='projectsub'>Ver planos</a></p>*/}
             <p><b>Propietario:</b> {project.user.firstName}</p>
           </div>}
           {RoomsVisible && <Rooms projectId={project.id} />}
@@ -148,7 +146,6 @@ const deployProject = ({ project }) => {
             </div>
           */
         }
-
       </div>}
     </>
   )
