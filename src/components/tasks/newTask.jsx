@@ -239,7 +239,6 @@ const newTask = () => {
                 </aside>
             </div>
 
-            <br />
             <button>{Task.id ? 'Actualizar' : 'Crear'}</button>
         </form>
     )

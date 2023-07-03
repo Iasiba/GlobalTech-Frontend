@@ -44,7 +44,7 @@ const newBackup = () => {
         Data.append('backups', File)
         data.projectId = Project.id
         data.date = year + '/' + month + '/' + day//Today // "2020/06/12"//
-        data.name = Project.name + year + month + day + 'V' + data.version
+        data.name = Project.name +' '+ year + month + day +' '+ 'V' + data.version
         const URL = Backup.id ?
             `http://192.168.0.253:8000/api/v1/backups/${Backup.id}`
             :

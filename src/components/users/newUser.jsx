@@ -427,7 +427,6 @@ const newUser = () => {
                     </aside>
                 </div>
             </div>
-            <br />
             <button>{User.id ? 'Actualizar' : 'Crear'}</button>
         </form>
     )

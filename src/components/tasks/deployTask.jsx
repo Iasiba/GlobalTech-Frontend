@@ -104,7 +104,7 @@ const deployTask = ({ task }) => {
                         <a href={`https://maps.google.com/?q=${task.room.project.coordinates}`} className='projectsub'>¿Como llegar?</a>
                     </p>
                     <p><b>Coordenadas:</b>  {task.room.project.coordinates}</p>
-                    <p><b>Material:</b>  {task.material}</p>
+                    {task.material && <p><b>Material:</b>  {task.material}</p>}
                 </div>}
                 <section className="taskActivity" >
                     {ActivityVisible && <Activities taskId={task.id} />}

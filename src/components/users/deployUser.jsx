@@ -66,7 +66,7 @@ const deployUser = ({ user }) => {
     <>
       <div className='deploy'>
         <div onClick={() => setVisible(!Visible)} className='userHeader tableHover'>
-          <p>{user.firstName} {user.lastName}</p>
+          <p><b>{user.firstName} {user.lastName}</b></p>
           {<p>{/*user.tasks && user.tasks[0].description*/ Task}</p>}
         </div>
         <aside className='threePoints'
@@ -99,12 +99,12 @@ const deployUser = ({ user }) => {
         }
       </div>
       {Visible && <div className='deployTask'>
-        <p>Email: {user.email}</p>
-        {user.phone && <p>Telefono: {user.phone}</p>}
-        {Materials && <p>Material: {Materials}</p>}
-        {Projects && <p>Proyectos: {Projects}</p>}
-        {Task && <p>Tareas: {Task}</p>}
-        {Activities && <p>Actividades: {Activities}</p>}
+        <p><b>Email:</b> {user.email}</p>
+        {user.phone && <p><b>Telefono:</b> {user.phone}</p>}
+        {Materials && <p><b>Material:</b> {Materials}</p>}
+        {Projects && <p><b>Proyectos:</b> {Projects}</p>}
+        {Task && <p><b>Tareas:</b> {Task}</p>}
+        {Activities && <p><b>Actividades:</b> {Activities}</p>}
       </div>}
     </>
   )

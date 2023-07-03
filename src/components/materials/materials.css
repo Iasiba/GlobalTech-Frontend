@@ -5,7 +5,7 @@
 }
 
 .materialsBody {
-    width: 96%;
+    width: 95%;
     display: grid;
     grid-template-columns: 33% 33% 33%;
 }
@@ -49,20 +49,12 @@
     cursor: pointer;
 }
 
-.Select {
-    background-color: rgb(209, 230, 249);
-    width: 6px;
-    height: 6px;
-    /*border: 1px solid black;
-    box-shadow: 0 0 4px black;*/
-}
 .selection{
     background-color: blue;
 }
 .userSelect{
-    width: 4%;
+    width: 5%;
     display: flex;
-    justify-content: center;
     align-items: center;
 }
 .SelectUser:hover{
@@ -94,10 +86,10 @@
 }
 
 .tableHead{
-    width: 96%;
-    display: flex;
+    width: 95%;
+    display: grid;
     align-items: center;
-    justify-content: space-between;
+    grid-template-columns: 33% 33% 33%;
     border-bottom:1px solid var(--borderInput-color);
     margin-top: 5px;
     background-color: rgb(239, 249, 246);
@@ -107,7 +99,12 @@
     display: flex;
 }
 .space{
+    height: 100%;
     width: 38px;
+    margin: 5px 0px;
+}
+.backgroundhead{
+    background-color: rgb(239, 249, 246);
 }
 
 

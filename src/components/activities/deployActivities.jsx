@@ -18,6 +18,7 @@ const deployActivities = ({ activity, myhome }) => {
 
   const RefreshMenu = useSelector(state => state.RefreshMenu)
   const [Click, setClick] = useState(false)
+  const [Observations, setObservations] = useState(false)
   useEffect(
     () => {
       if (Click) {
@@ -39,7 +40,10 @@ const deployActivities = ({ activity, myhome }) => {
           <p>{activity.description}</p>
           {!myhome && <p>{activity.user.firstName}</p>}
         </div>*/}
-        <div className={"createGrid"}>
+        <div
+          className={"createGrid"}
+          onClick={() => setObservations(!Observations)}
+        >
           <p className='activities1'>{activity.createdAt + ' - ' + activity.task.room.project.name + ' - ' + activity.user.firstName + ': ' /*+ activity.description*/}</p>
           <p className='activities'>{activity.description}</p>
         </div>
@@ -64,6 +68,7 @@ const deployActivities = ({ activity, myhome }) => {
           </div>
         }
       </div>
+      {activity.observation && Observations && <p className='activityObservations'><b>{`Observaciones: `}</b>{activity.observation}</p>}
     </>
   )
 }

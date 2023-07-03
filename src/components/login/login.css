@@ -49,4 +49,6 @@
 .singUp > .SingUp { 
     color:blue;
 } 
-
+.loginInput{
+    width: 100%;
+}

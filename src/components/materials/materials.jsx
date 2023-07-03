@@ -10,6 +10,7 @@ const materials = ({ projectId, myhome, home, materials }) => {
   const [MaterialList, setMaterialList] = useState([])
   const [viewUserList, setviewUserList] = useState(false)
   const Refresh = useSelector(state => state.Refresh)
+
   useEffect(() => {
     if (materials) {
       setMaterials(materials)
@@ -42,8 +43,8 @@ const materials = ({ projectId, myhome, home, materials }) => {
   }
   return (
     <div >
-      <div>
-        <div className="materialsHeader taskHeader tableHeader flex">
+      {Materials.length > 0 && <div>
+        <div className=" deploy backgroundhead">{/*materialsHeader taskHeader tableHeader flex */}
           <aside className='space'></aside>
           <div className={`tableHead`}>
             <p>Material</p>
@@ -52,7 +53,7 @@ const materials = ({ projectId, myhome, home, materials }) => {
           </div>
           <div className='userSelect' onClick={() => MaterialList.length && setviewUserList(!viewUserList)}><i className='bx bxs-user SelectUser'></i></div>
         </div>
-      </div>
+      </div>}
       {Materials && Materials?.map(material => {
         return (
           < DeployMaterials

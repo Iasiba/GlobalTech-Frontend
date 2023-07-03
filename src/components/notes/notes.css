@@ -1,12 +1,12 @@
 .noteGrid {
     width: 100%;
     display: grid;
-    grid-template-columns: 23% 73% 4%;
+    grid-template-columns: 30% 66% 4%;
 }
 
 .noteBody {
     width: 96%;
     display: grid;
-    grid-template-columns: 25% 75%;
+    grid-template-columns: 30% 70%;
 }
 

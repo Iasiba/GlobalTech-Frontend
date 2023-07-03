@@ -147,7 +147,6 @@ const MyAccounts = () => {
   }, [visibleInputImageProfile]);
 
   const initial = () => {
-    console.log(visibleInputImageProfile, 'Se pidio los datos para ver si la primera ves el cuadro de cargar imagen se oculta')
     axios.get('http://192.168.0.253:8000/api/v1/users/me', getConfig())
       .then((res) => setMe(res.data));
     dispatch(setArea("Mi Cuenta"));
@@ -188,11 +187,11 @@ const MyAccounts = () => {
             />
           )}
 
-          <p>{Me.id && `${Me.firstName} ${Me.lastName}`}</p>
-          <p>Email: {Me.id && Me.email}</p>
-          {Me.phone && <p>Celular: {Me.id && Me.phone}</p>}
-          {Me.birthdayDate && <p>Fecha de nacimiento: {Me.id && Me.birthdayDate}</p>}
-          {Me.address && <p>Direccion: {Me.id && Me.address}</p>}
+          <p><b>{Me.id && `${Me.firstName} ${Me.lastName}`}</b></p>
+          <p><b>Email:</b> {Me.id && Me.email}</p>
+          {Me.phone && <p><b>Celular:</b> {Me.id && Me.phone}</p>}
+          {Me.birthdayDate && <p><b>Fecha de nacimiento:</b> {Me.id && Me.birthdayDate}</p>}
+          {Me.address && <p><b>Direccion:</b> {Me.id && Me.address}</p>}
         </div>
       )}
     </>

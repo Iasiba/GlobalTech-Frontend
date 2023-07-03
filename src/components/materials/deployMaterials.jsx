@@ -70,13 +70,15 @@ const deployMaterials = ({ material, MaterialList, setviewUserList }) => {
         <div className='selectListBackground selectMaterial'
           onClick={() => !material.onHold && addToMaterialList()}
         >
-          <div className={'select Select ' + `${Selected && !material.onHold && 'selection'}`}></div>
+          <div
+            className={'select  ' + `${Selected && !material.onHold && 'selection'}`}
+          ></div>
         </div>
 
         <div onClick={() => setVisible(!Visible)} className={`materialsBody tableHover ${material.onHold ? "onHold" : (material.damaged ? "damaged" : (material.installed ? "installed" : material.assigned && "assigned"))}`}>
-          <p>{material.name}</p>
+          <p><b>{material.name}</b></p>
           <p>{material.amount}</p>
-          {material.project?.name && <p>{material.project.name}</p>}
+          {material.project?.name && <p><b>{material.project.name}</b></p>}
         </div>
 
         <aside className='threePoints'
@@ -119,19 +121,20 @@ const deployMaterials = ({ material, MaterialList, setviewUserList }) => {
       </div>
       {
         Visible && <div className='content'>
-          <p>Inventario: {material.inventory.name}</p>
-          {<p>Modelo: {material.model}</p>}
-          {material.color && <p>Color: {material.color}</p>}
-          <p>Cantidad: {material.amount}</p>
-          {material.project?.name && <p>Proyecto: {material.project.name}</p>}
-          {material.room?.name && <p>Lugar de Instalacion: {material.room.name}</p>}
-          <p>En espera: {material.onHold ? "si" : "no"}</p>
-          <p>Asignado: {material.assigned ? "si" : "no"}</p>
-          <p>Entregado: {material.delivered ? "si" : "no"}</p>
-          <p>Instalado: {material.installed ? "si" : "no"}</p>
-          <p>Retornado: {material.returned ? "si" : "no"}</p>
-          <p>Dañado: {material.damaged ? "si" : "no"}</p>
-          <p>Usuario Asignado: {material.user.firstName + ' ' + (material.user && material.user.lastName)}</p>
+
+          <p><b>Inventario:</b> {material.inventory.name}</p>
+          {<p><b>Modelo:</b> {material.model}</p>}
+          {material.color && <p><b>Color:</b> {material.color}</p>}
+          <p><b>Cantidad:</b> {material.amount}</p>
+          {material.project?.name && <p><b>Proyecto:</b> {material.project.name}</p>}
+          {material.room?.name && <p><b>Lugar de Instalacion:</b> {material.room.name}</p>}
+          <p><b>En espera:</b> {material.onHold ? "si" : "no"}</p>
+          <p><b>Asignado:</b> {material.assigned ? "si" : "no"}</p>
+          <p><b>Entregado:</b> {material.delivered ? "si" : "no"}</p>
+          <p><b>Instalado:</b> {material.installed ? "si" : "no"}</p>
+          <p><b>Retornado:</b> {material.returned ? "si" : "no"}</p>
+          <p><b>Dañado:</b> {material.damaged ? "si" : "no"}</p>
+          <p><b>Usuario Asignado:</b> {material.user.firstName + ' ' + (material.user && material.user.lastName)}</p>
         </div>
       }
     </>

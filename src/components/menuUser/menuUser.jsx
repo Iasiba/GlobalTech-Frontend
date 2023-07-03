@@ -20,6 +20,9 @@ const menuUser = () => {
     axios.get('http://192.168.0.253:8000/api/v1/users/me', getConfig())
       .then(res => setMe(res.data))
   }, [])
+  const handleLogout = () => {
+    localStorage.removeItem('token')
+  }
   return (
     /*visible && */<div className={`menu ${UserMenuVisible && 'openmenuUser'}`}>
       {Me.watchActivities && <div className='menuPlusOptions' onClick={() => (navigate('/activities'), dispatch(setVisibleUserMenu(!UserMenuVisible)))}>Actividades</div>}
@@ -31,6 +34,7 @@ const menuUser = () => {
       {Me.watchProjects && <div className='menuPlusOptions' onClick={() => (navigate('/projects'), dispatch(setVisibleUserMenu(!UserMenuVisible)))}>Proyectos</div>}
       {Me.watchTasks && <div className='menuPlusOptions' onClick={() => (navigate('/tasks'), dispatch(setVisibleUserMenu(!UserMenuVisible)))}>Tareas</div>}
       {Me.watchUsers && <div className='menuPlusOptions' onClick={() => (navigate('/users'), dispatch(setVisibleUserMenu(!UserMenuVisible)))}>Usuarios</div>}
+      {<div className='menuPlusOptions' onClick={() => (handleLogout(), navigate('/login'), dispatch(setVisibleUserMenu(!UserMenuVisible)))}>Cerrar Sesion</div>}
       {/*  
     <div><Link to={'/userList'} onClick={() => (dispatch(setArea("Lista de Usuarios")), dispatch(setVisibleUserMenu(!UserMenuVisible)))}>Lista de Usuarios</Link></div>
   */}

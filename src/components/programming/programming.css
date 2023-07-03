@@ -23,7 +23,7 @@
 .programmingGridHeader{
     width: 100%;
     display: grid;
-    grid-template-columns: auto 50px 50px 50px 4%;
+    grid-template-columns: auto 50px 50px 50px 5%;
     text-align: center;
 }
 /*

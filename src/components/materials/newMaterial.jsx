@@ -258,7 +258,7 @@ const newMaterial = () => {
                     <div>Entregado</div>
                 </aside>
             </div>
-            <br />
+      
             <button>{Material.id ? 'Actualizar' : 'Crear'}</button>
         </form>
     )

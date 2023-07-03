@@ -32,9 +32,9 @@ const deployNotes = ({ note, setAllNotes }) => {
     return (
         <>
             <div className='deploy'>
-                <div className={`table noteBody`}>
-                    <p>{note.tittle}</p>
-                    <p>{note.note}</p>
+                <div className={`createGrid`}>
+                    <p className="activities1">{note.tittle}</p>
+                    <p className="activities">{note.note}</p>
                 </div>
                 <aside className='threePoints'
                     onClick={

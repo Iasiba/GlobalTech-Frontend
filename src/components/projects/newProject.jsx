@@ -71,6 +71,7 @@ const newProject = () => {
                     {...register('address')}
                 />
             </div>
+            {/*
             <div className='createGrid'>
                 <label>Plano:</label>
                 <input
@@ -80,7 +81,8 @@ const newProject = () => {
                     placeholder='Link'
                     {...register('plane')}
                 />
-            </div>
+                </div>
+                */}
             <div className='createGrid'>
                 <label className='necessary'>Coordenadas:</label>
                 <textarea

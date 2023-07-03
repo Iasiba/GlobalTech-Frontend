@@ -51,7 +51,7 @@ const deployAccounts = ({ account }) => {
                     MenuVisible
                     &&
                     <div className='itemList itemListPrimary '>
-                        <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(account)), setMenuVisible(!MenuVisible),navigate('/NewAccount') /*dispatch(setVisibleAccount(true))*/ }}>Editar</p>
+                        <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(account)), setMenuVisible(!MenuVisible), navigate('/NewAccount') /*dispatch(setVisibleAccount(true))*/ }}>Editar</p>
                         <p className='items materialItemsWidth' onClick={() => ((
                             axios.delete(`http://192.168.0.253:8000/api/v1/accounts/${account.id}`, getConfig())
                                 .then(dispatch(updateRefresh())),
@@ -62,10 +62,10 @@ const deployAccounts = ({ account }) => {
                 }
             </div>
             {Visible && <div className='content'>
-                <p>Propietario: {account.owner}</p>
-                <p>Usuario: {account.user}</p>
-                <p>Contraseña: {account.password}</p>
-                <p>Direccion IP: {account.directionIp}</p>
+                {account.owner && <p><b>Propietario:</b> {account.owner}</p>}
+                <p><b>Usuario:</b> {account.user}</p>
+                <p><b>Contraseña:</b> {account.password}</p>
+                <p><b>Direccion IP:</b> {account.directionIp}</p>
             </div>}
         </>
     )

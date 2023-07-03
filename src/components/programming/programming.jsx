@@ -19,14 +19,14 @@ const programming = () => {
 
   return (
     <div className='contentDeploy'>
-      <div className="programmingGridHeader tableHeader">
+      {AllProgrammings.length > 0 && <div className="programmingGridHeader tableHeader">
         <p>Nombre</p>
         <p>Manual</p>
         <p>Guia</p>
         <p>Tutorial</p>
         <aside>
         </aside>
-      </div>
+      </div>}
       {
         AllProgrammings && AllProgrammings?.map(Programming => {
           return (<DeployProgramming key={Programming.id} programming={Programming} />)

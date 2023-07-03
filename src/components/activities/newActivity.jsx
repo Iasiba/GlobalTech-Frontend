@@ -21,7 +21,7 @@ const newActivity = ({ /*task,*/ setVisibleReport }) => {
     const NewActivityVisible = useSelector(state => state.NewsVisible)[3]
 
     const Tasks = AxiosGetHook('http://192.168.0.253:8000/api/v1/tasks')
-    const AllTasks = Tasks.data.data?.tasks
+    const AllTasks = Tasks.data.data?.tasks.filter(task => task.iscanceled === false && task.isfinished === false)
 
     const [Task, setTask] = useState({ description: '--Selecciona la Tarea--' })
     const [TaskId, setTaskId] = useState('')
@@ -152,7 +152,7 @@ const newActivity = ({ /*task,*/ setVisibleReport }) => {
 
 
 
-
+    console.log(Activity)
     return (
         <form onSubmit={Task.id && handleSubmit(submit)} className='createCenter new' >
             <i className='bx bx-x-circle close' onClick={() => { dispatch(setItem(false)), navigate(-1) } /*(task ? setVisibleReport(false) : dispatch(setVisibleActivity(!NewActivityVisible)), dispatch(setItem(false)), navigate(-1))*/}></i>
@@ -162,7 +162,7 @@ const newActivity = ({ /*task,*/ setVisibleReport }) => {
                     autoComplete='off'
                     required
                     id='ActivityDescription'
-                    defaultValue={Activity.description}
+                    defaultValue={Activity.activities?'': Activity.description}
                     placeholder='Ej: Se cablearon nodos de red'
                     {...register('description')}
                     maxLength="255"
@@ -170,6 +170,17 @@ const newActivity = ({ /*task,*/ setVisibleReport }) => {
                 />
             </div> {/*defaultValue={Activity.task && Activity.description} placeholder='Ej. cablee 5 nodos en cocina' {...register('description')}  */}
 
+            <div className='createGrid'>
+                <label >Observacion:</label>
+                <textarea
+                    autoComplete='off'
+                    defaultValue={Activity.observation}
+                    placeholder='Ej: Se entrego material a arquitecto'
+                    {...register('observation')}
+                    maxLength="255"
+                /*onChange={e => setActivityDescription(e.target.value)}*/
+                />
+            </div> {/*defaultValue={Activity.task && Activity.description} placeholder='Ej. cablee 5 nodos en cocina' {...register('description')}  */}
             <div className='createGrid'>
                 <label className='necessary'>Tarea:</label>
                 <div className="selectableMenu">

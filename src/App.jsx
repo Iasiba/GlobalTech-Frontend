@@ -44,7 +44,6 @@ function App() {
         ) && 'overlay'*/''}`
       }
     >
-      <NavBar />
       <Rutas />
       {/*(NewProjectVisible || NewRoomVisible || NewTaskVisible ||
         NewActivityVisible || NewAccountVisible || NewInventaryVisible ||

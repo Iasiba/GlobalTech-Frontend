@@ -88,3 +88,6 @@
     text-align: center;
     grid-template-columns: 33% 33% 33%;
 }
+.activityObservations{
+    box-shadow: 0 0 1px var(--secondary-color);
+}

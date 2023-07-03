@@ -6,6 +6,7 @@ import Materials from '../materials/materials'
 import Activities from '../activities/activities'
 import { useDispatch, useSelector } from 'react-redux'
 import { setArea } from '../../store/slices/AreaSlice'
+import NavBar from '../navBar/navBar'
 const HomeScreen = () => {
   /*function downloadFile(link, fileName) {
    const downloadInstance = document.createElement('a')
@@ -34,6 +35,8 @@ const HomeScreen = () => {
     dispatch(setArea("Home"))
   }
   return (
+    <>
+ 
     <div className='home'>
       {/*<p>Notas</p>
       <Notes />*/}
@@ -44,6 +47,7 @@ const HomeScreen = () => {
       <h4>Materiales Faltantes</h4>
       <Materials home={"home"} />
     </div>
+    </>
   )
 }
 

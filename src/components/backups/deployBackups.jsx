@@ -37,7 +37,7 @@ const deployBackups = ({ backup }) => {
           <p>{backup.software}</p>
           <p>{backup.name}</p>
           <p>{backup.user.firstName}</p>
-          <a href={'http://'+`${backup.backup}`} target="_blank">
+          <a href={`${backup.backup}`} target="_blank">
             <i className='bx bxs-download'></i>
           </a>
         </div>

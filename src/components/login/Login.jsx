@@ -13,7 +13,7 @@ const Login = () => {
     const URL = 'http://192.168.0.253:8000/api/v1/auth/login'
     axios.post(URL, data)
       .then(res => {
-        console.log("intento de logueo exitoso",res.data.token, "intento de logueo exitoso")
+        console.log("intento de logueo exitoso", res.data.token, "intento de logueo exitoso")
         localStorage.setItem('token', res.data.token)
         navigate('/')
       })
@@ -35,20 +35,30 @@ const Login = () => {
       <h2>Login</h2>
       <div>
         <label className='necessary'>Email:</label>
-        <input type="text" autoComplete='off' {...register('email')} />
+        <input
+          type="text"
+          className='loginInput'
+          autoComplete='off'
+          {...register('email')}
+        />
       </div>
       <div>
-        <label className='necessary'>Password:</label>
-        <input type="text" autoComplete='off' {...register('password')} />
+        <label className='necessary'>Contraseña:</label>
+        <input
+          type="text"
+          className='loginInput'
+          autoComplete='off'
+          {...register('password')}
+        />
       </div>
       <br />
       {
-        isErrorLogin && 'Invalid credentials, try again...'
+        isErrorLogin && <p>{'Credenciales Invalidas, intentelo de nuevo...'}</p> 
       }
       <button className='boton'>Login</button>
       <div className='singUp'>
-        <div>Already have an account?</div>
-        <div className='SingUp'><Link to='/singup'>Sing  Up</Link></div>
+        <div>No tienes Cuenta?</div>
+        <div className='SingUp'><Link to='/singup'>Registrarse</Link></div>
       </div>
     </form>
   )
