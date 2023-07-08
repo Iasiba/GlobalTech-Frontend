@@ -7,10 +7,11 @@ import axios from 'axios'
 import { setArea } from '../../store/slices/AreaSlice'
 const programming = () => {
   const dispatch = useDispatch()
+  const BackendAddress = useSelector(state => state.BackendAddress)
   const [AllProgrammings, setAllProgrammings] = useState('')
   const Refresh = useSelector(state => state.Refresh)
   useEffect(() => {
-    axios.get('http://192.168.0.253:8000/api/v1/programmings', getConfig())
+    axios.get(`http://${BackendAddress}/api/v1/programmings`, getConfig())
       .then(res => (
         setAllProgrammings(res.data.programmingGuide),
         dispatch(setArea("Documentacion"))

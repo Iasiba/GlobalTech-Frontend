@@ -22,6 +22,7 @@ import getConfig from '../../utils/getConfig'
 import { setItem } from '../../store/slices/ItemSlice'
 const menuPlus = () => {
   const dispatch = useDispatch()
+  const BackendAddress = useSelector(state => state.BackendAddress)
   let visible = useSelector(state => state.PlusMenu)
   const [Me, setMe] = useState('')
 
@@ -40,7 +41,7 @@ const menuPlus = () => {
   //const Refresh = useSelector(state => state.Refresh)
 
   useEffect(() => {
-    axios.get('http://192.168.0.253:8000/api/v1/users/me', getConfig())
+    axios.get(`http://${BackendAddress}/api/v1/users/me`, getConfig())
       .then(res => setMe(res.data))
   }, [/*Refresh*/])
 

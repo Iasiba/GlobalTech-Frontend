@@ -7,11 +7,15 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 const accounts = ({ projectId }) => {
+  const BackendAddress = useSelector(state => state.BackendAddress)
   const [Accounts, setAccounts] = useState('')
   const Refresh = useSelector(state => state.Refresh)
   useEffect(() => searchAccounts(), [Refresh])
   function searchAccounts() {
-    const URL = projectId ? `http://192.168.0.253:8000/api/v1/projects/${projectId}/accounts` : `http://192.168.0.253:8000/api/v1/accounts`
+    const URL = projectId ?
+      `http://${BackendAddress}/api/v1/projects/${projectId}/accounts`
+      :
+      `http://${BackendAddress}/api/v1/accounts`
     axios.get(URL, getConfig())
       .then(res => {
         if (res.data?.accounts) {

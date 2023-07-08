@@ -5,6 +5,7 @@ import getConfig from '../../utils/getConfig'
 import { useDispatch, useSelector } from 'react-redux'
 import { setArea } from '../../store/slices/AreaSlice'
 const inventaries = () => {
+  const BackendAddress = useSelector(state => state.BackendAddress)
   const dispatch = useDispatch()
   const Refresh = useSelector(state => state.Refresh)
   const [AllInventaries, setAllInventaries] = useState('')
@@ -12,7 +13,7 @@ const inventaries = () => {
 
   function searchInventary() {
 
-    axios.get('http://192.168.0.253:8000/api/v1/inventories', getConfig())
+    axios.get(`http://${BackendAddress}/api/v1/inventories`, getConfig())
       .then(res => (setAllInventaries(res.data.inventory)))
     dispatch(setArea("Inventarios"))
   }

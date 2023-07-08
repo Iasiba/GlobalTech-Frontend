@@ -5,10 +5,11 @@ import axios from 'axios'
 import getConfig from '../../utils/getConfig'
 import { useSelector } from 'react-redux'
 const notes = () => {
+  const BackendAddress = useSelector(state => state.BackendAddress)
   const Refresh = useSelector(state => state.Refresh)
   const [AllNotes, setAllNotes] = useState('')
   useEffect(() => {
-    axios.get('http://192.168.0.253:8000/api/v1/users/me/notes', getConfig())
+    axios.get(`http://${BackendAddress}/api/v1/users/me/notes`, getConfig())
       .then((res) => setAllNotes(res.data))
   }, [Refresh])
 

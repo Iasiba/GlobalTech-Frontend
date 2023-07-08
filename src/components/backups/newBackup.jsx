@@ -12,10 +12,11 @@ import { setVisibleBackup } from './../../store/slices/NewsVisibleSlice'
 import { updateRefresh } from '../../store/slices/RefreshSlice'
 import { setArea } from '../../store/slices/AreaSlice'
 const newBackup = () => {
+    const BackendAddress = useSelector(state => state.BackendAddress)
     const dispatch = useDispatch()
     const Backup = useSelector(state => state.Item)
     const NewBackupVisible = useSelector(state => state.NewsVisible)[7]
-    const Projects = AxiosGetHook('http://192.168.0.253:8000/api/v1/projects')
+    const Projects = AxiosGetHook(`http://${BackendAddress}/api/v1/projects`)
 
     const AllProjects = Projects.data.data?.projects
     const [projectName, setProjectName] = useState('')
@@ -44,15 +45,15 @@ const newBackup = () => {
         Data.append('backups', File)
         data.projectId = Project.id
         data.date = year + '/' + month + '/' + day//Today // "2020/06/12"//
-        data.name = Project.name +' '+ year + month + day +' '+ 'V' + data.version
+        data.name = Project.name + ' ' + year + month + day + ' ' + 'V' + data.version
         const URL = Backup.id ?
-            `http://192.168.0.253:8000/api/v1/backups/${Backup.id}`
+            `http://${BackendAddress}/api/v1/backups/${Backup.id}`
             :
-            `http://192.168.0.253:8000/api/v1/backups`
+            `http://${BackendAddress}/api/v1/backups`
         Backup.id ?
             axios.put(URL, data, getConfig())
                 .then(() => {
-                    axios.post(`http://192.168.0.253:8000/api/v1/backups/${Backup.id}`, Data, getConfig())
+                    axios.post(`http://${BackendAddress}/api/v1/backups/${Backup.id}`, Data, getConfig())
                         .then(res => { console.log(res) })
                 })
                 .catch(err => console.log(err))
@@ -63,7 +64,7 @@ const newBackup = () => {
             axios.post(URL, data, getConfig())
                 .then(res => {
                     console.log(res)
-                    axios.post(`http://192.168.0.253:8000/api/v1/backups/${res.data.backup.id}`, Data, getConfig())
+                    axios.post(`http://${BackendAddress}/api/v1/backups/${res.data.backup.id}`, Data, getConfig())
                         .then(res => { console.log(res) })
                 })
                 .catch(err => console.log(err))

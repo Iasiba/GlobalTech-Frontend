@@ -22,6 +22,7 @@ tasks
 
 const deployUser = ({ user }) => {
   const dispatch = useDispatch()
+  const BackendAddress = useSelector(state => state.BackendAddress)
   const [Visible, setVisible] = useState(false)
   const [MenuVisible, setMenuVisible] = useState(false)
 
@@ -35,7 +36,7 @@ const deployUser = ({ user }) => {
   const [Projects, setProjects] = useState('')
   const [Activities, setActivities] = useState('')
   function tasks() {
-    axios.get(`http://192.168.0.253:8000/api/v1/taskList/me/${user.id}`, getConfig())
+    axios.get(`http://${BackendAddress}/api/v1/taskList/me/${user.id}`, getConfig())
       .then(res => setTaskList(res.data))
   }
   function auxTask() {
@@ -58,8 +59,7 @@ const deployUser = ({ user }) => {
       }
     }, [RefreshMenu]
   )
-  useEffect(() => tasks(), [/*Refresh*/]
-  )
+  useEffect(() => tasks(), [/*Refresh*/])
   useEffect(() => auxTask(), [TaskList])
 
   return (
@@ -90,7 +90,7 @@ const deployUser = ({ user }) => {
           !user.userImages.length &&
           <div className='itemList itemListPrimary '>
             <p className='items materialItemsWidth' onClick={() => ((
-              axios.delete(`http://192.168.0.253:8000/api/v1/users/${user.id}`, getConfig())
+              axios.delete(`http://${BackendAddress}/api/v1/users/${user.id}`, getConfig())
                 .then(dispatch(updateRefresh())),
               dispatch(updateRefresh()),
               setMenuVisible(!MenuVisible)))

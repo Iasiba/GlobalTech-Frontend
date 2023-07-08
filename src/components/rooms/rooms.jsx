@@ -7,12 +7,16 @@ import axios from 'axios'
 import getConfig from '../../utils/getConfig'
 import { useSelector } from 'react-redux'
 const rooms = ({ projectId }) => {
+    const BackendAddress = useSelector(state => state.BackendAddress)
     const Refresh = useSelector(state => state.Refresh)
     const [Rooms, setRooms] = useState('')
-    useEffect(() => { searchRooms()}, [projectId, Refresh])
+    useEffect(() => { searchRooms() }, [projectId, Refresh])
 
     function searchRooms() {
-        const URL = projectId ? `http://192.168.0.253:8000/api/v1/projects/${projectId}/rooms` : `http://localhost:8000/api/v1/rooms`
+        const URL = projectId ?
+            `http://${BackendAddress}/api/v1/projects/${projectId}/rooms`
+            :
+            `http://${BackendAddress}/api/v1/rooms`
         axios.get(URL, getConfig())
             .then(res => {
                 if (res.data?.rooms) {

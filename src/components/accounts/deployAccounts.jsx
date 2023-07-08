@@ -9,6 +9,7 @@ import { setVisibleAccount } from './../../store/slices/NewsVisibleSlice'
 import { updateRefresh } from '../../store/slices/RefreshSlice'
 import { updateRefreshMenu } from '../../store/slices/RefreshMenuSlice'
 const deployAccounts = ({ account }) => {
+    const BackendAddress = useSelector(state => state.BackendAddress)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const NewAccountVisible = useSelector(state => state.NewsVisible)[4]
@@ -34,7 +35,17 @@ const deployAccounts = ({ account }) => {
     return (
         <>
             <div className='deploy'>
-                <div onClick={() => setVisible(!Visible)} className={`accountBody tableHover ${account.iscanceled && "canceled"} ${account.isfinished && "finished"}`}>
+                <div
+                    onClick={
+                        () => setVisible(!Visible)
+                    }
+                    className={
+                        `accountBody 
+                        tableHover 
+                        ${account.iscanceled && "canceled"} 
+                        ${account.isfinished && "finished"}`
+                    }
+                >
                     <aside>
                         <p>{account.software}</p>
                     </aside>
@@ -53,7 +64,7 @@ const deployAccounts = ({ account }) => {
                     <div className='itemList itemListPrimary '>
                         <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(account)), setMenuVisible(!MenuVisible), navigate('/NewAccount') /*dispatch(setVisibleAccount(true))*/ }}>Editar</p>
                         <p className='items materialItemsWidth' onClick={() => ((
-                            axios.delete(`http://192.168.0.253:8000/api/v1/accounts/${account.id}`, getConfig())
+                            axios.delete(`http://${BackendAddress}/api/v1/accounts/${account.id}`, getConfig())
                                 .then(dispatch(updateRefresh())),
                             setMenuVisible(!MenuVisible)),
                             dispatch(updateRefresh())
@@ -65,7 +76,11 @@ const deployAccounts = ({ account }) => {
                 {account.owner && <p><b>Propietario:</b> {account.owner}</p>}
                 <p><b>Usuario:</b> {account.user}</p>
                 <p><b>Contraseña:</b> {account.password}</p>
-                <p><b>Direccion IP:</b> {account.directionIp}</p>
+                {
+                    account.directionIp != '0.0.0.0'
+                    &&
+                    <p><b>Direccion IP:</b> {account.directionIp}</p>
+                }
             </div>}
         </>
     )

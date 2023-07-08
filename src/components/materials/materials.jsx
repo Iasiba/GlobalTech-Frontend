@@ -6,6 +6,7 @@ import getConfig from '../../utils/getConfig'
 import UserList from '../users/userList'
 import { useSelector } from 'react-redux'
 const materials = ({ projectId, myhome, home, materials }) => {
+  const BackendAddress = useSelector(state => state.BackendAddress)
   const [Materials, setMaterials] = useState('')
   const [MaterialList, setMaterialList] = useState([])
   const [viewUserList, setviewUserList] = useState(false)
@@ -22,10 +23,10 @@ const materials = ({ projectId, myhome, home, materials }) => {
 
 
   function searchMaterials() {
-    let url = `http://192.168.0.253:8000/api/v1/materials`
-    if (home) url = `http://192.168.0.253:8000/api/v1/materials/pendings`
-    if (projectId) url = `http://192.168.0.253:8000/api/v1/projects/${projectId}/materials`
-    if (myhome) url = `http://192.168.0.253:8000/api/v1/users/me/materials`
+    let url = `http://${BackendAddress}/api/v1/materials`
+    if (home) url = `http://${BackendAddress}/api/v1/materials/pendings`
+    if (projectId) url = `http://${BackendAddress}/api/v1/projects/${projectId}/materials`
+    if (myhome) url = `http://${BackendAddress}/api/v1/users/me/materials`
     axios.get(url, getConfig())
       .then(res => {
         if (res.data?.materials) {

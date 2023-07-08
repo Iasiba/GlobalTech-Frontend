@@ -10,9 +10,9 @@ import { updateRefreshMenu } from '../../store/slices/RefreshMenuSlice'
 import { updateRefresh } from '../../store/slices/RefreshSlice'
 import { useNavigate } from 'react-router-dom'
 const deployRooms = ({ room }) => {
-
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const BackendAddress = useSelector(state => state.BackendAddress)
     const NewRoomVisible = useSelector(state => state.NewsVisible)[1]
     const [Visible, setVisible] = useState(false)
     const [MenuVisible, setMenuVisible] = useState(false)
@@ -32,16 +32,16 @@ const deployRooms = ({ room }) => {
     )
     useEffect(() => { }, [room, Refresh])
     function deleteRoom() {
-        axios.get(`http://192.168.0.253:8000/api/v1/rooms/${room.id}/tasks`, getConfig())
+        axios.get(`http://${BackendAddress}/api/v1/rooms/${room.id}/tasks`, getConfig())
             .then(res => {
                 let i
                 for (i = 0; i < res.data.length; i++) {
-                    axios.delete(`http://192.168.0.253:8000/api/v1/tasks/${res.data[i].id}`, getConfig())
+                    axios.delete(`http://${BackendAddress}/api/v1/tasks/${res.data[i].id}`, getConfig())
                     dispatch(updateRefresh())
                 }
                 if (i === res.data.length) {
                     i += 1
-                    axios.delete(`http://192.168.0.253:8000/api/v1/rooms/${room.id}`, getConfig())
+                    axios.delete(`http://${BackendAddress}/api/v1/rooms/${room.id}`, getConfig())
                     dispatch(updateRefresh())
                 }
             })

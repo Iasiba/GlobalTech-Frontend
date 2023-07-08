@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setArea } from '../../store/slices/AreaSlice'
 const tasks = ({ roomId, home, myhome }) => {
   const dispatch = useDispatch()
+  const BackendAddress = useSelector(state => state.BackendAddress)
   const [AllTasks, setAllTasks] = useState('')
   const [Home, setHome] = useState('')
   const Refresh = useSelector(state => state.Refresh)
@@ -14,9 +15,9 @@ const tasks = ({ roomId, home, myhome }) => {
 
   function searchTasks() {
     if (!roomId && !home && !myhome) dispatch(setArea("Tareas"))
-    let url = 'http://192.168.0.253:8000/api/v1/tasks'// home y otras opciones
-    if (roomId) url = `http://192.168.0.253:8000/api/v1/rooms/${roomId}/tasks`
-    if (myhome) url = 'http://192.168.0.253:8000/api/v1/users/me/taskList'
+    let url = `http://${BackendAddress}/api/v1/tasks`// home y otras opciones
+    if (roomId) url = `http://${BackendAddress}/api/v1/rooms/${roomId}/tasks`
+    if (myhome) url = `http://${BackendAddress}/api/v1/users/me/taskList`
     axios.get(url, getConfig())
       .then(res => {
         if (myhome) {

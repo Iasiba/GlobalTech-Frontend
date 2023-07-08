@@ -13,6 +13,7 @@ import { updateRefresh } from '../../store/slices/RefreshSlice'
 import { setArea } from '../../store/slices/AreaSlice'
 const newGuide = () => {
     const dispatch = useDispatch()
+    const BackendAddress = useSelector(state => state.BackendAddress)
     const Guide = useSelector(state => state.Item)
     const NewGuideVisible = useSelector(state => state.NewsVisible)[10]
     const [File, setFile] = useState('')
@@ -37,16 +38,16 @@ const newGuide = () => {
         data.date = year + '/' + month + '/' + day//Today // "2020/06/12"//
         data.name = data.name + year + month + day
         console.log("dfdsgfgfgs", Guide)
-        const URL = `http://192.168.0.253:8000/api/v1/programmings`
+        const URL = `http://${BackendAddress}/api/v1/programmings`
         Guide.id ?
-            axios.post(`http://192.168.0.253:8000/api/v1/programmings/${Guide.id}/${key}`, Data, getConfig())
+            axios.post(`http://${BackendAddress}/api/v1/programmings/${Guide.id}/${key}`, Data, getConfig())
                 .then(res => { console.log(res) })
                 .finally(dispatch(setItem(false)))
             :
             axios.post(URL, data, getConfig())
                 .then(res => {
                     console.log(res)
-                    axios.post(`http://192.168.0.253:8000/api/v1/programmings/${res.data.programmingGuide.id}/${key}`, Data, getConfig())
+                    axios.post(`http://${BackendAddress}/api/v1/programmings/${res.data.programmingGuide.id}/${key}`, Data, getConfig())
                         .then(res => { console.log(res) })
                 })
                 .catch(err => console.log(err))

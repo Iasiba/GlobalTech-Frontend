@@ -12,11 +12,12 @@ import { setVisibleAccount } from './../../store/slices/NewsVisibleSlice'
 import { updateRefresh } from '../../store/slices/RefreshSlice'
 import { setArea } from '../../store/slices/AreaSlice'
 const newAccount = () => {
+    const BackendAddress = useSelector(state => state.BackendAddress)
     const dispatch = useDispatch()
     const Account = useSelector(state => state.Item)
     const NewAccountVisible = useSelector(state => state.NewsVisible)[4]
 
-    const Projects = AxiosGetHook('http://192.168.0.253:8000/api/v1/projects')
+    const Projects = AxiosGetHook(`http://${BackendAddress}/api/v1/projects`)
     const AllProjects = Projects.data.data?.projects
 
     const [Project, setProject] = useState({ name: '--Selecciona Proyecto--' })
@@ -34,14 +35,14 @@ const newAccount = () => {
         //data projectname
         data.projectId = Project.id
         Account.id ?
-            axios.put(`http://192.168.0.253:8000/api/v1/accounts/${Account.id}`, data, getConfig())
+            axios.put(`http://${BackendAddress}/api/v1/accounts/${Account.id}`, data, getConfig())
                 .then(res => {
                     console.log(res, "cuenta Actualizada")
                 })
                 .catch(err => console.log(err))
                 .then(dispatch(setItem(false)))
             :
-            axios.post(`http://192.168.0.253:8000/api/v1/projects/${data.projectId}/accounts`, data, getConfig())
+            axios.post(`http://${BackendAddress}/api/v1/projects/${data.projectId}/accounts`, data, getConfig())
                 .then(res => {
                     console.log(res, "cuenta creada")
                 })

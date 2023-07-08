@@ -13,10 +13,9 @@ import Backups from '../backups/backups'
 import { updateRefresh } from '../../store/slices/RefreshSlice'
 import { updateRefreshMenu } from '../../store/slices/RefreshMenuSlice'
 const deployProject = ({ project }) => {
-
   const dispatch = useDispatch()
   const navigate = useNavigate()
-
+  const BackendAddress = useSelector(state => state.BackendAddress)
   const [Visible, setVisible] = useState(false)
   const [InfoVisible, setInfoVisible] = useState(true)
   const [RoomsVisible, setRoomsVisible] = useState(false)
@@ -103,7 +102,7 @@ const deployProject = ({ project }) => {
               !project.rooms.length &&
               !project.materials.length &&
               <p className='items materialItemsWidth' onClick={() => ((
-                axios.delete(`http://192.168.0.253:8000/api/v1/projects/${project.id}`, getConfig())
+                axios.delete(`http://${BackendAddress}/api/v1/projects/${project.id}`, getConfig())
                   .then(/*,
                   console.log('eliminado con exito falta eliminar todo el contenido de el proyecto para que funcione sin roblemas')
                   axios.get('http://localhost:8000/api/v1/users/me/notes', getConfig())
@@ -128,7 +127,7 @@ const deployProject = ({ project }) => {
             <p><b>Pais:</b>  {project.country}</p>
             <p><b>Ciudad:</b> {project.city}</p>
             <p><b>Direccion:</b> {project.address}</p>
-            <p><b>Referencias:</b> {project.reference}</p>
+            {project.reference && <p><b>Referencias:</b> {project.reference}</p>}
             <p><b>Coordenadas:</b> {/*'25.653315, -100.382917'*/project.coordinates} <a href={`https://maps.google.com/?q=${project.coordinates}`} className='projectsub'>¿Como llegar?</a></p>
             {/*<p><b>Planos:</b> <a href={`${project.plane}`} className='projectsub'>Ver planos</a></p>*/}
             <p><b>Propietario:</b> {project.user.firstName}</p>

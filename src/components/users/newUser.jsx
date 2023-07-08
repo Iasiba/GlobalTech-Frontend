@@ -13,7 +13,8 @@ import { updateRefresh } from '../../store/slices/RefreshSlice'
 import { setArea } from '../../store/slices/AreaSlice'
 const newUser = () => {
     const dispatch = useDispatch()
-    const Roles = AxiosGetHook('http://192.168.0.253:8000/api/v1/roles')
+    const BackendAddress = useSelector(state => state.BackendAddress)
+    const Roles = AxiosGetHook(`http://${BackendAddress}/api/v1/roles`)
     const AllRoles = Roles.data.data?.roles
 
     const NewUser = useSelector(state => state.Item)
@@ -36,13 +37,13 @@ const newUser = () => {
         data.roleId = RoleId
         console.log(data)
         User.id ?
-            axios.put(`http://192.168.0.253:8000/api/v1/users/me`, data, getConfig())
+            axios.put(`http://${BackendAddress}/api/v1/users/me`, data, getConfig())
                 .then(res => {
                     console.log(res, "Usuario editado")
                 })
                 .catch(err => console.log(err))
             :
-            axios.post(`http://192.168.0.253:8000/api/v1/auth/register`, data, getConfig())
+            axios.post(`http://${BackendAddress}/api/v1/auth/register`, data, getConfig())
                 .then(res => {
                     console.log(res, "Usuario creado")
                 })

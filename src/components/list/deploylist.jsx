@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import getConfig from '../../utils/getConfig'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { updateRefresh } from '../../store/slices/RefreshSlice'
 const deploylist = ({ user, setUserListVisible, material, task, AssingItem, UserSelected, setUserSelected }) => {
+    const BackendAddress = useSelector(state => state.BackendAddress)
     const dispatch = useDispatch()
     const [Selected, setSelected] = useState(false)
     //const [Amount, setAmount] = useState(0)
@@ -12,7 +13,7 @@ const deploylist = ({ user, setUserListVisible, material, task, AssingItem, User
         setSelected(true)
     }
     function asign() {
-        
+
         if (Selected /*|| Amount > 0*/) {
             /*if (material) {
                 material.userId = user.id
@@ -20,19 +21,19 @@ const deploylist = ({ user, setUserListVisible, material, task, AssingItem, User
             }*/
             if (task) {
                 task.userId = user.id
-                task.assigned=true
-                axios.put(`http://192.168.0.253:8000/api/v1/tasks/${task.id}`, task, getConfig())
-                .then(res => {
-                    console.log(res, "Tarea Actualizada")
-                })
-                axios.post(`http://192.168.0.253:8000/api/v1/taskList`,{"userId":`${user.id}`,"taskId":`${task.id}`}, getConfig())
-                .then(res=>console.log(res.data))
+                task.assigned = true
+                axios.put(`http://${BackendAddress}/api/v1/tasks/${task.id}`, task, getConfig())
+                    .then(res => {
+                        console.log(res, "Tarea Actualizada")
+                    })
+                axios.post(`http://${BackendAddress}/api/v1/taskList`, { "userId": `${user.id}`, "taskId": `${task.id}` }, getConfig())
+                    .then(res => console.log(res.data))
             }
             setUserListVisible(false)
         }
         dispatch(updateRefresh())
     }
-    useEffect(() => { asign()  /*if (AssingItem) {  } */}, [AssingItem])
+    useEffect(() => { asign()  /*if (AssingItem) {  } */ }, [AssingItem])
 
     return (
         <section className='assignItems'>

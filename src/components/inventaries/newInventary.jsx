@@ -12,6 +12,7 @@ import { setVisibleInventary } from './../../store/slices/NewsVisibleSlice'
 import { updateRefresh } from '../../store/slices/RefreshSlice'
 import { setArea } from '../../store/slices/AreaSlice'
 const newInventary = () => {
+    const BackendAddress = useSelector(state => state.BackendAddress)
     const dispatch = useDispatch()
     const Inventary = useSelector(state => state.Item)
     const NewInventaryVisible = useSelector(state => state.NewsVisible)[5]
@@ -25,7 +26,7 @@ const newInventary = () => {
     const submit = data => {
 
         Inventary.id ?
-            axios.put(`http://192.168.0.253:8000/api/v1/inventories/${Inventary.id}`, data, getConfig())
+            axios.put(`http://${BackendAddress}/api/v1/inventories/${Inventary.id}`, data, getConfig())
                 .then(res => {
                     console.log(res, "Inventario creado")
                 })
@@ -34,7 +35,7 @@ const newInventary = () => {
                     dispatch(setItem(false))
                 )
             :
-            axios.post(`http://192.168.0.253:8000/api/v1/inventories`, data, getConfig())
+            axios.post(`http://${BackendAddress}/api/v1/inventories`, data, getConfig())
                 .then(res => {
                     console.log(res, "Inventario creado")
                 })

@@ -127,7 +127,7 @@ export default myAccounts*/
 
 import React, { useState, useEffect } from 'react';
 import './myAccounts.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import FileUploader from '../fileUploader/fileUploader';
@@ -139,6 +139,7 @@ import getConfig from '../../utils/getConfig';
 const MyAccounts = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const BackendAddress = useSelector(state => state.BackendAddress)
   const [visibleInputImageProfile, setVisibleInputImageProfile] = useState(false);
   const [Me, setMe] = useState('');
 
@@ -147,7 +148,7 @@ const MyAccounts = () => {
   }, [visibleInputImageProfile]);
 
   const initial = () => {
-    axios.get('http://192.168.0.253:8000/api/v1/users/me', getConfig())
+    axios.get(`http://${BackendAddress}/api/v1/users/me`, getConfig())
       .then((res) => setMe(res.data));
     dispatch(setArea("Mi Cuenta"));
   };
@@ -170,7 +171,7 @@ const MyAccounts = () => {
           {Me.profileImage && <aside className='image'>
             <img
               className='profileImage'
-              src={Me.profileImage ? Me.profileImage : "https://www.w3schools.com/css/paris.jpg"}
+              src={Me.profileImage ? Me.profileImage : ""}
               alt=""
             />
             <i
@@ -182,7 +183,7 @@ const MyAccounts = () => {
           {(!Me.profileImage || visibleInputImageProfile) && (
             <FileUploader
               onImageUpload={handleImageUpload}
-              url={"http://192.168.0.253:8000/api/v1/users/me/profile-img"}
+              url={`http://${BackendAddress}/api/v1/users/me/profile-img`}
               uploadKey={"profile_img"}
             />
           )}

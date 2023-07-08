@@ -6,15 +6,16 @@ import getConfig from '../../utils/getConfig'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 const backups = ({ projectId }) => {
+  const BackendAddress = useSelector(state => state.BackendAddress)
   const Refresh = useSelector(state => state.Refresh)
   const [Backups, setBackups] = useState('')
   useEffect(() => search(), [Refresh])
 
   function search() {
     const URL = projectId ?
-      `http://192.168.0.253:8000/api/v1/projects/${projectId}/backups`
+      `http://${BackendAddress}/api/v1/projects/${projectId}/backups`
       :
-      `http://192.168.0.253:8000/api/v1/backups`
+      `http://${BackendAddress}/api/v1/backups`
     axios.get(URL, getConfig())
       .then(
         res => {

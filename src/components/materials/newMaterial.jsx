@@ -14,16 +14,17 @@ import { setRefresh, updateRefresh } from '../../store/slices/RefreshSlice'
 import { setArea } from '../../store/slices/AreaSlice'
 const newMaterial = () => {
     const dispatch = useDispatch()
+    const BackendAddress = useSelector(state => state.BackendAddress)
     const Material = useSelector(state => state.Item)
     const NewMaterialVisible = useSelector(state => state.NewsVisible)[6]
-    const Projects = AxiosGetHook('http://192.168.0.253:8000/api/v1/projects')
+    const Projects = AxiosGetHook(`http://${BackendAddress}/api/v1/projects`)
     const AllProjects = Projects.data.data?.projects
     const [projectName, setProjectName] = useState('')
     const [Project, setProject] = useState({ name: "--Selecciona Proyecto--" })
     const [ProjectId, setProjectId] = useState('')
     const [ProjectListVisible, setProjectListVisible] = useState(false)
 
-    const Inventories = AxiosGetHook('http://192.168.0.253:8000/api/v1/inventories')
+    const Inventories = AxiosGetHook(`http://${BackendAddress}/api/v1/inventories`)
     const AllInventories = Inventories.data.data?.inventory
     const [InventoryName, setInventoryName] = useState('')
     const [Inventory, setInventory] = useState({ name: "--Selecciona Inventario--" })
@@ -44,7 +45,10 @@ const newMaterial = () => {
         data.projectId = Project.id
         data.inventoryId = Inventory.id
         data.inventoryName = Inventory.name
-        const URL = Material.id ? `http://192.168.0.253:8000/api/v1/materials/${Material.id}` : `http://192.168.0.253:8000/api/v1/inventories/${InventoryId}/materials`
+        const URL = Material.id ?
+            `http://${BackendAddress}/api/v1/materials/${Material.id}`
+            :
+            `http://${BackendAddress}/api/v1/inventories/${InventoryId}/materials`
 
         Material.id ?
             axios.put(URL, data, getConfig())
@@ -258,7 +262,7 @@ const newMaterial = () => {
                     <div>Entregado</div>
                 </aside>
             </div>
-      
+
             <button>{Material.id ? 'Actualizar' : 'Crear'}</button>
         </form>
     )

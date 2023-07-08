@@ -13,6 +13,7 @@ import { updateRefreshMenu } from '../../store/slices/RefreshMenuSlice'
 const deployNotes = ({ note, setAllNotes }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const BackendAddress = useSelector(state => state.BackendAddress)
     const NewNoteVisible = useSelector(state => state.NewsVisible)[8]
     const RefreshMenu = useSelector(state => state.RefreshMenu)
     const [MenuVisible, setMenuVisible] = useState(false)
@@ -50,7 +51,7 @@ const deployNotes = ({ note, setAllNotes }) => {
                     <div className='itemList itemListPrimary '>
                         <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(note)), navigate('/NewNote')/*dispatch(setVisibleNote(!NewNoteVisible)), setMenuVisible(!MenuVisible) */ }}>Editar</p>
                         <p className='items materialItemsWidth' onClick={() => ((
-                            axios.delete(`http://192.168.0.253:8000/api/v1/notes/${note.id}`, getConfig())
+                            axios.delete(`http://${BackendAddress}/api/v1/notes/${note.id}`, getConfig())
                                 .then(
                                     dispatch(updateRefresh())
                                 ),

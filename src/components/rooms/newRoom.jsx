@@ -12,11 +12,12 @@ import { setVisibleRoom } from './../../store/slices/NewsVisibleSlice'
 import { updateRefresh } from '../../store/slices/RefreshSlice'
 import { setArea } from '../../store/slices/AreaSlice'
 const newRoom = () => {
-    const NewRoomVisible = useSelector(state => state.NewsVisible)[1]
     const dispatch = useDispatch()
+    const BackendAddress = useSelector(state => state.BackendAddress)
+    const NewRoomVisible = useSelector(state => state.NewsVisible)[1]
     const Room = useSelector(state => state.Item)
 
-    const Projects = AxiosGetHook('http://192.168.0.253:8000/api/v1/projects')
+    const Projects = AxiosGetHook(`http://${BackendAddress}/api/v1/projects`)
     const AllProjects = Projects.data.data?.projects
 
     const [Project, setProject] = useState({ name: "--Selecciona un Proyecto--" })
@@ -33,7 +34,7 @@ const newRoom = () => {
     const submit = data => {
         data.projectId = Project.id
         Room.id ?
-            axios.put(`http://192.168.0.253:8000/api/v1/rooms/${Room.id}`, data, getConfig())
+            axios.put(`http://${BackendAddress}/api/v1/rooms/${Room.id}`, data, getConfig())
                 .then(res => {
                     console.log(res, "Habitacion Actualizada")
                 })
@@ -42,7 +43,7 @@ const newRoom = () => {
                     dispatch(setItem(false))
                 )
             :
-            axios.post(`http://192.168.0.253:8000/api/v1/projects/${data.projectId}/rooms`, data, getConfig())
+            axios.post(`http://${BackendAddress}/api/v1/projects/${data.projectId}/rooms`, data, getConfig())
                 .then(res => {
                     console.log(res, "Habitacion Creada")
                 })

@@ -6,10 +6,11 @@ import AxiosGetHook from '../../hooks/axiosGetHook'
 import Deploylist from '../list/deploylist'
 import axios from 'axios'
 import getConfig from '../../utils/getConfig'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { updateRefresh } from '../../store/slices/RefreshSlice'
-const userList = ({ setmenuvisible, material,setMaterialList, setUserListVisible, task, setviewUserList }) => {
+const userList = ({ setmenuvisible, material, setMaterialList, setUserListVisible, task, setviewUserList }) => {
     const dispatch = useDispatch()
+    const BackendAddress = useSelector(state => state.BackendAddress)
     const [AssingItem, setAssingItem] = useState(false)
     const [UserSelected, setUserSelected] = useState('')
     const [AllUsers, setAllUsers] = useState('')
@@ -22,7 +23,7 @@ const userList = ({ setmenuvisible, material,setMaterialList, setUserListVisible
         }
     }
     useEffect(() => {
-        axios.get('http://192.168.0.253:8000/api/v1/users', getConfig())
+        axios.get(`http://${BackendAddress}/api/v1/users`, getConfig())
             .then(res => setAllUsers(res.data.users))
     }, [])
     useEffect(() => { setSelectedToUser() }, [AllUsers])
@@ -39,7 +40,7 @@ const userList = ({ setmenuvisible, material,setMaterialList, setUserListVisible
 
     function assignMaterial() {
         for (let i = 0; i < material.length; i++) {
-            axios.put(`http://192.168.0.253:8000/api/v1/materials/${material[i].id}`, { "assigned": true, "userId": UserSelected.id }, getConfig())
+            axios.put(`http://${BackendAddress}/api/v1/materials/${material[i].id}`, { "assigned": true, "userId": UserSelected.id }, getConfig())
                 .then(() => console.log("Material asignado"))
         }
         setviewUserList(false)
@@ -62,7 +63,7 @@ const userList = ({ setmenuvisible, material,setMaterialList, setUserListVisible
                 &&
                 <div className='TittleMaterialSelected'>
                     <div>Tarea Selecionada</div>
-                    <div>{task.description+" en "+ task.room.name+"-"+task.room.project.name}</div>
+                    <div>{task.description + " en " + task.room.name + "-" + task.room.project.name}</div>
                 </div>
             }
             {

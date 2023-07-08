@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom'
 const deployTask = ({ task }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const BackendAddress = useSelector(state => state.BackendAddress)
     const [MenuVisible, setMenuVisible] = useState(false)
     const [UserListVisible, setUserListVisible] = useState(false)
     const [Visible, setVisible] = useState(false)
@@ -70,7 +71,7 @@ const deployTask = ({ task }) => {
                         <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(task)), /*dispatch(setVisibleTask(true)),*/ navigate('/NewTask') /*setMenuVisible(false)*/ }}>Editar</p>
                         {!task.taskLists?.length && <p className='items materialItemsWidth' onClick={() => ((
                             //axios.delete(`http://192.168.0.253:8000/api/v1/tasks/${task.id}/activities`, getConfig()),
-                            axios.delete(`http://192.168.0.253:8000/api/v1/tasks/${task.id}`, getConfig())
+                            axios.delete(`http://${BackendAddress}/api/v1/tasks/${task.id}`, getConfig())
                                 .then(dispatch(updateRefresh())),
                             setMenuVisible(!MenuVisible)))
                         }>Eliminar</p>}

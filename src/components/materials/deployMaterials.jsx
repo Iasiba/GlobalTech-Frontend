@@ -11,6 +11,7 @@ import { updateRefresh } from '../../store/slices/RefreshSlice'
 import { updateRefreshMenu } from '../../store/slices/RefreshMenuSlice'
 import { useNavigate } from 'react-router-dom'
 const deployMaterials = ({ material, MaterialList, setviewUserList }) => {
+  const BackendAddress = useSelector(state => state.BackendAddress)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [Visible, setVisible] = useState(false)
@@ -101,7 +102,7 @@ const deployMaterials = ({ material, MaterialList, setviewUserList }) => {
             <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(material)), navigate('/NewMaterial') /*,dispatch(setVisibleMaterial(true)), setMenuVisible(false)*/ }}>Editar</p>
             <p className='items materialItemsWidth'
               onClick={() => ((
-                axios.delete(`http://192.168.0.253:8000/api/v1/materials/${material.id}`, getConfig())
+                axios.delete(`http://${BackendAddress}/api/v1/materials/${material.id}`, getConfig())
                   .then(dispatch(updateRefresh())),
                 setMenuVisible(!MenuVisible)
               ))}

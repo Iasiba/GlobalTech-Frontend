@@ -3,14 +3,15 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
 import './login.css'
+import { useSelector } from 'react-redux'
 const Login = () => {
+  const BackendAddress = useSelector(state => state.BackendAddress)
   const [isErrorLogin, setIsErrorLogin] = useState(false)
   const { handleSubmit, reset, register } = useForm()
 
   const navigate = useNavigate()
-
   const submit = data => {
-    const URL = 'http://192.168.0.253:8000/api/v1/auth/login'
+    const URL = `http://${BackendAddress}/api/v1/auth/login`
     axios.post(URL, data)
       .then(res => {
         console.log("intento de logueo exitoso", res.data.token, "intento de logueo exitoso")
@@ -53,7 +54,7 @@ const Login = () => {
       </div>
       <br />
       {
-        isErrorLogin && <p>{'Credenciales Invalidas, intentelo de nuevo...'}</p> 
+        isErrorLogin && <p>{'Credenciales Invalidas, intentelo de nuevo...'}</p>
       }
       <button className='boton'>Login</button>
       <div className='singUp'>

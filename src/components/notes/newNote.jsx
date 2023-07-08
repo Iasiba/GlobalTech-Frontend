@@ -12,6 +12,7 @@ import { updateRefresh } from '../../store/slices/RefreshSlice'
 import { setArea } from '../../store/slices/AreaSlice'
 const newNote = () => {
     const dispatch = useDispatch()
+    const BackendAddress = useSelector(state => state.BackendAddress)
     const Note = useSelector(state => state.Item)
     const NewNoteVisible = useSelector(state => state.NewsVisible)[8]
     const { handleSubmit, reset, register } = useForm()
@@ -22,7 +23,10 @@ const newNote = () => {
     }, [])
 
     const submit = data => {
-        const URL = Note.id ? `http://192.168.0.253:8000/api/v1/notes/${Note.id}` : `http://192.168.0.253:8000/api/v1/notes`
+        const URL = Note.id ?
+            `http://${BackendAddress}/api/v1/notes/${Note.id}`
+            :
+            `http://${BackendAddress}/api/v1/notes`
         Note.id ?
             axios.put(URL, data, getConfig())
                 .then(res => {

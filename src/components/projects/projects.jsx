@@ -7,13 +7,14 @@ import getConfig from '../../utils/getConfig'
 import { useDispatch, useSelector } from 'react-redux'
 import { setArea } from '../../store/slices/AreaSlice'
 const projects = () => {
-  const dispatch= useDispatch()
+  const dispatch = useDispatch()
+  const BackendAddress = useSelector(state => state.BackendAddress)
   const Refresh = useSelector(state => state.Refresh)
   const [AllProjects, setAllProjects] = useState('')
   useEffect(() => searchProjects(), [Refresh])
 
   function searchProjects() {
-    axios.get('http://192.168.0.253:8000/api/v1/projects', getConfig())
+    axios.get(`http://${BackendAddress}/api/v1/projects`, getConfig())
       .then(res => setAllProjects(res.data.projects))
     dispatch(setArea("Proyectos"))
   }

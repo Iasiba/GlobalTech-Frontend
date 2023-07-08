@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom'
 const deployProgramming = ({ programming }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const BackendAddress = useSelector(state => state.BackendAddress)
   const [MenuVisible, setMenuVisible] = useState(false)
   const [Click, setClick] = useState(false)
   const Refresh = useSelector(state => state.Refresh)
@@ -52,7 +53,7 @@ const deployProgramming = ({ programming }) => {
           <div className='itemList itemListPrimary '>
             <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(programming)), navigate('/NewGuide') /*dispatch(setVisibleGuide(!NewGuideVisible))*/, setMenuVisible(false) }}>Editar</p>
             <p className='items materialItemsWidth' onClick={() => ((
-              axios.delete(`http://192.168.0.253:8000/api/v1/programmings/${programming.id}`, getConfig())
+              axios.delete(`http://${BackendAddress}/api/v1/programmings/${programming.id}`, getConfig())
                 .then(dispatch(updateRefresh())),
               dispatch(updateRefresh()),
               setMenuVisible(!MenuVisible)))

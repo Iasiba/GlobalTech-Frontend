@@ -15,6 +15,7 @@ import NewNote from './components/notes/newNote'
 import NewGuide from './components/programming/newGuide'
 import { useSelector } from 'react-redux'
 function App() {
+  
   const NewProjectVisible = useSelector(state => state.NewsVisible)[0]
   const NewRoomVisible = useSelector(state => state.NewsVisible)[1]
   const NewTaskVisible = useSelector(state => state.NewsVisible)[2]

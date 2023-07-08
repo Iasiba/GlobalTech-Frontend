@@ -11,17 +11,18 @@ import { setVisibleProject } from './../../store/slices/NewsVisibleSlice'
 import { updateRefresh } from '../../store/slices/RefreshSlice'
 import { setArea } from '../../store/slices/AreaSlice'
 const newProject = () => {
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const BackendAddress = useSelector(state => state.BackendAddress)
     const NewProjectVisible = useSelector(state => state.NewsVisible)[0]
     const Project = useSelector(state => state.Item)
     const { handleSubmit, reset, register } = useForm()
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
     useEffect(() => {
         dispatch(setArea(Project.id ? 'Editar Proyecto' : 'Nuevo Proyecto'))
     }, [])
     const submit = data => {
         Project.id ?
-            axios.put(`http://192.168.0.253:8000/api/v1/projects/${Project.id}`, data, getConfig())
+            axios.put(`http://${BackendAddress}/api/v1/projects/${Project.id}`, data, getConfig())
                 .then(res => {
                     console.log(res, "Proyecto Actualizado")
                 })
@@ -30,7 +31,7 @@ const newProject = () => {
                     dispatch(setItem(false)),
                 )
             :
-            axios.post(`http://192.168.0.253:8000/api/v1/projects`, data, getConfig())
+            axios.post(`http://${BackendAddress}/api/v1/projects`, data, getConfig())
                 .then(res => {
                     console.log(res, "Proyecto creado")
                 })

@@ -12,12 +12,13 @@ import getConfig from '../../utils/getConfig'
 const menuUser = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const BackendAddress = useSelector(state => state.BackendAddress)
   /**let visible = useSelector(state => state.UserMenu)*/
   let UserMenuVisible = useSelector(state => state.UserMenu)
   const [Me, setMe] = useState('')
   //let Area = useSelector(state => state.Area)
   useEffect(() => {
-    axios.get('http://192.168.0.253:8000/api/v1/users/me', getConfig())
+    axios.get(`http://${BackendAddress}/api/v1/users/me`, getConfig())
       .then(res => setMe(res.data))
   }, [])
   const handleLogout = () => {
