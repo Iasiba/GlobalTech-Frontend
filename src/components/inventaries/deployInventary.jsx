@@ -9,6 +9,7 @@ import { setVisibleInventary } from './../../store/slices/NewsVisibleSlice'
 import { updateRefreshMenu } from '../../store/slices/RefreshMenuSlice'
 import { updateRefresh } from '../../store/slices/RefreshSlice'
 import { useNavigate } from 'react-router-dom'
+import ExcelReader from '../ExcelReader/ExcelReader'
 const deployInventary = ({ inventary }) => {
     const BackendAddress = useSelector(state => state.BackendAddress)
     const dispatch = useDispatch()
@@ -47,6 +48,7 @@ const deployInventary = ({ inventary }) => {
                     MenuVisible
                     &&
                     <div className='itemList itemListPrimary '>
+                        <ExcelReader inventaryId={inventary.id} />
                         <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(inventary)), navigate('/NewInventary')/*, dispatch(setVisibleInventary(!NewInventaryVisible)), setMenuVisible(!MenuVisible) */ }}>Editar</p>
                         {!inventary.materials.length && <p className='items materialItemsWidth' onClick={() => ((
                             axios.delete(`http://${BackendAddress}/api/v1/inventories/${inventary.id}`, getConfig())

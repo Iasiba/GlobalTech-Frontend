@@ -12,6 +12,7 @@ import { setVisibleMaterial } from './../../store/slices/NewsVisibleSlice'
 
 import { setRefresh, updateRefresh } from '../../store/slices/RefreshSlice'
 import { setArea } from '../../store/slices/AreaSlice'
+import ExcelReader from '../ExcelReader/ExcelReader'
 const newMaterial = () => {
     const dispatch = useDispatch()
     const BackendAddress = useSelector(state => state.BackendAddress)
@@ -30,7 +31,8 @@ const newMaterial = () => {
     const [Inventory, setInventory] = useState({ name: "--Selecciona Inventario--" })
     const [InventoryId, setInventoryId] = useState('')
     const [InventoryListVisible, setInventoryListVisible] = useState('')
-
+    const [FromExcel, setFromExcel] = useState(false)
+    const [File, setFile] = useState(null)
     //const Refresh = useSelector(state=>state.Refresh)
     const { handleSubmit, reset, register } = useForm()
 
@@ -41,6 +43,11 @@ const newMaterial = () => {
     useEffect(() => { setInventoryId(Inventory.id) }, [Inventory])
 
     useEffect(() => assignInventory(), [Material])//en caso de editar materiales
+    useEffect(() => {
+        console.log(File)
+    }, [File])
+
+
     const submit = data => {
         data.projectId = Project.id
         data.inventoryId = Inventory.id

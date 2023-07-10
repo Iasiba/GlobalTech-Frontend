@@ -12,6 +12,7 @@ import getConfig from '../../utils/getConfig'
 import Backups from '../backups/backups'
 import { updateRefresh } from '../../store/slices/RefreshSlice'
 import { updateRefreshMenu } from '../../store/slices/RefreshMenuSlice'
+import ExcelGenerator from '../ExcelGenerator/ExcelGenerator'
 const deployProject = ({ project }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -95,6 +96,7 @@ const deployProject = ({ project }) => {
           MenuVisible
           &&
           <div className='itemList itemListPrimary '>
+            <ExcelGenerator data={project} />
             <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(project)), navigate('/NewProject')/*dispatch(setVisibleProject(true)), setMenuVisible(!MenuVisible)*/ }}>Editar</p>
             {
               !project.accounts.length &&

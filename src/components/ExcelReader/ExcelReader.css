@@ -1,0 +1,26 @@
+
+.excel-uploader {
+    width: 77px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.excel-uploader input[type="file"] {
+    display: none;
+}
+
+.excel-uploader label {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    display: inline-block;
+    background-color: var(--selectlist-color);
+    color: white;
+    cursor: pointer;
+    padding: 0 10px;
+}
+
+.excel-uploader label:hover {
+    color: var(--primary-color);
+}
+
