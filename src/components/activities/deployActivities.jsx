@@ -69,7 +69,23 @@ const deployActivities = ({ activity, myhome }) => {
           </div>
         }
       </div>
-      {activity.observation && Observations && <p className='activityObservations'><b>{`Observaciones: `}</b>{activity.observation}</p>}
+      {
+        activity.observation && Observations && <p className='activityObservations'><b>{`Observaciones: `}</b>{activity.observation}</p>
+      }
+      {
+        <div>
+          {activity.receiver && Observations && <p><b>Recibió: {activity.receiver}</b></p>}
+          {activity.signature && Observations &&
+          <div className='signatureBody'>
+            <img
+            className='signatureImg'
+              src={activity.signature ? activity.signature : ""}
+              alt=""
+            />
+          </div>
+            }
+        </div>
+      }
     </>
   )
 }

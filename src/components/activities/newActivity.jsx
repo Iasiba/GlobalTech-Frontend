@@ -11,6 +11,7 @@ import { setItem } from '../../store/slices/ItemSlice'
 import { setVisibleActivity } from './../../store/slices/NewsVisibleSlice'
 import { updateRefresh } from '../../store/slices/RefreshSlice'
 import { setArea } from '../../store/slices/AreaSlice'
+import SignatureCapture from '../signature/signature'
 const newActivity = ({ /*task,*/ setVisibleReport }) => {
     const BackendAddress = useSelector(state => state.BackendAddress)
     let aux
@@ -342,6 +343,7 @@ const newActivity = ({ /*task,*/ setVisibleReport }) => {
                     </section>
                 </div>
             }
+            {Activity.id&&<SignatureCapture activityId={Activity.id}/>}
             <button>{Activity.task ? 'Actualizar' : 'Crear'}</button>
         </form>
     )

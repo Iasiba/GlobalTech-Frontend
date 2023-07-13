@@ -6,6 +6,7 @@
 .activities{
     width: 70%;
     text-align: justify;
+    padding: 0 5px;
 }
 .activities1{
     width: 120px;
@@ -90,4 +91,15 @@
 }
 .activityObservations{
     box-shadow: 0 0 1px var(--secondary-color);
+}
+.signatureImg{
+    max-width: 300px;
+    box-shadow: 0 0 1px black;
+    margin: 0 auto;
+}
+.signatureBody{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
