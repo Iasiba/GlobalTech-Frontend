@@ -19,7 +19,7 @@ const deployBackups = ({ backup }) => {
   const RefreshMenu = useSelector(state => state.RefreshMenu)
   const Refresh = useSelector(state => state.Refresh)
   const [Click, setClick] = useState(false)
-
+console.log(backup)
   useEffect(
     () => {
       if (Click) {

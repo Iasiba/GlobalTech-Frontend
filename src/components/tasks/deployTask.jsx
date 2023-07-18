@@ -11,6 +11,7 @@ import NewActivity from '../activities/newActivity'
 import { updateRefreshMenu } from '../../store/slices/RefreshMenuSlice'
 import { updateRefresh } from '../../store/slices/RefreshSlice'
 import { useNavigate } from 'react-router-dom'
+import ExcelEditor from './ExcelEditor'
 const deployTask = ({ task }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -66,6 +67,7 @@ const deployTask = ({ task }) => {
                     MenuVisible
                     &&
                     <div className='itemList itemListPrimary '>
+                        <ExcelEditor task={task}/>
                         <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(task)), /*setMenuVisible(false),*/ navigate('/NewActivity')/*setVisibleReport(true)*/ }}>Reporte</p>
                         <p className='items materialItemsWidth' onClick={() => { setMenuVisible(false), setUserListVisible(true) }}>Asignar</p>
                         <p className='items materialItemsWidth' onClick={() => { dispatch(setItem(task)), /*dispatch(setVisibleTask(true)),*/ navigate('/NewTask') /*setMenuVisible(false)*/ }}>Editar</p>
